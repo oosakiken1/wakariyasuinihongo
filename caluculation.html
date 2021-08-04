@@ -14,7 +14,7 @@
     <div class="container">
         <div class="row">
             <header>
-                <h1>わかりにくさ計算機（仮）</h1>
+                <h1>わかりにくさ計算機（仮）0.0.1</h1>
             </header>
             <h3 class="bg-primary text-white">判定したい文章</h3>
             <span class="label label-primary" id="message">テキストを入力してください</span>
@@ -22,6 +22,14 @@
 
             <div class="col-12">
                 <p>
+                    <label>
+                        <input type="checkbox" value="" id="limit">
+                        下限(30%)未満も表示
+                    </label>
+                    <label>
+                        <input type="checkbox" value="" id="detail">
+                        詳細表示
+                    </label>
                     <button id="execute" type="button" class="btn btn-primary">計算</button>
                     <button id="clear" type="button" class="btn btn-warning">クリア</button>
                 </p>
@@ -32,7 +40,8 @@
             <div id="result">
             </div>
             <footer>
-                <p>2021 Copyright Kenichi Oosaki</p>
+                <hr>
+                <p>Copyright 2021 Kenichi Oosaki.</p>
             </footer>
         </div>
     </div>
