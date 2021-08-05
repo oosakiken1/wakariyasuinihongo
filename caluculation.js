@@ -4,6 +4,7 @@ const BTN_EXEC = document.getElementById("execute");
 const BTN_CLEAR = document.getElementById("clear");
 const CHK_LIMIT = document.getElementById("limit");
 const CHK_DETAIL = document.getElementById("detail");
+const CHK_PERIOD = document.getElementById("period");
 
 
 BTN_EXEC.onclick = function () {
@@ -13,7 +14,15 @@ BTN_EXEC.onclick = function () {
     const lines = text.split('\n');
 
     for (const line of lines) {
-        const sentences = line.match(/[^。]*。*/g);
+        var kutenReg = null;
+        if  (CHK_PERIOD.checked) {
+            kutenReg = /[^。．]*[。．]*/g;
+        }  else {
+            kutenReg = /[^。]*。*/g;
+        }
+
+        // const sentences = line.match(/[^。]*。*/g);
+        const sentences = line.match(kutenReg);
 
         for (const sentence of sentences) {
             if (sentence === '') { continue }
