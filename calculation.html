@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>わかりにくさ計算機（仮）</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <header>
+                <h1>わかりにくさ計算機（簡易版）1.0.0</h1>
+            </header>
+            <h3 class="bg-primary text-white">判定したい文章</h3>
+            <span id="message">テキストを入力してください</span>
+            <textarea id="text" class="form-control" rows="12" placeholder="" style="width:100%;"></textarea>
+
+            <div class="col-12">
+                <p>
+                    <label>
+                        <input type="checkbox" value="" id="limit">
+                        30%未満も表示
+                    </label>
+                    <label>
+                        <input type="checkbox" value="" id="detail">
+                        詳細表示
+                    </label>
+                    <label>
+                        <input type="checkbox" value="" id="period">
+                        ピリオドを句点扱い
+                    </label>
+                    <button id="execute" type="button" class="btn btn-primary">計算</button>
+                    <button id="clear" type="button" class="btn btn-warning">クリア</button>
+                </p>
+            </div>
+
+            <h3 class="bg-primary text-white">判定結果</h3>
+
+            <div id="result">
+                <p></p>
+            </div>
+
+            <h3 class="bg-primary text-white">使い方</h3>
+                <p>1.判定したい文章を入力して計算ボタンをクリックすると、わかりにくいと思われる文を赤色で表示します。</p>
+                <p>2.初期値では、わかりにくさ係数が0.3以上の文（30%以上の人がわかりにくいと思う文）の色を変えます。</p>
+                <p>3.「30%未満も表示」をチェックすると、わかりにくさ係数が0.3未満の文（わかりにくいと思う人が30%未満の文）も色を変えます。</p>
+                <p>4.「詳細表示」をチェックすると、①一文の文字数②6文字以上連続する漢字の頻度③10文字以上連続するカタカナの頻度④わかりにくさ係数（わかりにくいと思う人の割合％）を追加表示します。</p>
+                <p>5.「ピリオドを句点扱い」をチェックすると、全角ピリオドを句点として扱います。初期値は、改行コードと句点を文末として扱います。</p>
+            <footer>
+                <hr>
+                <p>本ツールは、研究・教育のための利用に限定します。本ツールを利用した論文・記事を執筆される場合、本ツールを利用した旨を明記してください。商用でのご利用やその他ご相談は<a href="https://www.facebook.com/kenichi.oosakihirokouji">こちら</a></p>
+                <p>Copyright 2021 Kenichi Oosaki.</p>
+            </footer>
+        </div>
+    </div>
+    <script src="calculation.js"></script>
+</body>
+
+</html>
