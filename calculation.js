@@ -70,7 +70,7 @@ function countKanji6(str) {
     }
 }
 
-
 BTN_CLEAR.onclick = function () {
     TEXTAREA.value = "";
+    DIV_RESULT.innerHTML = "<p></p>";
 };
