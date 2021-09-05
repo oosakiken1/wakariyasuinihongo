@@ -8,6 +8,7 @@
     <meta name="google-site-verification" content="B-grpIRlQPDVhsa-uzQTrLOoswSs9juvRvEZLXVCcxo" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
     <title>わかりにくさ計算機（仮）</title>
 </head>
 
@@ -16,12 +17,21 @@
 
         <header>
             <div class="row">
-                <h1>わかりにくさ計算機（簡易版）1.0.0
+                <h1>わかりにくさ計算機（簡易版）1.0.0<span class="h6 rounded bg-secondary text-white mx-1 px-1">The calculator for Difficult-to-Understand scale</span></h1>
+
+                <div class="my-1">
+                    <a href="./index.html" class="badge btn-secondary">Home</a>
+                </div>
+                <div class="my-1">
+                    <!-- <span class="btn btn-secondary" data-bs-toggle="collapse"
+                    data-bs-target="#collapseExample">ツールの使い方</span>                      -->
                     <button type="button" class="btn btn-secondary" data-bs-toggle="collapse"
                         data-bs-target="#collapseExample">ツールの使い方</button>
-                </h1>
+                    </div>
+
+
                 <div class="collapse" id="collapseExample">
-                    <div class="card card-body">
+                    <div class="card card-body my-1">
                         <p>1.判定したい文章を入力して計算ボタンをクリックすると、わかりにくいと思われる文を赤色で表示します。</p>
                         <p>2.初期値では、わかりにくさ係数が0.3以上の文（30%以上の人がわかりにくいと思う文）の色を変えます。</p>
                         <p>3.「30%未満も表示」をチェックすると、わかりにくさ係数が0.3未満の文（わかりにくいと思う人が30%未満の文）も色を変えます。</p>
@@ -30,7 +40,7 @@
                         <p>5.「ピリオドを文末扱い」をチェックすると、全角ピリオドを文末として扱います。初期値は、改行コードと句点を文末として扱います。</p>
                     </div>
                 </div>
-                <p><a href="./index.html" class="badge bg-secondary">Home</a></p>
+
             </div>
         </header>
 
@@ -39,7 +49,7 @@
                 <h3 class="bg-primary text-white rounded">判定したい文章</h3>
                 <textarea id="text" class="form-control" rows="12" placeholder="テキストを入力してください"
                     style="width:100%;"></textarea>
-                <p>
+                <div class="my-1">
                     <label>
                         <input type="checkbox" value="" id="limit">
                         30%未満も表示
@@ -54,11 +64,11 @@
                     </label>
                     <button id="execute" type="button" class="btn btn-primary">計算</button>
                     <button id="clear" type="button" class="btn btn-warning">クリア</button>
-                </p>
+                </div>
             </div>
             <div class="row">
                 <h3 class="bg-primary text-white rounded">判定結果</h3>
-                <div id="result" class="border rounded">
+                <div id="result" class="border rounded bg-white">
                     <p></p>
                 </div>
             </div>
