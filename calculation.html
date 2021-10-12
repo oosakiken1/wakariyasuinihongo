@@ -17,28 +17,29 @@
 
         <header>
             <div class="row">
-                <h1>わかりにくさ計算機（簡易版）1.0.0<span class="h6 rounded bg-secondary text-white mx-1 px-1">The calculator for Difficult-to-Understand scale</span></h1>
+                <h1>わかりにくさ計算機（簡易版）1.0.1<span class="h6 rounded bg-secondary text-white mx-1 px-1">The calculator for Difficult-to-Understand scale</span></h1>
 
                 <div class="my-1">
                     <a href="./index.html" class="badge btn-secondary">Home</a>
                 </div>
                 <div class="my-1">
                     <button type="button" class="btn border btn-secondary" data-bs-toggle="collapse"
-                        data-bs-target="#collapseExample">ツールの使い方を見る</button>
-                </div>
+                        data-bs-target="#howto">ツールの使い方を見る</button>
+                    <button id="sample" type="button" class="btn btn-secondary">サンプル文章を判定する</button>
+                    </div>
 
-                <div class="collapse" id="collapseExample">
+                <div class="collapse" id="howto">
                     <div class="card card-body my-1">
-                        1.このツールは、文章内のわかりにくい文を可視化するツールです。<br>
+                        <div id="howtotext">1.このツールは、文章内のわかりにくい文を可視化するツールです。<br>
                         2.判定したい文章を入力して「計算する」ボタンをクリックすると、わかりにくい文を赤色で表示します。<br>
-                        3.初期値では、わかりにくさ係数が0.3以上の文（30%以上の人がわかりにくいと思う文）の色を変えます。<br>
-                        4.「30%未満も表示」をチェックすると、わかりにくさ係数が0.3未満の文（わかりにくいと思う人が30%未満の文）も色を変えます。<br>
-                        5.「詳細表示」をチェックすると、わかりにくさの計算に利用する①一文の文字数②6文字以上連続する漢字の頻度③10文字以上連続するカタカナの頻度と、わかりにくさ係数（わかりにくいと思う人の割合％）を追加で表示します。
-                        <br>
-                        6.「ピリオドを文末扱い」をチェックすると、全角ピリオドを文末として扱います。初期値は、改行コードと句点を文末として扱います。<br>
+                        3.「サンプル文章を判定する」ボタンで、サンプル文章を判定することができます。<br>
+                        4.初期値では、30%以上の人がわかりにくいと思うと予測した文の色を変えます。<br>
+                        5.「30%未満も表示」をチェックすると、わかりにくいと思う人が30%未満の文も色を変えます。<br>
+                        6.「詳細表示」をチェックすると、(①-②-③=④)の形式で、わかりにくさの計算に利用した①一文の文字数②6文字以上連続する漢字の頻度③10文字以上連続するカタカナの頻度と、④わかりにくいと思う人の割合％を追加で表示します。<br>
+                        7.「ピリオドを文末扱い」をチェックすると、全角ピリオドを文末として扱います。初期値は、改行コードと句点を文末として扱います。<br>
                         <hr>
                         ※このツールで計算するわかりにくさ係数は、外国人と日本人を調査対象とした「システム仕様書の中の日本語のわかりにくさに関する調査」（大崎，2020）に最適化したものです。<br>
-                        ※このツールの理論的背景については「専門文書内のわかりにくい文の推定―多文化共生社会に向けたライティング支援のための考察―」（大崎，2021）をご参照ください。<br>
+                        ※このツールの理論的背景については「専門文書内のわかりにくい文の推定―多文化共生社会に向けたライティング支援のための考察―」（大崎，2021）をご参照ください。<br></div>
                     </div>
                 </div>
 

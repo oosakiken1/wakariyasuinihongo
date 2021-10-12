@@ -1,5 +1,7 @@
-const TEXTAREA = document.getElementById("text");
+const DIV_TEXT = document.getElementById("text");
+const DIV_HOWTO = document.getElementById("howtotext");
 const DIV_RESULT = document.getElementById("result");
+const BTN_SAMPLE = document.getElementById("sample");
 const BTN_EXEC = document.getElementById("execute");
 const BTN_CLEAR = document.getElementById("clear");
 const CHK_LIMIT = document.getElementById("limit");
@@ -7,7 +9,7 @@ const CHK_DETAIL = document.getElementById("detail");
 const CHK_PERIOD = document.getElementById("period");
 
 BTN_EXEC.onclick = function () {
-    const text = TEXTAREA.value.replace(/\r\n|\r/g, '\n');
+    const text = DIV_TEXT.value.replace(/\r\n|\r/g, '\n');
     var resultText = '';
 
     const lines = text.split('\n');
@@ -71,6 +73,11 @@ function countKanji6(str) {
 }
 
 BTN_CLEAR.onclick = function () {
-    TEXTAREA.value = "";
+    DIV_TEXT.value = "";
     DIV_RESULT.innerHTML = "<p></p>";
+};
+
+BTN_SAMPLE.onclick = function () {
+    DIV_TEXT.value = DIV_HOWTO.innerText.replace(/ /g,'');
+    BTN_EXEC.click();
 };
