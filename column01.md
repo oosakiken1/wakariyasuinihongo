@@ -1,5 +1,8 @@
 # 日本語文章を自動評価するWebツール一覧
 
+<div class="my-1">
+<a href="./index.html" class="badge btn-secondary">Home</a>
+</div>
 
 このページでは、日本語文章を自動評価するWebサイトを紹介しています。 
 
