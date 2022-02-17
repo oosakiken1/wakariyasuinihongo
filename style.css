@@ -1,4 +1,253 @@
+
 body {
     background-color: aliceblue;
 }
 
+img {
+    height: 250px;
+    object-fit: cover; 
+}
+
+.bggreen {
+    background-color: #78B86C;
+    color : rgba(255,255,255,.8);
+
+}
+
+.bgblue{
+    background-color: #8484CF;
+    color : rgba(255,255,255,.8);
+}
+.bgred{
+    background-color: #F78B9E;
+    color : rgba(255,255,255,.9);
+}
+
+.bgyellow{
+    background-color: #F7DE80;
+    color : rgba(0,0,0,.7);
+}
+
+#answertext {
+    /* font-family: monospace;   */
+    font-size: 200%;
+    transition: background-color 0.2s; 
+}
+
+#questiontext {
+    /* font-family: monospace;   */
+    font-size: 250%;
+    transition: background-color 0.2s;
+}
+
+#questiontext rt{
+    font-size: 75%;
+}
+
+
+span {
+    display: inline-block;
+}
+
+span.white{
+    color :rgba(0,0,0,0);
+        /* opacity:1; */
+}
+
+span.red{
+    color: #F78B9E;
+    /* opacity:1; */
+
+    /* text-decoration:underline; 
+    text-decoration-color:#FF0000; */
+}
+
+
+#animationtext {
+    /* font-family: monospace;   */
+    font-size: 250%;
+    letter-spacing:0.1em;
+        /* background-color: #F7DE80; */
+    /* transition: background-color 0.2s;  1秒かけて背景色を元に戻す */
+}
+
+#animationtext rt{
+    font-size: 80%;
+    letter-spacing:0.0em;
+}
+
+#animationtext .red {
+    color: #F78B9E;
+    transform: scale(1);
+    animation: animation2 .2s forwards;
+}
+
+#animationtable {
+    /* font-family: monospace;   */
+    transition: background-color 0.2s;
+}
+
+.message {
+    font-size: 600%;
+}
+
+table {
+    border-spacing: 0px;
+}
+
+td, th {
+    padding: 0;
+    }
+
+#animationtable table{
+    margin: auto;
+    white-space: nowrap;
+}
+
+#animationtable th{
+    font-size: 200%;
+    text-align:center;
+    letter-spacing:0.0em;
+}
+
+
+#animationtable td{
+    font-size: 250%;
+    text-align:center;
+}
+
+#animationtable .wide{
+    letter-spacing:0.2em;
+}
+
+#animationtable .narrow{
+    letter-spacing:-0.1em;
+}
+
+#animationtable span{
+    color: black;
+    opacity: 0.6;
+}
+
+#animationtable .white{
+    color : #F7DE80;
+        /* opacity:1; */
+}
+
+#animationtable .red {
+    color: #F78B9E;
+    transform: scale(1);
+    animation: animation2 .2s forwards;
+}
+
+
+
+@keyframes animation2 {
+	50% {
+		transform: scale(2);
+    }
+	100% {
+		transform: scale(1);
+	}
+}
+
+
+.highlight {
+	background-color: #e66;  /* ピカッてした時の背景色 */
+	transition-duration: 0s; /* 即座に背景色を変える */
+}
+
+span.fs:nth-of-type(11n) {
+	animation-delay: .12s;
+}
+
+span.fs:nth-of-type(7n) {
+	animation-delay: .09s;
+}
+
+span.fs:nth-of-type(5n) {
+	animation-delay: .06s;
+}
+
+span.fs:nth-of-type(3n) {
+	animation-delay: .03s;
+}
+
+span.fs {
+    color: black;
+	opacity: 0;
+	transform: translate(0, -150px) rotate(360deg) scale(0);
+	animation: revolveDrop .3s forwards;
+}
+
+span.fs0 {
+    color: black;
+	opacity: 0;
+	transform: translate(0, -150px) rotate(360deg) scale(.5);
+	animation: revolveDrop .2s forwards;
+	animation-delay: .03s;
+
+}
+
+span.fs1 {
+    color: black;
+	opacity: 0;
+	transform: translate(0, -150px) rotate(360deg) scale(.5);
+	animation: revolveDrop .2s forwards;
+	animation-delay: .06s;
+}
+
+span.fs2 {
+    color: black;
+	opacity: 0;
+	transform: translate(0, -150px) rotate(360deg) scale(.5);
+	animation: revolveDrop .2s forwards;
+	animation-delay: .09s;
+}
+
+span.fs0 {
+    color: black;
+	opacity: 0;
+	transform: translate(0, -150px) rotate(360deg) scale(.5);
+	animation: revolveDrop .2s forwards;
+}
+
+
+@keyframes revolveDrop {
+	30% {
+		transform: translate(0, -50px) rotate(240deg) scale(.8);
+    }
+
+	50% {
+		transform: translate(0, 20px) rotate(120deg) scale(.9);
+    }
+
+	100% {
+		transform: translate(0,-0px) rotate(0deg) scale(1);
+		opacity: .6;
+	}
+}
+
+
+span.res {
+    color: black;
+    opacity: 1;
+    transform: translate(0, 0) rotate(360deg) scale(0);
+	animation: result .3s forwards;
+}
+
+@keyframes result {
+	30% {
+		transform: translate(0, 0) rotate(240deg) scale(.3);
+    }
+
+	50% {
+		transform: translate(0, 0) rotate(120deg) scale(.5);
+    }
+
+	100% {
+		transform: translate(0,0) rotate(0deg) scale(1);
+        opacity: 1;
+
+    }
+}
