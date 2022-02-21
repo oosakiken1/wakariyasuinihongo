@@ -43,11 +43,11 @@
                     <a href="./index.html" class="badge btn-secondary">Home</a>
                 </div>
                 <div class="my-1">
-                    <button id="howto" type="button" class="btn border btn-secondary" data-bs-toggle="collapse"
+                    <button id="btnhowto" type="button" class="btn border btn-secondary" data-bs-toggle="collapse"
                         data-bs-target="#howtoTab">使い方 HOW TO</button>
-                    <button id="config" type="button" class="btn border btn-secondary" data-bs-toggle="collapse"
+                    <button id="btnconfig" type="button" class="btn border btn-secondary" data-bs-toggle="collapse"
                         data-bs-target="#configTab">設定 CONFIG</button>
-                    <button id="qr" type="button" class="btn border btn-secondary" data-bs-toggle="collapse"
+                    <button id="btnqr" type="button" class="btn border btn-secondary" data-bs-toggle="collapse"
                         data-bs-target="#qrTab">QR Code</button>
                 </div>
 
@@ -88,24 +88,30 @@
                                         <input class="form-check-input" type="radio" name="practicetime" id="ptc3" value="C3"><label for="ptc3">300文字</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicetime" id="ptc2" value="C6"><label for="ptc2">200文字</label>
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptc2" value="C2"><label for="ptc2">200文字</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptc1" value="C1"><label for="ptc1">100文字</label>
                                     </div>
                                 </div>
                                 <div class="col-2 mt-2">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicetime" id="ptt5" value="T5"><label for="ptt5">50問</label>
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptal" value="SA"><label for="ptal">全問</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicetime" id="ptt4" value="T4"><label for="ptt4">40問</label>
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptt5" value="S5"><label for="ptt5">50問</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicetime" id="ptt3" value="T3"><label for="ptt3">30問</label>
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptt4" value="S4"><label for="ptt4">40問</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicetime" id="ptt2" value="T2"><label for="ptmt">20問</label>
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptt3" value="S3"><label for="ptt3">30問</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicetime" id="ptt1" value="T1"><label for="ptt1">10問</label>
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptt2" value="S2"><label for="ptt2">20問</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptt1" value="S1"><label for="ptt1">10問</label>
                                     </div>
                                 </div>
                                 <div class="col-2 mt-2">
@@ -182,7 +188,7 @@
                                         <label for="plc4">ひらがな１</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicelevel" id="plc5" value="C5">
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="plc5" value="c5">
                                         <label for="plc5">ひらがな２</label>
                                     </div>
                                 </div>
@@ -265,17 +271,17 @@
 
             <div class="d-flex align-items-center  justify-content-center">
 
-                <button id="start" type="button" class="m-1 btn btn-primary">はじめる START</button>
-                <button id="clear" type="button" class="m-1 btn btn-primary">もどる GO BACK</button>
-                <button id="pass" type="button" class="m-1 btn btn-primary">パス PASS</button>
+                <button id="btnstart" type="button" class="m-1 btn btn-primary">はじめる START</button>
+                <button id="btnclear" type="button" class="m-1 btn btn-primary">もどる GO BACK</button>
+                <button id="btnpass" type="button" class="m-1 btn btn-primary">パス PASS</button>
 
             </div>
 
             <div class="row">
-                <span id="statusremain" class="h3 col ms-1 bggreen rounded text-center">練習時間：05:00</span>
-                <span id="statuslevel" class="h3 col ms-1 bggreen rounded text-center">レベル：単語＋文(N2)</span>
-                <span id="statusruby" class="h3 col ms-1 bggreen rounded text-center">ふりがな：漢字だけ</span>
-                <span id="statususerandom" class="h3 col ms-1 bggreen rounded text-center">順番：漢字だけ</span>
+                <span id="statusremain" class="h3 col ms-1 bgblue rounded text-center">練習時間：05:00</span>
+                <span id="statuslevel" class="h3 col ms-1 bgblue rounded text-center">レベル：単語＋文(N2)</span>
+                <span id="statusruby" class="h3 col ms-1 bgblue rounded text-center">ふりがな：漢字だけ</span>
+                <span id="statususerandom" class="h3 col ms-1 bgblue rounded text-center">順番：漢字だけ</span>
             </div>
 
             <div class="row">
@@ -283,11 +289,11 @@
                 <span id="statusquestion" class="h3 col ms-1 bggreen rounded text-center">問題数：0</span>
                 <span id="statuslength" class="h3 col ms-1 bggreen rounded text-center">文字数：0</span>
                 <span id="statusmiss" class="h3 col ms-1 bggreen rounded text-center">ミス回数：0</span>
-                <span id="statuspercent" class="h3 col ms-1 bggreen rounded text-center">正答率：100%</span>
+                <span id="statuspercent" class="h3 col ms-1 bggreen rounded text-center">正答率：100.0%</span>
             </div>
 
             <div class="row">
-                <h3 class="bgblue rounded">入力する文字</h3>
+                <!-- <h3 class="bgblue rounded">入力する文字</h3> -->
                 <div id="questiontext"
                     class="mb-2 border rounded d-flex align-items-center justify-content-center bgyellow d-none"
                     style="height: 200px;" hidden>
@@ -335,8 +341,8 @@
             </div>
 
             <div class="row">
-                <h3 class="bgblue rounded">入力した文字</h3>
-                <div id="answertext" class="mb-2 border rounded justify-content-center" style="height: 200px;">
+                <!-- <h3 class="bgblue rounded">入力した文字</h3> -->
+                <div id="answertext" class="mb-2 bg-white border rounded justify-content-center" style="height: 200px;">
                 </div>
             </div>
         </main>
@@ -356,6 +362,7 @@
         crossorigin="anonymous"></script>
     <script src="romaji.json.js"></script>
     <script src="mondai.json.js"></script>
+    <script src="typing.json.js"></script>
     <script src="typing.js"></script>
 </body>
 

@@ -5,9 +5,6 @@ const DIV_ANIMATIONTABLE = document.getElementById("animationtable");
 
 const FORM_CONFIG = document.getElementById("formconfig");
 
-// const SELECT_TIME = document.getElementById("practicetime");
-// const SELECT_LEVEL = document.getElementById("practicelevel");
-// const SELECT_RUBY = document.getElementById("displayruby");
 const INPUT_ID = document.getElementById("studentid");
 const INPUT_EMAIL = document.getElementById("email");
 
@@ -22,16 +19,16 @@ const STATUS_SCORE = document.getElementById("statuslength");
 const STATUS_MISS = document.getElementById("statusmiss");
 const STATUS_RATE = document.getElementById("statuspercent");
 
-const BTN_HOWTO = document.getElementById("howto");
-const BTN_CONFIG = document.getElementById("config");
-const BTN_QR = document.getElementById("qr");
+const BTN_HOWTO = document.getElementById("btnhowto");
+const BTN_CONFIG = document.getElementById("btnconfig");
+const BTN_QR = document.getElementById("btnqr");
 
-const BTN_START = document.getElementById("start");
-const BTN_CLEAR = document.getElementById("clear");
-const BTN_PASS = document.getElementById("pass");
+const BTN_START = document.getElementById("btnstart");
+const BTN_CLEAR = document.getElementById("btnclear");
+const BTN_PASS = document.getElementById("btnpass");
 
 const config = {
-    time:'T2',
+    time:'S2',
     level:'s2',
     ruby:'1',
     useRandom: 'on',
@@ -42,6 +39,15 @@ const config = {
     studentId: ''
 }
 
+const information = {
+    remain:0,
+    durationTime:0,
+    sentencesCount:0,
+    characterCount:0,
+    missCount:0,
+    correctRate:0
+}
+
 let romajiText = '';
 let hiraganaText = '';
 let untransferText = '';
@@ -49,17 +55,18 @@ let missText = '';
 
 let mondaiText = '';
 let correctText = '';
+let order = [];
 
 let level = 0;
 
-let questionCount = 0;
 let lastScore = 0;
-let totalScore = 0;
-let unCorrectCount = 0;
 let correctRate = 1;
 
 let startTime = 0; 
+
 let endTime = 0; // 秒
+let endCount = 0; // 秒
+
 let remainTime = ''; // 秒
 
 let lastUnCorrectflag = false;
@@ -68,9 +75,11 @@ let intervalID = null;
 document.addEventListener('keydown', keydown_event);
 document.addEventListener('keyup', keyup_event);
 
+cleanMondaiTexts();
 let mode = 'title'; // title →　typing → result
 modeTitle();
 setFormValue();
+getFormValue();
 
 // let displayText = '<ruby><rb>練習</rb><rt>れんしゅう</rt><rt>ばかりしていると</rt><rb>疲</rb><rt>つか</rt><rt>れます。</rt></ruby>';
 // let kanjiText = '練習ばかりしていると疲れます。'
@@ -83,6 +92,11 @@ function getFormValue() {
     config.useRandom = FORM_CONFIG.elements['userandom'].value;
     config.playAudio = FORM_CONFIG.elements['playaudio'].value;
     config.displayQR = FORM_CONFIG.elements['displayqr'].value;
+
+    $('#statusremain').text(`練習時間：${configTexts.time[config.time]}`);
+    $('#statuslevel').text(`レベル：${configTexts.level[config.level]}`);
+    $('#statusruby').text(`ふりがな：${configTexts.ruby[config.ruby]}`);
+    $('#statususerandom').text(`順番：${configTexts.useRandom[config.useRandom]}`);
 
     playAudio(AUDIO_TYPE);
 }
@@ -99,6 +113,7 @@ function setFormValue() {
 function playAudio(audio) {
     if (config.playAudio === 'on') {
         audio.currentTime = 0;
+        audio.volume = 0.1;
         audio.play();
     }
 }
@@ -127,17 +142,42 @@ function closeAllTab() {
     $('#qrTab').collapse('hide');
 }
 
+function cleanMondaiTexts(){
+    for (let i = 0; i < mondaiTexts.length; i++) {
+        for (let j = 0; j < mondaiTexts[i].length; j++) {
+            if (!mondaiTexts[i][j]) {
+                mondaiTexts[i].splice(j, 1);
+            }
+        }
+    }
+}
+
+function makeOrder(){
+    order = [];
+    for (let i=0; i < mondaiTexts[level].length; i++) {
+        order.push(i);
+    }
+    if (config.useRandom === 'on') {
+        for (let i=0; i < order.length; i++) {
+            const j = Math.floor(order.length * Math.random());
+            [order[i], order[j]] = [order[j], order[i]];
+        }
+    } 
+}
+
 function setNextMondaiText() {
 
     mondaiText = '';
 
     while (!mondaiText) {
         let test;
-        if (config.useRandom === 'on') {
-            text = mondaiTexts[level][Math.floor(mondaiTexts[level].length * Math.random())];
-        } else {
-            text = mondaiTexts[level][questionCount % mondaiTexts[level].length];
-        }
+        // if (config.useRandom === 'on') {
+        //     text = mondaiTexts[level][Math.floor(mondaiTexts[level].length * Math.random())];
+        // } else {
+        //     text = mondaiTexts[level][questionCount % mondaiTexts[level].length];
+        // }
+
+        text = mondaiTexts[level][order[information.sentencesCount % order.length]];
 
         if (config.level[0] === 'c') {
             mondaiText = text;
@@ -152,7 +192,7 @@ function setNextMondaiText() {
         }
     }
 
-    questionCount++;
+    information.sentencesCount++;
 
     correctText = getCorrectText(mondaiText);
     romajiText = '';
@@ -196,18 +236,13 @@ function getCorrectText(inputText) {
 }
 
 function displayAll() {
-    totalScore = lastScore + hiraganaText.length;
+    information.characterCount = lastScore + hiraganaText.length;
 
-    if (config.time[0] !== 'M') {
-        STATUS_TIME.innerText = '経過時間： ' + remainTime;
-    } else {
-        STATUS_TIME.innerText = '残り時間： ' + remainTime;
-    }
-
-    STATUS_COUNT.innerText = '問題数：' + questionCount;
-    STATUS_SCORE.innerText = '文字数：' + totalScore;
-    STATUS_MISS.innerText = 'ミス回数：' + unCorrectCount;
-    STATUS_RATE.innerText = '正答率：' + (totalScore === 0 ? 100 : Math.floor(100 - unCorrectCount / totalScore * 100)) + '%';
+    STATUS_TIME.innerText = `経過時間： ${(Math.floor(information.durationTime / 60)).toString().padStart(2,'0')}:${(information.durationTime % 60).toString().padStart(2,'0')}`;
+    STATUS_COUNT.innerText = '問題数：' + information.sentencesCount;
+    STATUS_SCORE.innerText = '文字数：' + information.characterCount;
+    STATUS_MISS.innerText = 'ミス回数：' + information.unCorrectCount;
+    STATUS_RATE.innerText = '正答率：' + (information.characterCount === 0 ? 100 : (100 - information.unCorrectCount / information.characterCount * 100)).toFixed(1) + '%';
 
     // DIV_QUESTIONTEXT.innerHTML = getDispayText(mondaiText, hiraganaText.length)
     DIV_ANSWERTEXT.innerHTML = romajiText + missText + '|<br>' + hiraganaText + untransferText + missText + '|';
@@ -400,7 +435,7 @@ BTN_CLEAR.onclick = function () {
         mondaiText = '';
         romajiText = '';
         hiraganaText = '';
-        unCorrectCount = 0;
+        information.unCorrectCount = 0;
         displayAll();
     }
     if (mode === 'result') {
@@ -419,7 +454,7 @@ BTN_CLEAR.onclick = function () {
 
 BTN_PASS.onclick = function () {
     if (mode !== 'typing') return;
-    questionCount--;
+    // information.sentencesCount--;
     setNextMondaiText();
 }
 
@@ -430,9 +465,9 @@ BTN_START.onclick = function () {
     mode = 'countdown';
     modeTyping();
 
-    questionCount = 0;
+    information.sentencesCount = 0;
     lastScore = 0;
-    unCorrectCount = 0;
+    information.unCorrectCount = 0;
     lastUnCorrectflag = false;
 
     level = parseInt(config.level[1]);
@@ -455,15 +490,21 @@ BTN_START.onclick = function () {
                 // AUDIO_COUNT.play();
     
                 mode = 'typing';
+                makeOrder();
 
                 startTime = new Date().getTime();
-                if (config.time[0] === 'T') {
-                    endCount = parseInt(config.time[1]) * 10;
-                    endTime = 0;
+                if (config.time[0] === 'S') {
+                    if (config.time[1] === 'A') {
+                        endCount = order.length;
+                        endTime = 0;
+                    } else {
+                        endCount = parseInt(config.time[1]) * 10;
+                        endTime = 0;
+                    }
                 } else if (config.time[0] === 'C') {
                     endCount = parseInt(config.time[1]) * 100;
                     endTime = 0;
-                } else {
+            } else {
                     endCount = 0;
                     endTime = parseInt(config.time[1]) * 60 * 1000;
                     endTime = startTime + (endTime === 0 ? 6000 : endTime);
@@ -484,19 +525,12 @@ BTN_START.onclick = function () {
 function intervalEvent() {
     if (mode !== 'typing') return;
 
-    let rt = 0;
-
-    if (config.time[0] !== 'M') {
-        rt = Math.ceil((new Date().getTime() - startTime) / 1000);
-    } else {
-        rt = Math.ceil((endTime - new Date().getTime()) / 1000);
-    }
-
-    remainTime = `${('00' + Math.floor(rt / 60)).slice(-2)}:${('00' + rt % 60).slice(-2)}`
+    const nowTime =new Date();
+    information.durationTime = Math.floor((nowTime.getTime() - startTime) / 1000);
 
     displayAll();
 
-    if (endTime !== 0 && rt <= 0) {
+    if (config.time[0] ==='M' && nowTime >= endTime) {
         displayReult();
         modeResult();
     }
@@ -533,9 +567,9 @@ function displayReult() {
         time: timeValue,
         level: config.level,
         ruby: config.ruby,
-        count: questionCount,
-        score: totalScore,
-        miss: unCorrectCount,
+        count: information.sentencesCount,
+        score: information.characterCount,
+        miss: information.unCorrectCount,
         rate: correctRate
     }
 
@@ -564,7 +598,7 @@ function keyup_event(e) {
 
     // DIV_QUESTIONTEXT.classList.add('bg-white');
 
-    if (config.time[0] === 'C' && totalScore >= endCount) {
+    if (config.time[0] === 'C' && information.characterCount >= endCount) {
         displayReult();
         return;
     }
@@ -572,11 +606,11 @@ function keyup_event(e) {
     if (correctText === hiraganaText) {
         lastScore += hiraganaText.length;
 
-        if (config.time[0] === 'T' && questionCount >= endCount) {
+        if (config.time[0] === 'S' && information.sentencesCount >= endCount) {
             displayReult();
             return;
         } else {
-            if (config.level[0]!=='c') {
+            if (config.level[0] !== 'c') {
                 playAudio(AUDIO_NEW_TEXT);
             }
             setNextMondaiText();
@@ -624,7 +658,7 @@ function keydown_event(e) {
     if (unCorrectflag) {
         if (e.key !== ' ') {
             if (!lastUnCorrectflag) {
-                unCorrectCount++;
+                information.unCorrectCount++;
             }
             missText = e.key;
         }
