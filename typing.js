@@ -3,35 +3,64 @@ const DIV_QUESTIONTEXT = document.getElementById("questiontext");
 const DIV_ANIMATIONTEXT = document.getElementById("animationtext");
 const DIV_ANIMATIONTABLE = document.getElementById("animationtable");
 
-const SELECT_TIME = document.getElementById("practicetime");
-const SELECT_LEVEL = document.getElementById("practicelevel");
-const SELECT_RUBY = document.getElementById("displayRuby");
+const FORM_CONFIG = document.getElementById("formconfig");
+
+// const SELECT_TIME = document.getElementById("practicetime");
+// const SELECT_LEVEL = document.getElementById("practicelevel");
+// const SELECT_RUBY = document.getElementById("displayruby");
 const INPUT_ID = document.getElementById("studentid");
 const INPUT_EMAIL = document.getElementById("email");
 
+const AUDIO_TYPE = document.getElementById("audiotype");
+const AUDIO_MISS = document.getElementById("audiomiss");
+const AUDIO_COUNT = document.getElementById("audiocount");
+const AUDIO_NEW_TEXT = document.getElementById("audionewtext");
+
 const STATUS_TIME = document.getElementById("statustime");
-const STATUS_LENGTH = document.getElementById("statuslength");
+const STATUS_COUNT = document.getElementById("statusquestion");
+const STATUS_SCORE = document.getElementById("statuslength");
 const STATUS_MISS = document.getElementById("statusmiss");
+const STATUS_RATE = document.getElementById("statuspercent");
+
+const BTN_HOWTO = document.getElementById("howto");
+const BTN_CONFIG = document.getElementById("config");
+const BTN_QR = document.getElementById("qr");
 
 const BTN_START = document.getElementById("start");
 const BTN_CLEAR = document.getElementById("clear");
-const BTN_URL = document.getElementById("createurl");
+const BTN_PASS = document.getElementById("pass");
 
-let mode = 'title'; // title →　typing → result
+const config = {
+    time:'T2',
+    level:'s2',
+    ruby:'1',
+    useRandom: 'on',
+    playAudio: 'off',
+    displayQR: 'off',
+ 
+    email:'',
+    studentId: ''
+}
+
 let romajiText = '';
 let hiraganaText = '';
 let untransferText = '';
 let missText = '';
+
 let mondaiText = '';
 let correctText = '';
 
 let level = 0;
-let remainTime = ''; // 秒
+
+let questionCount = 0;
 let lastScore = 0;
 let totalScore = 0;
 let unCorrectCount = 0;
+let correctRate = 1;
 
+let startTime = 0; 
 let endTime = 0; // 秒
+let remainTime = ''; // 秒
 
 let lastUnCorrectflag = false;
 let intervalID = null;
@@ -39,29 +68,105 @@ let intervalID = null;
 document.addEventListener('keydown', keydown_event);
 document.addEventListener('keyup', keyup_event);
 
+let mode = 'title'; // title →　typing → result
+modeTitle();
+setFormValue();
+
 // let displayText = '<ruby><rb>練習</rb><rt>れんしゅう</rt><rt>ばかりしていると</rt><rb>疲</rb><rt>つか</rt><rt>れます。</rt></ruby>';
 // let kanjiText = '練習ばかりしていると疲れます。'
 // let correctText = 'れんしゅうばかりしているとつかれます。'
 
+function getFormValue() {
+    config.time = FORM_CONFIG.elements['practicetime'].value;
+    config.level = FORM_CONFIG.elements['practicelevel'].value;
+    config.ruby = FORM_CONFIG.elements['displayruby'].value;
+    config.useRandom = FORM_CONFIG.elements['userandom'].value;
+    config.playAudio = FORM_CONFIG.elements['playaudio'].value;
+    config.displayQR = FORM_CONFIG.elements['displayqr'].value;
+
+    playAudio(AUDIO_TYPE);
+}
+
+function setFormValue() {
+    FORM_CONFIG.elements['practicetime'].value = config.time;
+    FORM_CONFIG.elements['practicelevel'].value = config.level;
+    FORM_CONFIG.elements['displayruby'].value = config.ruby;
+    FORM_CONFIG.elements['userandom'].value = config.useRandom;
+    FORM_CONFIG.elements['playaudio'].value = config.playAudio;
+    FORM_CONFIG.elements['displayqr'].value = config.displayQR;
+}
+
+function playAudio(audio) {
+    if (config.playAudio === 'on') {
+        audio.currentTime = 0;
+        audio.play();
+    }
+}
+
+BTN_QR.onclick = function (e) {
+    $('#howtoTab').collapse('hide');
+    $('#configTab').collapse('hide');
+    // $('#qrTab').collapse('show');
+}
+
+BTN_CONFIG.onclick = function (e) {
+    $('#howtoTab').collapse('hide');
+    // $('#configTab').collapse('show');
+    $('#qrTab').collapse('hide');
+}
+
+BTN_HOWTO.onclick = function (e) {
+    // $('#howtoTab').collapse('show');
+    $('#configTab').collapse('hide');
+    $('#qrTab').collapse('hide');
+}
+
+function closeAllTab() {
+    $('#howtoTab').collapse('hide');
+    $('#configTab').collapse('hide');
+    $('#qrTab').collapse('hide');
+}
+
 function setNextMondaiText() {
-    mondaiText = mondaiTexts[level][Math.floor(mondaiTexts[level].length * Math.random())];
+
+    mondaiText = '';
+
+    while (!mondaiText) {
+        let test;
+        if (config.useRandom === 'on') {
+            text = mondaiTexts[level][Math.floor(mondaiTexts[level].length * Math.random())];
+        } else {
+            text = mondaiTexts[level][questionCount % mondaiTexts[level].length];
+        }
+
+        if (config.level[0] === 'c') {
+            mondaiText = text;
+        } else if (config.level[0] === 's') {
+            mondaiText = text.split('/')[1];
+
+        } else if (config.level[0] === 'w') {
+            mondaiText = text.split('/')[0];
+
+        } else if (config.level[0] === 'b') {
+            mondaiText = text.replace('/','。');
+        }
+    }
+
+    questionCount++;
+
     correctText = getCorrectText(mondaiText);
     romajiText = '';
     missText = '';
     hiraganaText = '';
     untransferText = '';
 
+    // while (DIV_ANIMATIONTEXT.firstChild) {
+    //     DIV_ANIMATIONTEXT.removeChild(DIV_ANIMATIONTEXT.firstChild);
+    // }
 
-    while (DIV_ANIMATIONTEXT.firstChild) {
-        DIV_ANIMATIONTEXT.removeChild(DIV_ANIMATIONTEXT.firstChild);
-    }
-
-    const divAnime = document.createElement("div");
-    // divAnime.innerHTML = '<div class="animate four" id="animate"><ruby><span>練</span><span>習</span><rt>れんしゅう</rt></ruby><span>ば</span><span>か</span><span>り</span><span>し</span><span>て</span><span>い</span><span>る</span><span>と</span><span>疲</span><span>れ</span><span>ま</span><span>す</span></div>';
-
-    divAnime.innerHTML = `<div class="animate four" id="animate">${getAnimationText(mondaiText)}</div>`;
+    // const divAnime = document.createElement("div");
+    // divAnime.innerHTML = `<div class="animate four" id="animate">${getAnimationText(mondaiText)}</div>`;
     // DIV_ANIMATIONTEXT.appendChild(divAnime);
-
 
     while (DIV_ANIMATIONTABLE.firstChild) {
         DIV_ANIMATIONTABLE.removeChild(DIV_ANIMATIONTABLE.firstChild);
@@ -71,7 +176,7 @@ function setNextMondaiText() {
     tableAnime.innerHTML = `<table>${getAnimationTable(mondaiText)}</div>`;
     DIV_ANIMATIONTABLE.appendChild(tableAnime);
 
-    dispAll();
+    displayAll();
 }
 
 function getCorrectText(inputText) {
@@ -90,12 +195,19 @@ function getCorrectText(inputText) {
     return outputText;
 }
 
-function dispAll() {
+function displayAll() {
     totalScore = lastScore + hiraganaText.length;
 
-    STATUS_TIME.innerText = '残り時間：  ' + remainTime;
-    STATUS_LENGTH.innerText = '入力文字数：　' + totalScore;
-    STATUS_MISS.innerText = 'ミス回数：　' + unCorrectCount;
+    if (config.time[0] !== 'M') {
+        STATUS_TIME.innerText = '経過時間： ' + remainTime;
+    } else {
+        STATUS_TIME.innerText = '残り時間： ' + remainTime;
+    }
+
+    STATUS_COUNT.innerText = '問題数：' + questionCount;
+    STATUS_SCORE.innerText = '文字数：' + totalScore;
+    STATUS_MISS.innerText = 'ミス回数：' + unCorrectCount;
+    STATUS_RATE.innerText = '正答率：' + (totalScore === 0 ? 100 : Math.floor(100 - unCorrectCount / totalScore * 100)) + '%';
 
     // DIV_QUESTIONTEXT.innerHTML = getDispayText(mondaiText, hiraganaText.length)
     DIV_ANSWERTEXT.innerHTML = romajiText + missText + '|<br>' + hiraganaText + untransferText + missText + '|';
@@ -145,7 +257,7 @@ function getDispayText(inputText, spanIndex) {
                 if (nonKnajiIndex < spanIndex) {
                     outputText += `<span class="red">${char}</span>`;
                 } else {
-                    if (SELECT_RUBY.value === '1') {
+                    if (config.ruby === '1') {
                         outputText += char;
                     } else {
                         outputText += `<span class="white">${char}</span>`;
@@ -182,11 +294,11 @@ function getAnimationText(inputText) {
                     outputText += `<span id="k${kanjiIndex}" class="fs">${char}</span>`;
                     kanjiIndex++;
                 }
-                if (SELECT_RUBY.value === '2') {
+                if (config.ruby === '2') {
                     rubyFlag = true;
                 }
             } else {
-                if (SELECT_RUBY.value !== '0') {
+                if (config.ruby !== '0') {
                     rubyFlag = true;
                 }
             }
@@ -228,7 +340,7 @@ function getAnimationTable(inputText) {
             kjText += '<td>';
             for (let char of str) {
                 kjIndex++;
-                let delay = Math.floor(Math.random()*4);
+                let delay = Math.floor(Math.random() * 4);
                 kjText += `<span id="k${kjIndex}" class="fs${delay}">${char}</span>`;
             }
             kjText += '</td>';
@@ -237,7 +349,7 @@ function getAnimationTable(inputText) {
             if (str.search(/[（）]/) === -1) {
                 for (let char of str) {
                     kjIndex++;
-                    let delay = Math.floor(Math.random()*4);
+                    let delay = Math.floor(Math.random() * 4);
                     kjText += `<td><span id="k${kjIndex}" class="fs${delay}">${char}</span>`;
                 }
                 //　カタカナをひらがなに変換
@@ -247,7 +359,7 @@ function getAnimationTable(inputText) {
                 });
 
                 for (let char of str) {
-                    if (SELECT_RUBY.value === '2') {
+                    if (config.ruby === '2') {
                         rbText += `<th><span id="r${rbIndex}">${char}</span></th>`;
                     } else {
                         rbText += `<th><span id="r${rbIndex}" class="white">${char}</span></th>`;
@@ -265,9 +377,9 @@ function getAnimationTable(inputText) {
                     return String.fromCharCode(chr);
                 });
 
-                rbText += '<th>'
+                rbText += '<th class = "narrow">'
                 for (let char of str) {
-                    if (SELECT_RUBY.value !== '0') {
+                    if (config.ruby !== '0') {
                         rbText += `<span id="r${rbIndex}">${char}</span>`;
                     } else {
                         rbText += `<span id="r${rbIndex}" class="white">${char}</span>`;
@@ -284,72 +396,160 @@ function getAnimationTable(inputText) {
 
 BTN_CLEAR.onclick = function () {
     if (mode === 'title') {
+        closeAllTab();
         mondaiText = '';
         romajiText = '';
         hiraganaText = '';
         unCorrectCount = 0;
-        dispAll();
+        displayAll();
     }
     if (mode === 'result') {
+        closeAllTab();
         DIV_ANIMATIONTABLE.innerHTML = '';
         mode = 'title';
+        modeTitle();
     }
     if (mode === 'typing') {
         DIV_ANIMATIONTABLE.innerHTML = '<div class="message"><span class="fs">中</span><span class="fs">断</span></div>';
         window.clearInterval(intervalID);
         mode = 'result';
+        modeResult();
     }
 };
 
+BTN_PASS.onclick = function () {
+    if (mode !== 'typing') return;
+    questionCount--;
+    setNextMondaiText();
+}
+
 BTN_START.onclick = function () {
     if (mode !== 'title') return;
+    closeAllTab();
 
-    mode = 'typing';
+    mode = 'countdown';
+    modeTyping();
+
+    questionCount = 0;
     lastScore = 0;
     unCorrectCount = 0;
     lastUnCorrectflag = false;
 
-    endTime = new Date().getTime() + parseFloat(SELECT_TIME.value) * 60 * 1000;
-    level = parseInt(SELECT_LEVEL.value);
-    setNextMondaiText();
+    level = parseInt(config.level[1]);
 
-    intervalID = window.setInterval(intervalEvent,50);
+    DIV_ANIMATIONTABLE.innerHTML = '<div class="message"><span class="res">3</span><div>';
+    playAudio(AUDIO_COUNT);
+
+    setTimeout(function () {
+        DIV_ANIMATIONTABLE.innerHTML = '<div class="message"><span class="res">2</span><div>';
+        playAudio(AUDIO_COUNT);
+
+
+        setTimeout(function () {
+            DIV_ANIMATIONTABLE.innerHTML = '<div class="message"><span class="res">1</span><div>';
+            playAudio(AUDIO_COUNT);
+
+            setTimeout(function () {
+
+                // AUDIO_COUNT.currentTime = 0;
+                // AUDIO_COUNT.play();
+    
+                mode = 'typing';
+
+                startTime = new Date().getTime();
+                if (config.time[0] === 'T') {
+                    endCount = parseInt(config.time[1]) * 10;
+                    endTime = 0;
+                } else if (config.time[0] === 'C') {
+                    endCount = parseInt(config.time[1]) * 100;
+                    endTime = 0;
+                } else {
+                    endCount = 0;
+                    endTime = parseInt(config.time[1]) * 60 * 1000;
+                    endTime = startTime + (endTime === 0 ? 6000 : endTime);
+                }
+
+                setNextMondaiText();
+                intervalID = window.setInterval(intervalEvent, 50);
+            
+            }, 1000)
+
+        }, 1000)
+
+    }, 1000)
+
 };
 
 
 function intervalEvent() {
     if (mode !== 'typing') return;
 
-    const rt = Math.ceil((endTime - new Date().getTime())/1000);
-    remainTime = `${('00' +Math.floor(rt/60)).slice(-2)}:${('00'+rt%60).slice(-2)}`
+    let rt = 0;
 
-    dispAll();
+    if (config.time[0] !== 'M') {
+        rt = Math.ceil((new Date().getTime() - startTime) / 1000);
+    } else {
+        rt = Math.ceil((endTime - new Date().getTime()) / 1000);
+    }
 
-    if (rt === 0) {
+    remainTime = `${('00' + Math.floor(rt / 60)).slice(-2)}:${('00' + rt % 60).slice(-2)}`
+
+    displayAll();
+
+    if (endTime !== 0 && rt <= 0) {
+        displayReult();
         modeResult();
     }
 }
 
+function modeTitle() {
+    BTN_START.disabled = false;
+    BTN_CLEAR.disabled = true;
+    BTN_PASS.disabled = true;
+};
+
+function modeTyping() {
+    BTN_START.disabled = true;
+    BTN_CLEAR.disabled = false;
+    BTN_PASS.disabled = false;
+};
+
 function modeResult() {
-    DIV_ANIMATIONTABLE.innerHTML = '<div class="message"><span class="res">終</span><span class="res">了</span></div><span id="qr"></span>';
+    BTN_START.disabled = true;
+    BTN_CLEAR.disabled = false;
+    BTN_PASS.disabled = true;
+}
+
+function displayReult() {
+
+    DIV_ANIMATIONTABLE.innerHTML = '<div class="message"><span class="res">お</span><span class="res">し</span></div><div class="message"><span class="res">ま</span><span class="res">い</span></div><br><span id="qr" ></span>';
+    DIV_ANSWERTEXT.innerHTML = '';
 
     window.clearInterval(intervalID);
     mode = 'result';
+    let timeValue = config.time[0] !== 'M' ? remainTime + '/' + config.time : config.time;
     const body = {
-        id : INPUT_ID.value,
-        time : SELECT_TIME.value,
-        level : SELECT_LEVEL.value,
-        ruby : SELECT_RUBY.value,
-        score : totalScore,
-        miss : unCorrectCount
+        id: INPUT_ID.value,
+        time: timeValue,
+        level: config.level,
+        ruby: config.ruby,
+        count: questionCount,
+        score: totalScore,
+        miss: unCorrectCount,
+        rate: correctRate
     }
 
     var qrtext = `mailto:${INPUT_EMAIL.value}?subject=RT-RESULT&body=${JSON.stringify(body)}`;
     // var utf8qrtext = decodeURI(encodeURIComponent(qrtext));
     var utf8qrtext = qrtext;
 
-    $("#qr").qrcode({text:utf8qrtext}); 
-    $("#qr").addClass('res');
+    $("#qrimage").html('');
+    $("#qrimage").qrcode({ text: utf8qrtext });
+
+    if (config.displayQR === 'on'){
+        $('#qrTab').collapse('show');
+    }
+    // $("#qrimage").addClass('res');
 }
 
 
@@ -364,15 +564,31 @@ function keyup_event(e) {
 
     // DIV_QUESTIONTEXT.classList.add('bg-white');
 
-    if (correctText === hiraganaText) {
-        lastScore += hiraganaText.length;
-        setNextMondaiText();
+    if (config.time[0] === 'C' && totalScore >= endCount) {
+        displayReult();
+        return;
     }
 
+    if (correctText === hiraganaText) {
+        lastScore += hiraganaText.length;
+
+        if (config.time[0] === 'T' && questionCount >= endCount) {
+            displayReult();
+            return;
+        } else {
+            if (config.level[0]!=='c') {
+                playAudio(AUDIO_NEW_TEXT);
+            }
+            setNextMondaiText();
+        }
+    }
 }
 
 function keydown_event(e) {
     if (mode !== 'typing') return;
+
+    // e.which = null;
+    e.preventDefault();
 
     let nextRomajiText = '';
     let nextHiriganaText = '';
@@ -417,6 +633,8 @@ function keydown_event(e) {
         DIV_ANIMATIONTEXT.classList.add('highlight');
         DIV_ANIMATIONTABLE.classList.add('highlight');
 
+        playAudio(AUDIO_MISS);
+
 
     } else {
         romajiText = nextRomajiText;
@@ -424,11 +642,13 @@ function keydown_event(e) {
         untransferText = nextUntransferText;
 
         missText = '';
+
+        playAudio(AUDIO_TYPE);
     }
 
     lastUnCorrectflag = unCorrectflag;
 
-    dispAll();
+    // dispAll();
 
     return false;
 }

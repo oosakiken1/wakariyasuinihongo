@@ -28,6 +28,8 @@ img {
     color : rgba(0,0,0,.7);
 }
 
+
+
 #answertext {
     /* font-family: monospace;   */
     font-size: 200%;
@@ -44,8 +46,7 @@ img {
     font-size: 75%;
 }
 
-
-span {
+#animationtable span {
     display: inline-block;
 }
 
@@ -88,7 +89,7 @@ span.red{
 }
 
 .message {
-    font-size: 600%;
+    font-size: 800%;
 }
 
 table {
@@ -117,7 +118,7 @@ td, th {
 }
 
 #animationtable .wide{
-    letter-spacing:0.2em;
+    letter-spacing:0.1em;
 }
 
 #animationtable .narrow{
@@ -183,7 +184,7 @@ span.fs {
 span.fs0 {
     color: black;
 	opacity: 0;
-	transform: translate(0, -150px) rotate(360deg) scale(.5);
+	transform: translate(0, -150px) rotate(360deg) scale(0.2);
 	animation: revolveDrop .2s forwards;
 	animation-delay: .03s;
 
@@ -192,7 +193,7 @@ span.fs0 {
 span.fs1 {
     color: black;
 	opacity: 0;
-	transform: translate(0, -150px) rotate(360deg) scale(.5);
+	transform: translate(0, -150px) rotate(360deg) scale(0.2);
 	animation: revolveDrop .2s forwards;
 	animation-delay: .06s;
 }
@@ -200,26 +201,26 @@ span.fs1 {
 span.fs2 {
     color: black;
 	opacity: 0;
-	transform: translate(0, -150px) rotate(360deg) scale(.5);
+	transform: translate(0, -150px) rotate(360deg) scale(0.2);
 	animation: revolveDrop .2s forwards;
 	animation-delay: .09s;
 }
 
-span.fs0 {
+span.fs3 {
     color: black;
 	opacity: 0;
-	transform: translate(0, -150px) rotate(360deg) scale(.5);
+	transform: translate(0, -150px) rotate(360deg) scale(0.2);
 	animation: revolveDrop .2s forwards;
 }
 
 
 @keyframes revolveDrop {
-	30% {
-		transform: translate(0, -50px) rotate(240deg) scale(.8);
+	33% {
+		transform: translate(0, -50px) rotate(240deg) scale(.6);
     }
 
-	50% {
-		transform: translate(0, 20px) rotate(120deg) scale(.9);
+	66% {
+		transform: translate(0, 20px) rotate(120deg) scale(.8);
     }
 
 	100% {
@@ -237,12 +238,12 @@ span.res {
 }
 
 @keyframes result {
-	30% {
+	33% {
 		transform: translate(0, 0) rotate(240deg) scale(.3);
     }
 
-	50% {
-		transform: translate(0, 0) rotate(120deg) scale(.5);
+	66% {
+		transform: translate(0, 0) rotate(120deg) scale(.6);
     }
 
 	100% {

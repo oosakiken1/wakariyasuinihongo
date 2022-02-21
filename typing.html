@@ -18,36 +18,46 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
     <link rel="stylesheet" href="style.css">
-    <title>留学生のためのローマ字タイピング</title>
+
+    <audio id="audionewtext" src="sound4.mp3" type="audio/mp3" preload="auto"></audio>
+    <audio id="audiotype" src="sound38.mp3" type="audio/mp3" preload="auto"></audio>
+    <audio id="audiocount" src="sound33.mp3" type="audio/mp3" preload="auto"></audio>
+    <audio id="audiomiss" src="sound40.mp3" type="audio/mp3" preload="auto"></audio>
+
+    <title>ローマ字タイピング</title>
 </head>
 
 <body>
     <div class="container">
-
         <header>
             <div class="row">
                 <h1 class="text-secondary">日本語を勉強する人のためのローマ字タイピング 0.0.1
-                    <span class="h6 rounded bg-secondary text-white mx-1 px-1">The romaji typing for japanese learners</span>
+                    <span class="h6 rounded bg-secondary text-white mx-1 px-1">The romaji typing for japanese
+                        learners</span>
                 </h1>
 
                 <div class="my-1">
                     <a href="./index.html" class="badge btn-secondary">Home</a>
                 </div>
                 <div class="my-1">
-                    <button type="button" class="btn border btn-secondary" data-bs-toggle="collapse"
-                        data-bs-target="#howto">アプリの使い方を見る</button>
+                    <button id="howto" type="button" class="btn border btn-secondary" data-bs-toggle="collapse"
+                        data-bs-target="#howtoTab">使い方 HOW TO</button>
+                    <button id="config" type="button" class="btn border btn-secondary" data-bs-toggle="collapse"
+                        data-bs-target="#configTab">設定 CONFIG</button>
+                    <button id="qr" type="button" class="btn border btn-secondary" data-bs-toggle="collapse"
+                        data-bs-target="#qrTab">QR Code</button>
                 </div>
 
-                <div class="collapse" id="howto">
+                <div class="collapse" id="howtoTab">
                     <div class="card card-body my-1">
                         <div id="howtotext">このツールは、ローマ字入力の練習アプリです。<br>
                             ひらがな→ローマ字変換が苦手な日本語学習者などに、ひらがな→ローマ字の変換を練習してもうことを目的としています。<br>
-                            そのため、「ひらがな」を大きく表示し、入力するアルファベットやキーボードは表示していません。<br>
+                            そのため、「ひらがな」を大きく表示し、入力するアルファベットやキーボードは表示しない作りになっています。<br>
                             タッチタイピングの練習ツールではないことに注意してください。<br><br>
-                            1.練習時間は、1～5分で選ぶことができます。<br>
+                            1.練習時間は、文字数、問題数、入力時間から選ぶことができます。<br>
                             2.練習問題は、むずかしい（N1レベル）～やさしい(N3レベル)で選ぶことができます。<br>
                             3.練習後の結果をQRコードで発行してメール送信できます。講師のアドレスに送信してもらうことで、結果の収集を簡単にできます。<br>
                             <!-- 4.1～3の情報を組み込んだurlを発行できます。<br> -->
@@ -55,61 +65,230 @@
                         </div>
                     </div>
                 </div>
+                <div class="collapse" id="configTab">
+                    <div class="card card-body my-1">
+                        <!-- <div class="row">
+                                <label class="col-1 col-form-label" for="studentid" >名前/番号</label>
+                                <input class="col col-form-label" type="text" name="" id="studentid">　
+                            </div> -->
+                        <form onchange="getFormValue()" id="formconfig">
+                            <div class="row mb-2">
+                                <label class="col-1 col-form-label">練習時間</label>
+                                <div class="col-2 mt-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptc6" value="C6"><label for="ptc6">600文字</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptc5" value="C5"><label for="ptc5">500文字</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptc4" value="C4"><label for="ptc4">400文字</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptc3" value="C3"><label for="ptc3">300文字</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptc2" value="C6"><label for="ptc2">200文字</label>
+                                    </div>
+                                </div>
+                                <div class="col-2 mt-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptt5" value="T5"><label for="ptt5">50問</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptt4" value="T4"><label for="ptt4">40問</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptt3" value="T3"><label for="ptt3">30問</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptt2" value="T2"><label for="ptmt">20問</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptt1" value="T1"><label for="ptt1">10問</label>
+                                    </div>
+                                </div>
+                                <div class="col-2 mt-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptm5" value="M5"><label for="ptm5">5分</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptm4" value="M4"><label for="ptm4">4分</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptm3" value="M3"><label for="ptm3">3分</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptm2" value="M2"><label for="ptm2">2分</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptm1" value="M1"><label for="ptm1">1分</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicetime" id="ptm0" value="M0"><label for="ptm0">0分</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label class="col-1 col-form-label">レベル</label>
+                                <div class="col-2 mt-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="pls1" value="s1" disabled>
+                                        <label for="pls1" class="text-black-50">文(N1)</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="pls2" value="s2">
+                                        <label for="pls2" >文(N2)</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="pls3" value="s3" disabled>
+                                        <label for="pls3" class="text-black-50">文(N3)</label>
+                                    </div>
+                                </div>
 
+                                <div class="col-2 mt-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="plb1" value="b1" disabled>
+                                        <label for="plb1" class="text-black-50">単語＋文(N1)</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="plb2" value="b2" >
+                                        <label for="plb2" >単語＋文(N2)</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="plb3" value="b3" disabled>
+                                        <label for="plb3" class="text-black-50">単語＋文(N3)</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-2 mt-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="plw6" value="w6" disabled>
+                                        <label for="plw1" class="text-black-50">単語(N1)</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="plw7" value="w7" disabled>
+                                        <label for="plw2" class="text-black-50">単語(N2)</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="plw8" value="w8" disabled>
+                                        <label for="plw3" class="text-black-50">単語(N3)</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-2 mt-2">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="plc4" value="c4">
+                                        <label for="plc4">ひらがな１</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="plc5" value="C5">
+                                        <label for="plc5">ひらがな２</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label class="col-1 col-form-label">ふりがな</label>
+                                <div class="col mt-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="displayruby" id="dr2"
+                                            value="2"><label for="dr2">すべて</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="displayruby" id="dr1"
+                                            value="1"><label for="dr1">漢字だけ</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="displayruby" id="dr0"
+                                            value="0"><label for="dr0">なし</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label class="col-1 col-form-label">順番</label>
+                                <div class="col mt-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="userandom" id="ur0"
+                                            value="off"><label for="ur0">ふつう</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="userandom" id="ur1"
+                                            value="on"><label for="ur1">ランダム</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label class="col-1 col-form-label">音</label>
+                                <div class="col mt-2">
+                                    <div class="form-check  form-check-inline">
+                                        <input class="form-check-input" type="radio" name="playaudio" id="ap1" value="on"><label for="ap1">あり</label>
+                                    </div>
+                                    <div class="form-check  form-check-inline">
+                                        <input class="form-check-input" type="radio" name="playaudio" id="ap0" value="off"><label for="ap0">なし</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="col-1 col-form-label">QRコード</label>
+                                <div class="col mt-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="displayqr" id="dq1" value="on"><label for="dq1">表示あり</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="displayqr" id="dq0" value="off"><label for="dq0">表示なし</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="collapse" id="qrTab">
+                    <div class="card card-body my-1 align-items-center">
+                        <div id="qrimage"></div>
+                        <div class="my-1">
+                            名前/番号
+                            <input type="text" name="" id="studentid">　
+                            メールアドレス
+                            <input type="email" name="" id="email">　
+                        </div>
+         
+                        スマホのQR code Readerで読み込むと、メールを送信できます。
+                    </div>
+                </div>
             </div>
         </header>
 
         <main>
-            <div class="my-1">
-                名前/番号
-                <input type="text" name="" id="studentid">　
 
-                練習時間
-                <select class="" id="practicetime">
-                    <option value="7">7</option>
-                    <option value="6">6</option>
-                    <option value="5" selected>5</option>
-                    <option value="4">4</option>
-                    <option value="3">3</option>
-                    <option value="2">2</option>
-                    <option value="1">1</option>
-                    <option value="0.1">0.1</option>
-                </select>分　
 
-                レベル
-                <select class="" id="practicelevel">
-                    <!-- <option value="0">むずかしい(N1)</option>
-                    <option value="1">ふつう(N2)</option> -->
-                    <option value="2" selected>かんたん(N3)</option>
-                    <!-- <option value="3">たんご</option> -->
-                    <option value="4">ひらがな</option>
-                </select>　
+            <div class="d-flex align-items-center  justify-content-center">
 
-                ふりがな
-                <select class="" id="displayRuby">
-                    <option value="2">すべて</option>
-                    <option value="1" selected>漢字だけ</option>
-                    <option value="0">なし</option>
-                </select>　
-
-                メールアドレス
-                <input type="email" name="" id="email">　
-
-                <button id="start" type="button" class="btn btn-primary">スタート</button>
-                <button id="clear" type="button" class="btn btn-warning">クリア</button>
-                <button id="clear" type="button" class="btn btn-warning">URLの発行</button>
+                <button id="start" type="button" class="m-1 btn btn-primary">はじめる START</button>
+                <button id="clear" type="button" class="m-1 btn btn-primary">もどる GO BACK</button>
+                <button id="pass" type="button" class="m-1 btn btn-primary">パス PASS</button>
 
             </div>
 
             <div class="row">
-                <span id="statustime" class="h1 m-1 col bggreen rounded">残り時間：　00:00</span>
-                <span id="statuslength" class="h1 m-1 col bggreen rounded">入力文字数：　0</span>
-                <span id="statusmiss" class="h1 m-1 col bggreen rounded">ミス回数：　0</span>
+                <span id="statusremain" class="h3 col ms-1 bggreen rounded text-center">練習時間：05:00</span>
+                <span id="statuslevel" class="h3 col ms-1 bggreen rounded text-center">レベル：単語＋文(N2)</span>
+                <span id="statusruby" class="h3 col ms-1 bggreen rounded text-center">ふりがな：漢字だけ</span>
+                <span id="statususerandom" class="h3 col ms-1 bggreen rounded text-center">順番：漢字だけ</span>
+            </div>
+
+            <div class="row">
+                <span id="statustime" class="h3 col ms-1 bggreen rounded text-center">経過時間：00:00</span>
+                <span id="statusquestion" class="h3 col ms-1 bggreen rounded text-center">問題数：0</span>
+                <span id="statuslength" class="h3 col ms-1 bggreen rounded text-center">文字数：0</span>
+                <span id="statusmiss" class="h3 col ms-1 bggreen rounded text-center">ミス回数：0</span>
+                <span id="statuspercent" class="h3 col ms-1 bggreen rounded text-center">正答率：100%</span>
             </div>
 
             <div class="row">
                 <h3 class="bgblue rounded">入力する文字</h3>
-                <div id="questiontext" 
+                <div id="questiontext"
                     class="mb-2 border rounded d-flex align-items-center justify-content-center bgyellow d-none"
                     style="height: 200px;" hidden>
 
@@ -124,9 +303,9 @@
                 </div>
 
                 <div id="animationtable"
-                class="mb-2 border rounded d-flex align-items-center justify-content-center bgyellow"
-                style="height: 200px;">
-                <!-- <table>
+                    class="mb-2 border rounded d-flex align-items-center justify-content-center bgyellow"
+                    style="height: 200px;">
+                    <!-- <table>
                     <tr class="rb">
                         <th class="narrow"><span class="red">ら</span>いねん</th>
                         <th>か</th><th>ら</th>
@@ -144,20 +323,20 @@
                         <td>がるそうです。</td>
                     </tr>
                 </table> -->
-    <!-- <table>
+                    <!-- <table>
         <tr><th><span id="r0">さ</span><span id="r1">と</span><span id="r2">う</span></th><th><span id="r3" class="white">さ</span></th><th><span id="r4" class="white">ん</span></th><th><span id="r5" class="white">に</span></th><th><span id="r6" class="white">は</span></th><th><span id="r7" class="white">、</span></th><th><span id="r8" class="white">お</span></th><th><span id="r9" class="white">と</span></th><th><span id="r10" class="white">な</span></th><th><span id="r11" class="white">し</span></th><th><span id="r12" class="white">い</span></th><th><span id="r13" class="white">い</span></th><th><span id="r14" class="white">め</span></th><th><span id="r15" class="white">ー</span></th><th><span id="r16" class="white">じ</span></th><th><span id="r17" class="white">が</span></th><th><span id="r18" class="white">あ</span></th><th><span id="r19" class="white">る</span></th><th><span id="r20" class="white">が</span></th><th><span id="r21" class="white">、</span></th><th><span id="r22">ほ</span><span id="r23">ん</span><span id="r24">と</span><span id="r25">う</span></th><th><span id="r26" class="white">は</span></th><th><span id="r27">か</span><span id="r28">つ</span><span id="r29">ど</span><span id="r30">う</span><span id="r31">て</span><span id="r32">き</span></th><th><span id="r33" class="white">な</span></th><th><span id="r34">ひ</span><span id="r35">と</span></th><th><span id="r36" class="white">ら</span></th><th><span id="r37" class="white">し</span></th><th><span id="r38" class="white">い</span></th><th><span id="r39" class="white">。</span></th></tr>
         <tr><td><span id="k0" class="fs">佐</span><span id="k1" class="fs">藤</span></td><td><span id="k2" class="fs">さ</span><td><span id="k3" class="fs">ん</span><td><span id="k4" class="fs">に</span><td><span id="k5" class="fs">は</span><td><span id="k6" class="fs">、</span><td><span id="k7" class="fs">お</span><td><span id="k8" class="fs">と</span><td><span id="k9" class="fs">な</span><td><span id="k10" class="fs">し</span><td><span id="k11" class="fs">い</span><td><span id="k12" class="fs">イ</span><td><span id="k13" class="fs">メ</span><td><span id="k14" class="fs">ー</span><td><span id="k15" class="fs">ジ</span><td><span id="k16" class="fs">が</span><td><span id="k17" class="fs">あ</span><td><span id="k18" class="fs">る</span><td><span id="k19" class="fs">が</span><td><span id="k20" class="fs">、</span><td><span id="k21" class="fs">本</span><span id="k22" class="fs">当</span></td><td><span id="k23" class="fs">は</span><td><span id="k24" class="fs">活</span><span id="k25" class="fs">動</span><span id="k26" class="fs">的</span></td><td><span id="k27" class="fs">な</span><td><span id="k28" class="fs">人</span></td><td><span id="k29" class="fs">ら</span><td><span id="k30" class="fs">し</span><td><span id="k31" class="fs">い</span><td><span id="k32" class="fs">。</span></tr>
     </table> -->
 
-</div>
+                </div>
 
-        
+
 
             </div>
 
             <div class="row">
                 <h3 class="bgblue rounded">入力した文字</h3>
-                <div id="answertext" class="mb-2 border rounded justify-content-center" style="height: 150px;">
+                <div id="answertext" class="mb-2 border rounded justify-content-center" style="height: 200px;">
                 </div>
             </div>
         </main>
