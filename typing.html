@@ -67,10 +67,6 @@
                 </div>
                 <div class="collapse" id="configTab">
                     <div class="card card-body my-1">
-                        <!-- <div class="row">
-                                <label class="col-1 col-form-label" for="studentid" >名前/番号</label>
-                                <input class="col col-form-label" type="text" name="" id="studentid">　
-                            </div> -->
                         <form onchange="getFormValue()" id="formconfig">
                             <div class="row mb-2">
                                 <label class="col-1 col-form-label">練習時間</label>
@@ -169,7 +165,7 @@
 
                                 <div class="col-2 mt-2">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicelevel" id="plw6" value="w6" disabled>
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="plw6" value="w6">
                                         <label for="plw1" class="text-black-50">単語(N1)</label>
                                     </div>
                                     <div class="form-check">
@@ -255,9 +251,10 @@
                         <div id="qrimage"></div>
                         <div class="my-1">
                             名前/番号
-                            <input type="text" name="" id="studentid">　
+                            <input type="text" name="" id="studentid" >　
                             メールアドレス
-                            <input type="email" name="" id="email">　
+                            <input type="email" name="" id="email" >　
+                            <button id="btncreateqr" type="button" class="m-1 btn btn-primary">QRコード作成 </button>
                         </div>
          
                         スマホのQR code Readerで読み込むと、メールを送信できます。

@@ -22,13 +22,14 @@ const STATUS_RATE = document.getElementById("statuspercent");
 const BTN_HOWTO = document.getElementById("btnhowto");
 const BTN_CONFIG = document.getElementById("btnconfig");
 const BTN_QR = document.getElementById("btnqr");
+const BTN_CREATEQR = document.getElementById("btncreateqr");
 
 const BTN_START = document.getElementById("btnstart");
 const BTN_CLEAR = document.getElementById("btnclear");
 const BTN_PASS = document.getElementById("btnpass");
 
 const config = {
-    time:'S2',
+    time:'M5',
     level:'s2',
     ruby:'1',
     useRandom: 'on',
@@ -40,12 +41,12 @@ const config = {
 }
 
 const information = {
-    remain:0,
     durationTime:0,
+    displayTime:'',
     sentencesCount:0,
     characterCount:0,
-    missCount:0,
-    correctRate:0
+    unCorrectCount:0,
+    correctRate:''
 }
 
 let romajiText = '';
@@ -60,7 +61,6 @@ let order = [];
 let level = 0;
 
 let lastScore = 0;
-let correctRate = 1;
 
 let startTime = 0; 
 
@@ -236,13 +236,13 @@ function getCorrectText(inputText) {
 }
 
 function displayAll() {
-    information.characterCount = lastScore + hiraganaText.length;
+    // information.characterCount = lastScore + hiraganaText.length;
 
-    STATUS_TIME.innerText = `経過時間： ${(Math.floor(information.durationTime / 60)).toString().padStart(2,'0')}:${(information.durationTime % 60).toString().padStart(2,'0')}`;
-    STATUS_COUNT.innerText = '問題数：' + information.sentencesCount;
-    STATUS_SCORE.innerText = '文字数：' + information.characterCount;
-    STATUS_MISS.innerText = 'ミス回数：' + information.unCorrectCount;
-    STATUS_RATE.innerText = '正答率：' + (information.characterCount === 0 ? 100 : (100 - information.unCorrectCount / information.characterCount * 100)).toFixed(1) + '%';
+    STATUS_TIME.innerText = `経過時間： ${information.displayTime}`;
+    STATUS_COUNT.innerText = `問題数：${information.sentencesCount}`;
+    STATUS_SCORE.innerText = `文字数：${information.characterCount}`;
+    STATUS_MISS.innerText = `ミス回数：${information.unCorrectCount}`;
+    STATUS_RATE.innerText = `正答率：${information.correctRate}%`;
 
     // DIV_QUESTIONTEXT.innerHTML = getDispayText(mondaiText, hiraganaText.length)
     DIV_ANSWERTEXT.innerHTML = romajiText + missText + '|<br>' + hiraganaText + untransferText + missText + '|';
@@ -435,7 +435,6 @@ BTN_CLEAR.onclick = function () {
         mondaiText = '';
         romajiText = '';
         hiraganaText = '';
-        information.unCorrectCount = 0;
         displayAll();
     }
     if (mode === 'result') {
@@ -465,9 +464,13 @@ BTN_START.onclick = function () {
     mode = 'countdown';
     modeTyping();
 
+    information.durationTime = 0;
+    information.displayTime = '00:00';
     information.sentencesCount = 0;
-    lastScore = 0;
     information.unCorrectCount = 0;
+    information.correctRate = '100.0'
+
+    lastScore = 0;
     lastUnCorrectflag = false;
 
     level = parseInt(config.level[1]);
@@ -527,6 +530,7 @@ function intervalEvent() {
 
     const nowTime =new Date();
     information.durationTime = Math.floor((nowTime.getTime() - startTime) / 1000);
+    information.displayTime = `${(Math.floor(information.durationTime / 60)).toString().padStart(2,'0')}:${(information.durationTime % 60).toString().padStart(2,'0')}`;
 
     displayAll();
 
@@ -561,16 +565,33 @@ function displayReult() {
 
     window.clearInterval(intervalID);
     mode = 'result';
-    let timeValue = config.time[0] !== 'M' ? remainTime + '/' + config.time : config.time;
+
+    createQRcode() ;
+
+    if (config.displayQR === 'on'){
+        $('#qrTab').collapse('show');
+    }
+    // $("#qrimage").addClass('res');
+}
+
+BTN_CREATEQR.onclick = function () {
+
+    createQRcode() ;
+
+}
+
+function createQRcode() {
+
     const body = {
         id: INPUT_ID.value,
-        time: timeValue,
-        level: config.level,
-        ruby: config.ruby,
-        count: information.sentencesCount,
-        score: information.characterCount,
-        miss: information.unCorrectCount,
-        rate: correctRate
+        tim: config.time,
+        lvl: config.level,
+        rub: config.ruby,
+        dur: information.displayTime,
+        txt: information.sentencesCount,
+        chr: information.characterCount,
+        mis: information.unCorrectCount,
+        rat: information.correctRate
     }
 
     var qrtext = `mailto:${INPUT_EMAIL.value}?subject=RT-RESULT&body=${JSON.stringify(body)}`;
@@ -580,12 +601,7 @@ function displayReult() {
     $("#qrimage").html('');
     $("#qrimage").qrcode({ text: utf8qrtext });
 
-    if (config.displayQR === 'on'){
-        $('#qrTab').collapse('show');
-    }
-    // $("#qrimage").addClass('res');
 }
-
 
 function keyup_event(e) {
     if (mode !== 'typing') return;
@@ -680,6 +696,9 @@ function keydown_event(e) {
         playAudio(AUDIO_TYPE);
     }
 
+    information.characterCount = lastScore + hiraganaText.length;
+    information.correctRate = (information.characterCount === 0 ? 100 : (100 - information.unCorrectCount / information.characterCount * 100)).toFixed(1);                
+
     lastUnCorrectflag = unCorrectflag;
 
     // dispAll();
@@ -704,12 +723,12 @@ function getHiraganaTextUseCorrectText(romajiText) {
             const romaji = ROMAJI.get(unTranferText)
             hiraganaText += romaji.fix;
             unTranferText = romaji.unfix;
-        } else if (unTranferText.charAt(0) === 'n') {
-            if (unTranferText.length == 2 && !hasStartRomaji(unTranferText)) {
-                hiraganaText += 'ん';
-                unTranferText = '';
-                i--;
-            }
+        // } else if (unTranferText.charAt(0) === 'n') {
+        //     if (unTranferText.length == 2 && !hasStartRomaji(unTranferText)) {
+        //         hiraganaText += 'ん';
+        //         unTranferText = '';
+        //         i--;
+        //     }
         }
     }
     return [hiraganaText, unTranferText];
@@ -749,10 +768,47 @@ function getExpectedHiragana(str) {
     const expectedHiragana = [];
     for (let [key, value] of ROMAJI) {
         if (key.indexOf(str) === 0) {
-            expectedHiragana.push(value.fix);
+            if (value.unfix !=='' ) {
+                let secondChars = ''
+                if (key[0]  !== key[1]) {
+                    secondChars = getExpectedHiragana(value.unfix);
+                } else {
+                    secondChars = getExpectedHiraganaUnrecursion(value.unfix);
+                }
+                for (chr of secondChars) {
+                    expectedHiragana.push(value.fix+chr);
+                }
+            } else {
+                expectedHiragana.push(value.fix);
+            }
         }
     }
     return expectedHiragana;
 }
 
+function getExpectedHiraganaUnrecursion(str) {
+    const expectedHiragana = [];
+    for (let [key, value] of ROMAJI) {
+        if (key.indexOf(str) === 0) {
+                expectedHiragana.push(value.fix);
+        }
+    }
+    return expectedHiragana;
+}
 
+/**
+ * 未完成のローマ字で始まるひらがなのローマ字リストを取得する
+ * @param {*} str 未完成のローマ字
+ * @returns 
+ */
+function getExpectedRomaji(str) {
+    const expectedHiragana = [];
+    for (let [key, value] of ROMAJI) {
+        if (key.indexOf(str) === 0) {
+                expectedHiragana.push(value.fix);
+        }
+    }
+    return expectedHiragana;
+}
+
+// んっしょ nssho
