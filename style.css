@@ -28,6 +28,28 @@ img {
     color : rgba(0,0,0,.7);
 }
 
+h1 {
+    color : #6c757d;
+    border-radius: 0.25rem;
+    padding: 0em 0.65em;
+}
+
+
+h2 {
+    background-color: #8484CF;
+    color : rgba(255,255,255,.8);
+    border-radius: 0.25rem;
+    padding: 0em 0.65em;
+
+}
+
+h3 {
+    background-color: #6c757d;
+    color : rgba(255,255,255,.8);
+    border-radius: 0.25rem;
+    padding: 0em 0.65em;
+
+}
 
 
 #answertext {
