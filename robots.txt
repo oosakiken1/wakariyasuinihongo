@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://oosakiken1.github.io/wakariyasuinihongo/sitemap.xml
