@@ -39,7 +39,7 @@
 <br>
 <br>
 
-### 日本語リーダビリティ測定ツール（佐藤，2011）
+### 日本語リーダビリティ測定（佐藤，2011）
 [http://readability.nagaokaut.ac.jp/readability](http://readability.nagaokaut.ac.jp/readability)
 
 日本語教育の読解クラスを支援する目的で文章の難易度を判定するツール。<br>
