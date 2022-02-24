@@ -653,7 +653,7 @@ function keydown_event(e) {
             return;
         }
     } else {
-        nextRomajiText = romajiText + e.key;
+        nextRomajiText = romajiText + e.key.toLowerCase();
     }
 
     [nextHiriganaText, nextUntransferText] = getHiraganaTextUseCorrectText(nextRomajiText);
@@ -716,7 +716,7 @@ function getHiraganaTextUseCorrectText(romajiText) {
     let unTranferText = '';
     for (let i = 0; i < romajiText.length; i++) {
         unTranferText += romajiText.charAt(i);
-        if (replaceHalfToFull(unTranferText.toUpperCase()) === replaceHalfToFull(correctText.charAt(hiraganaText.length).toUpperCase())) {
+        if (replaceHalfToFull(unTranferText) === replaceHalfToFull(correctText.charAt(hiraganaText.length).toLowerCase())) {
             hiraganaText += correctText.charAt(hiraganaText.length);
             unTranferText = '';
         } else if (ROMAJI.has(unTranferText)) {

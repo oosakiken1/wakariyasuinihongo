@@ -166,7 +166,9 @@ const mondaiTexts = {
     'ー','、','。'
 ],
 6:[
-    'んっさんっしゃんっってんちゃん'
+    'んっさんっしゃんっってんちゃん',
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    'abcdefghijklmnopqrstuvwxyz',
 ]
 }
 

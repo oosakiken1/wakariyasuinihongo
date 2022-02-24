@@ -203,7 +203,7 @@ const ROMAJI = new Map ([
     ['shi',{fix:'し',unfix:''}],
     ['shu',{fix:'しゅ',unfix:''}],
     ['she',{fix:'しぇ',unfix:''}],
-    ['sjo',{fix:'しょ',unfix:''}],
+    ['sho',{fix:'しょ',unfix:''}],
     ['swa',{fix:'すぁ',unfix:''}],
     ['swi',{fix:'すぃ',unfix:''}],
     ['swu',{fix:'すぅ',unfix:''}],
