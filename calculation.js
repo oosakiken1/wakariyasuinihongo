@@ -9,7 +9,7 @@ const CHK_DETAIL = document.getElementById("detail");
 const CHK_PERIOD = document.getElementById("period");
 
 BTN_EXEC.onclick = function () {
-    gtag('event', 'button', {'event_category': 'execute'});
+    gtag('event', 'exec-calc', {'event_category': 'execute'});
 
     const text = DIV_TEXT.value.replace(/\r\n|\r/g, '\n');
     var resultText = '';

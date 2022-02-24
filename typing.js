@@ -459,6 +459,8 @@ BTN_PASS.onclick = function () {
 
 BTN_START.onclick = function () {
     if (mode !== 'title') return;
+    gtag('event', 'start-typing', {'event_category': 'execute'});
+
     closeAllTab();
 
     mode = 'countdown';
