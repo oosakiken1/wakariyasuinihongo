@@ -171,18 +171,13 @@ function setNextMondaiText() {
 
     while (!mondaiText) {
         let test;
-        // if (config.useRandom === 'on') {
-        //     text = mondaiTexts[level][Math.floor(mondaiTexts[level].length * Math.random())];
-        // } else {
-        //     text = mondaiTexts[level][questionCount % mondaiTexts[level].length];
-        // }
 
         text = mondaiTexts[level][order[information.sentencesCount % order.length]];
 
         if (config.level[0] === 'c') {
             mondaiText = text;
         } else if (config.level[0] === 's') {
-            mondaiText = text.split('/')[1];
+            mondaiText = text.split('/')[1]||text;
 
         } else if (config.level[0] === 'w') {
             mondaiText = text.split('/')[0];
@@ -213,7 +208,8 @@ function setNextMondaiText() {
     }
 
     const tableAnime = document.createElement("table");
-    tableAnime.innerHTML = `<table>${getAnimationTable(mondaiText)}</div>`;
+    tableAnime.classList.add('table-responsive');
+    tableAnime.innerHTML = getAnimationTable(mondaiText);
     DIV_ANIMATIONTABLE.appendChild(tableAnime);
 
     displayAll();
@@ -256,6 +252,30 @@ function displayAll() {
             span.classList.remove('red');
         }
     }
+    scrollAnimationTable(hiraganaText.length);
+}
+
+let oldRate;
+function scrollAnimationTable() {
+    const sw = DIV_ANIMATIONTABLE.scrollWidth;
+    const cw = DIV_ANIMATIONTABLE.clientWidth;
+    rate = (sw-cw) * hiraganaText.length / (correctText.length-5)
+
+    if (oldRate === rate) {
+        return
+    }
+
+    oldRate = rate;
+
+    // $("#animationtable").scrollLeft(rate); 
+
+    $("#animationtable").stop(); 
+    if (rate === 0) {
+        $("#animationtable").animate({  scrollLeft: rate },10,'linear'); 
+    } else {
+        $("#animationtable").animate({  scrollLeft: rate },2000,'easeOutCubic'); 
+    }
+
 }
 
 // 問題文から、漢字と漢字以外の連続をとる。（）は区切り文字。
@@ -444,7 +464,7 @@ BTN_CLEAR.onclick = function () {
         modeTitle();
     }
     if (mode === 'typing') {
-        DIV_ANIMATIONTABLE.innerHTML = '<div class="message"><span class="fs">中</span><span class="fs">断</span></div>';
+        DIV_ANIMATIONTABLE.innerHTML = '<table><tr><td><div class="message"><span class="fs">中</span><span class="fs">断</span></div></td></tr></table>';
         window.clearInterval(intervalID);
         mode = 'result';
         modeResult();
@@ -477,16 +497,16 @@ BTN_START.onclick = function () {
 
     level = parseInt(config.level[1]);
 
-    DIV_ANIMATIONTABLE.innerHTML = '<div class="message"><span class="res">3</span><div>';
+    DIV_ANIMATIONTABLE.innerHTML = '<table><tr><td><div class="message"><span class="res">3</span><div></td></tr></table>';
     playAudio(AUDIO_COUNT);
 
     setTimeout(function () {
-        DIV_ANIMATIONTABLE.innerHTML = '<div class="message"><span class="res">2</span><div>';
+        DIV_ANIMATIONTABLE.innerHTML = '<table><tr><td><div class="message"><span class="res">2</span><div></td></tr></table>';
         playAudio(AUDIO_COUNT);
 
 
         setTimeout(function () {
-            DIV_ANIMATIONTABLE.innerHTML = '<div class="message"><span class="res">1</span><div>';
+            DIV_ANIMATIONTABLE.innerHTML = '<table><tr><td><div class="message"><span class="res">1</span><div></td></tr></table>';
             playAudio(AUDIO_COUNT);
 
             setTimeout(function () {
@@ -562,7 +582,7 @@ function modeResult() {
 
 function displayReult() {
 
-    DIV_ANIMATIONTABLE.innerHTML = '<div class="message"><span class="res">お</span><span class="res">し</span></div><div class="message"><span class="res">ま</span><span class="res">い</span></div><br><span id="qr" ></span>';
+    DIV_ANIMATIONTABLE.innerHTML = '<table><tr><td><div class="message"><span class="res">お</span><span class="res">し</span><span class="res">ま</span><span class="res">い</span></div></td></tr></table>';
     DIV_ANSWERTEXT.innerHTML = '';
 
     window.clearInterval(intervalID);

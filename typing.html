@@ -20,6 +20,7 @@
     <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
     <link rel="stylesheet" href="style.css">
 
     <audio id="audionewtext" src="sound4.mp3" type="audio/mp3" preload="auto"></audio>
@@ -27,16 +28,17 @@
     <audio id="audiocount" src="sound33.mp3" type="audio/mp3" preload="auto"></audio>
     <audio id="audiomiss" src="sound40.mp3" type="audio/mp3" preload="auto"></audio>
 
-    <title>ローマ字タイピング</title>
+    <title>多くの人に使いやすいローマ字タイピング</title>
+    <meta name="description" content="ウェブ上で無料のタイピング練習ができます。大きな文字でとても見やすい作りになっています。例文は日本語能力試験（JLPT）に対応しています。小さい字が苦手な方、留学生など日本語を勉強している方におすすめです。" />
+    <meta name="keywords" content="無料,ローマ字,タイピング,練習,見やすい,大きな文字,留学生,外国人,日本語学習者,日本語能力試験,JLPT,N1,N2,N3,typing" />
 </head>
 
 <body>
     <div class="container">
         <header>
             <div class="row">
-                <h1 class="text-secondary">日本語を勉強する人のためのローマ字タイピング 0.0.2
-                    <span class="h6 rounded bg-secondary text-white mx-1 px-1">The romaji typing for japanese
-                        learners</span>
+                <h1 class="text-secondary">多くの人に使いやすいローマ字タイピング 0.0.3(仮公開版)
+                    <span class="h6 rounded bg-secondary text-white mx-1 px-1">The romaji typing for all people</span>
                 </h1>
 
                 <div class="my-1">
@@ -53,18 +55,19 @@
 
                 <div class="collapse" id="howtoTab">
                     <div class="card card-body my-1">
-                        <div id="howtotext">このツールは、ローマ字入力の練習アプリです。<br>
-                            ひらがな→ローマ字変換が苦手な日本語学習者などに、ひらがな→ローマ字の変換を練習してもうことを主目的としています。<br>
-                            そのため、アルファベットやキーボードは表示しませんが、「ひらがな」を大きく表示することで見やすくなるように配慮しています。<br>
-                            このツールは、タッチタイピングの練習ツールではないことに注意してください。<br>
-                            また、日本語学習者が使うことを想定し、JLPTの問題を例文として利用しています。<br>
-                            そのため、JLPTとタイピングのハイブリッド学習「打って覚えるJLPT」(大崎,2022予定)ができる仕組みも備えています。<br><br>
+                        <div id="howtotext">このツールは、ローマ字タイピングの練習アプリです。<br>
+                            多くの人に使いやすくなるよう、大きな文字でとても見やすい作りになっています。<br>
+                            また、例文のレベルは日本語能力試験（JLPT）に対応しており、留学生などの日本語学習者におすすめです。<br>
+                            タイピングの結果をメール送付するQRコードが発行できますので、教室活動としても便利に利用できます。<br><br>
+                            ＜詳細＞<br>
+                            このツールは、ひらがな→ローマ字変換が苦手な方に、ひらがな→ローマ字の変換を練習してもらうことを主目的としています。<br>
+                            そのため、ローマ字のアルファベットやキーボードの表示などはありません。<br>
                             1.練習時間は、文字数、問題数、入力時間から選ぶことができます。<br>
-                            2.レベルは、N1～N3、及びひらがなから選ぶことができます。<br>
+                            2.レベルは、むずかしい（N1）、ふつう（N2）、かんたん（N3）、ひらがな、から選ぶことができます。<br>
                             3.ふりがなは、なし、漢字のみ、すべてを選ぶことができます。<br>
-                            4.JLPTとタイピングのハイブリッド学習「打って覚えるJLPT」をする場合、以下のような設定をしてください。<br>
+                            4.JLPTとタイピングのハイブリッド学習をする場合、以下のような設定をしてください。<br>
                             ・練習問題「単語＋文」：このモードではJLPT問題文で扱っている語彙を最初に入力し、そのあと例文を入力します。これにより、語彙と例文のスキーマを形成します。<br>
-                            ・ふりがな「なし」：このモードでは、漢字の読みを覚えることができます。
+                            ・ふりがな「なし」：このモードでは、漢字の読みを覚えることができます。<br>
                             5.練習後の結果をQRコードで発行してメール送信できます。講師のアドレスに送信してもらうことで、結果の収集を簡単にできます。<br>
                             <!-- 4.1～3の情報を組み込んだurlを発行できます。<br> -->
                             推奨環境　ディスプレイサイズ　1920*1080 以上<br>
@@ -141,46 +144,46 @@
                                 <label class="col-1 col-form-label">レベル</label>
                                 <div class="col-2 mt-2">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicelevel" id="pls1" value="s1" disabled>
-                                        <label for="pls1" class="text-black-50">文(N1)</label>
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="pls1" value="s1">
+                                        <label for="pls1" class="text-black-50">むずかしい文(N1)</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="practicelevel" id="pls2" value="s2">
-                                        <label for="pls2" >文(N2)</label>
+                                        <label for="pls2" >ふつう文(N2)</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicelevel" id="pls3" value="s3" disabled>
-                                        <label for="pls3" class="text-black-50">文(N3)</label>
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="pls3" value="s3">
+                                        <label for="pls3" class="text-black-50">かんたん文(N3)</label>
                                     </div>
                                 </div>
 
                                 <div class="col-2 mt-2">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicelevel" id="plb1" value="b1" disabled>
-                                        <label for="plb1" class="text-black-50">単語＋文(N1)</label>
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="plb1" value="b1">
+                                        <label for="plb1" class="text-black-50">むずかしい単語＋文(N1)</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="practicelevel" id="plb2" value="b2" >
-                                        <label for="plb2" >単語＋文(N2)</label>
+                                        <label for="plb2" >ふつう単語＋文(N2)</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="practicelevel" id="plb3" value="b3" disabled>
-                                        <label for="plb3" class="text-black-50">単語＋文(N3)</label>
+                                        <label for="plb3" class="text-black-50">かんたん単語＋文(N3)</label>
                                     </div>
                                 </div>
 
                                 <div class="col-2 mt-2">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="practicelevel" id="plw6" value="w6">
-                                        <label for="plw1" class="text-black-50">単語(N1)</label>
+                                        <label for="plw1" class="text-black-50">むずかしい単語(N1)</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="practicelevel" id="plw7" value="w7" disabled>
-                                        <label for="plw2" class="text-black-50">単語(N2)</label>
+                                        <label for="plw2" class="text-black-50">ふつう単語(N2)</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="practicelevel" id="plw8" value="w8" disabled>
-                                        <label for="plw3" class="text-black-50">単語(N3)</label>
+                                        <label for="plw3" class="text-black-50">かんたん単語(N3)</label>
                                     </div>
                                 </div>
 
@@ -312,8 +315,12 @@
                 </div>
 
                 <div id="animationtable"
-                    class="mb-2 border rounded d-flex align-items-center justify-content-center bgyellow"
+                    class="mb-2 border rounded d-flex bgyellow table-responsive"
                     style="height: 200px;">
+                    <!-- <div id="animationtable"
+                    class="mb-2 border rounded d-flex align-items-center justify-content-center bgyellow table-responsive"
+                    style="height: 200px;"> -->
+
                     <!-- <table>
                     <tr class="rb">
                         <th class="narrow"><span class="red">ら</span>いねん</th>

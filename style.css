@@ -108,10 +108,11 @@ span.red{
 #animationtable {
     /* font-family: monospace;   */
     transition: background-color 0.2s;
+    transition: scrollLeft 0.2s;
 }
 
 .message {
-    font-size: 800%;
+    font-size: 300%;
 }
 
 table {
