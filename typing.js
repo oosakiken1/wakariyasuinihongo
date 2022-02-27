@@ -161,7 +161,7 @@ function makeOrder(){
     for (let i=0; i < mondaiTexts[level].length; i++) {
         order.push(i);
     }
-    if (config.order === 'od1') {   
+    if (config.order === 'od1' && config.level[1] !=='6' ) {   
         for (let i=0; i < order.length; i++) {
             const j = Math.floor(order.length * Math.random());
             [order[i], order[j]] = [order[j], order[i]];
