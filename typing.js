@@ -31,8 +31,9 @@ const BTN_PASS = document.getElementById("btnpass");
 const config = {
     time:'M5',
     level:'s2',
-    ruby:'1',
-    useRandom: 'on',
+    mode:'pm0',
+    ruby:'dr1',
+    order: 'od1',
     playAudio: 'off',
     displayQR: 'off',
  
@@ -88,15 +89,17 @@ getFormValue();
 function getFormValue() {
     config.time = FORM_CONFIG.elements['practicetime'].value;
     config.level = FORM_CONFIG.elements['practicelevel'].value;
+    config.mode = FORM_CONFIG.elements['practicemode'].value;
     config.ruby = FORM_CONFIG.elements['displayruby'].value;
-    config.useRandom = FORM_CONFIG.elements['userandom'].value;
+    config.order = FORM_CONFIG.elements['order'].value;
     config.playAudio = FORM_CONFIG.elements['playaudio'].value;
     config.displayQR = FORM_CONFIG.elements['displayqr'].value;
 
-    $('#statusremain').text(`練習時間：${configTexts.time[config.time]}`);
-    $('#statuslevel').text(`レベル：${configTexts.level[config.level]}`);
-    $('#statusruby').text(`ふりがな：${configTexts.ruby[config.ruby]}`);
-    $('#statususerandom').text(`順番：${configTexts.useRandom[config.useRandom]}`);
+    $('#statusremain').html(`練習時間<br>${configTexts.time[config.time]}`);
+    $('#statuslevel').html(`レベル<br>${configTexts.level[config.level]}`);
+    $('#statusmode').html(`モード<br>${configTexts.mode[config.mode]}`);
+    $('#statusruby').html(`ふりがな<br>${configTexts.ruby[config.ruby]}`);
+    $('#statusorder').html(`順番<br>${configTexts.order[config.order]}`);
 
     playAudio(AUDIO_TYPE);
 }
@@ -104,8 +107,9 @@ function getFormValue() {
 function setFormValue() {
     FORM_CONFIG.elements['practicetime'].value = config.time;
     FORM_CONFIG.elements['practicelevel'].value = config.level;
+    FORM_CONFIG.elements['practicemode'].value = config.mode;
     FORM_CONFIG.elements['displayruby'].value = config.ruby;
-    FORM_CONFIG.elements['userandom'].value = config.useRandom;
+    FORM_CONFIG.elements['order'].value = config.order;
     FORM_CONFIG.elements['playaudio'].value = config.playAudio;
     FORM_CONFIG.elements['displayqr'].value = config.displayQR;
 }
@@ -157,7 +161,7 @@ function makeOrder(){
     for (let i=0; i < mondaiTexts[level].length; i++) {
         order.push(i);
     }
-    if (config.useRandom === 'on') {
+    if (config.order === 'od1') {   
         for (let i=0; i < order.length; i++) {
             const j = Math.floor(order.length * Math.random());
             [order[i], order[j]] = [order[j], order[i]];
@@ -177,13 +181,13 @@ function setNextMondaiText() {
         if (config.level[0] === 'c') {
             mondaiText = text;
         } else if (config.level[0] === 's') {
-            mondaiText = text.split('/')[1]||text;
-
-        } else if (config.level[0] === 'w') {
-            mondaiText = text.split('/')[0];
-
-        } else if (config.level[0] === 'b') {
-            mondaiText = text.replace('/','。');
+            if (config.mode === 'pm0') {    // ふつう
+                mondaiText = text.split('/')[1]||text;
+            } else if (config.mode === 'pm1') { // 単語くりかえし
+                mondaiText = text.replace('/','。');
+            } else {
+                mondaiText = text.split('/')[0];
+            }
         }
     }
 
@@ -241,7 +245,7 @@ function displayAll() {
     STATUS_RATE.innerText = `正答率：${information.correctRate}%`;
 
     // DIV_QUESTIONTEXT.innerHTML = getDispayText(mondaiText, hiraganaText.length)
-    DIV_ANSWERTEXT.innerHTML = romajiText + missText + '|<br>' + hiraganaText + untransferText + missText + '|';
+    DIV_ANSWERTEXT.innerHTML = '<div>' + romajiText + missText + '|<br>' + hiraganaText + untransferText + missText + '|</div>';
 
     for (let i = 0; i < correctText.length; i++) {
         const span = document.getElementById('r' + i);
@@ -252,31 +256,61 @@ function displayAll() {
             span.classList.remove('red');
         }
     }
-    scrollAnimationTable(hiraganaText.length);
+    scrollAnimationTable();
+    scrollTexts();
 }
 
-let oldRate;
+let oldscrollLeft;
+
 function scrollAnimationTable() {
     const sw = DIV_ANIMATIONTABLE.scrollWidth;
     const cw = DIV_ANIMATIONTABLE.clientWidth;
-    rate = (sw-cw) * hiraganaText.length / (correctText.length-5)
+    let scrollLeft = (sw - cw) * (hiraganaText.length - 5) / (correctText.length - 15)
 
-    if (oldRate === rate) {
+    if (oldscrollLeft === scrollLeft) {
         return
     }
 
-    oldRate = rate;
+    oldscrollLeft = scrollLeft;
 
     // $("#animationtable").scrollLeft(rate); 
 
     $("#animationtable").stop(); 
-    if (rate === 0) {
-        $("#animationtable").animate({  scrollLeft: rate },10,'linear'); 
+    if (scrollLeft === 0) {
+        $("#animationtable").animate({  scrollLeft: scrollLeft },10,'linear'); 
     } else {
-        $("#animationtable").animate({  scrollLeft: rate },2000,'easeOutCubic'); 
+        $("#animationtable").animate({  scrollLeft: scrollLeft },2000,'easeOutCubic'); 
     }
 
 }
+
+let oldHiraganaLength;
+
+function scrollTexts() {
+    if (oldHiraganaLength === hiraganaText.length) {
+        return
+    }
+
+    // scrollDiv('#animationtable');
+    scrollDiv('#answertext');
+
+    oldHiraganaLength = hiraganaText.length;
+}
+
+function scrollDiv(divName) {
+    div = $(divName);
+    const sw = div.scrollWidth;
+    const cw = div.clientWidth;
+    let scrollLeft = (sw - cw) * (hiraganaText.length - 5) / (correctText.length - 15)
+
+    div.stop(); 
+    if (scrollLeft === 0) {
+        div.animate({  scrollLeft: scrollLeft },10,'linear'); 
+    } else {
+        div.animate({  scrollLeft: scrollLeft },2000,'easeOutCubic'); 
+    }
+}
+
 
 // 問題文から、漢字と漢字以外の連続をとる。（）は区切り文字。
 // 漢字の場合、書き出し。
@@ -312,7 +346,7 @@ function getDispayText(inputText, spanIndex) {
                 if (nonKnajiIndex < spanIndex) {
                     outputText += `<span class="red">${char}</span>`;
                 } else {
-                    if (config.ruby === '1') {
+                    if (config.ruby === 'dr1') {
                         outputText += char;
                     } else {
                         outputText += `<span class="white">${char}</span>`;
@@ -386,11 +420,12 @@ function getAnimationTable(inputText) {
     let rbText = '';
     let kjIndex = 0;
     let rbIndex = 0;
+    // 漢字、ふりがな、ひらがなブロックに分割
     let tempTexts = inputText.match(/(（[^\u3005\u3007\u4E00-\u9FFF]+）|[^\u3005\u3007\u4E00-\u9FFF（）]+|[\u3005\u3007\u4E00-\u9FFF]+)/g);
 
     for (let str of tempTexts) {
         if (str.length === 0) continue;
-
+        //漢字ブロックの場合
         if (str.search(/[\u3005\u3007\u4E00-\u9FFF]/) === 0) {
             kjText += '<td>';
             for (let char of str) {
@@ -400,8 +435,9 @@ function getAnimationTable(inputText) {
             }
             kjText += '</td>';
         } else {
-
+            //ひらがなブロックの場合
             if (str.search(/[（）]/) === -1) {
+                // 漢字テキストに追加
                 for (let char of str) {
                     kjIndex++;
                     let delay = Math.floor(Math.random() * 4);
@@ -413,15 +449,16 @@ function getAnimationTable(inputText) {
                     return String.fromCharCode(chr);
                 });
 
+                //ふりがなテキストに追加
                 for (let char of str) {
-                    if (config.ruby === '2') {
+                    if (config.ruby === 'dr0') {  // ふりがなすべての時は、見える
                         rbText += `<th><span id="r${rbIndex}">${char}</span></th>`;
-                    } else {
+                    } else {                    // ふりがなすべて以外は、見えない
                         rbText += `<th><span id="r${rbIndex}" class="white">${char}</span></th>`;
                     }
                     rbIndex++;
                 }
-
+            //ふりがなブロックの場合
             } else {
                 // （）を削除
                 str = str.replace(/[（）]/g, '');
@@ -432,11 +469,12 @@ function getAnimationTable(inputText) {
                     return String.fromCharCode(chr);
                 });
 
+                //ふりがなテキストに追加
                 rbText += '<th class = "narrow">'
                 for (let char of str) {
-                    if (config.ruby !== '0') {
+                    if (config.ruby !== 'dr2') {  // ふりがななし以外は、見える
                         rbText += `<span id="r${rbIndex}">${char}</span>`;
-                    } else {
+                    } else {                    // ふりがななしの時は、見えない
                         rbText += `<span id="r${rbIndex}" class="white">${char}</span>`;
                     }
                     rbIndex++;
@@ -608,6 +646,7 @@ function createQRcode() {
         id: INPUT_ID.value,
         tim: config.time,
         lvl: config.level,
+        mod: config.mode,
         rub: config.ruby,
         dur: information.displayTime,
         txt: information.sentencesCount,
@@ -630,8 +669,6 @@ function keyup_event(e) {
 
     missText = '';
     DIV_ANSWERTEXT.innerHTML = romajiText + missText + '<br>' + hiraganaText + untransferText + missText;
-    DIV_QUESTIONTEXT.classList.remove('highlight');
-    DIV_ANIMATIONTEXT.classList.remove('highlight');
     DIV_ANIMATIONTABLE.classList.remove('highlight');
 
     // DIV_QUESTIONTEXT.classList.add('bg-white');
@@ -701,8 +738,6 @@ function keydown_event(e) {
             missText = e.key;
         }
 
-        DIV_QUESTIONTEXT.classList.add('highlight');
-        DIV_ANIMATIONTEXT.classList.add('highlight');
         DIV_ANIMATIONTABLE.classList.add('highlight');
 
         playAudio(AUDIO_MISS);

@@ -37,7 +37,7 @@
     <div class="container">
         <header>
             <div class="row">
-                <h1 class="text-secondary">多くの人に使いやすいローマ字タイピング 0.0.3(仮公開版)
+                <h1 class="text-secondary">多くの人に使いやすいローマ字タイピング 0.0.4(仮公開版)
                     <span class="h6 rounded bg-secondary text-white mx-1 px-1">The romaji typing for all people</span>
                 </h1>
 
@@ -54,9 +54,9 @@
                 </div>
 
                 <div class="collapse" id="howtoTab">
-                    <div class="card card-body my-1">
+                    <div class="card card-body border-3 my-1">
                         <div id="howtotext">このツールは、ローマ字タイピングの練習アプリです。<br>
-                            多くの人に使いやすくなるよう、大きな文字でとても見やすい作りになっています。<br>
+                            多くの人に使いやすくなるよう、大きな文字で見やすい作りになっています。<br>
                             また、例文のレベルは日本語能力試験（JLPT）に対応しており、留学生などの日本語学習者におすすめです。<br>
                             タイピングの結果をメール送付するQRコードが発行できますので、教室活動としても便利に利用できます。<br><br>
                             ＜詳細＞<br>
@@ -66,8 +66,8 @@
                             2.レベルは、むずかしい（N1）、ふつう（N2）、かんたん（N3）、ひらがな、から選ぶことができます。<br>
                             3.ふりがなは、なし、漢字のみ、すべてを選ぶことができます。<br>
                             4.JLPTとタイピングのハイブリッド学習をする場合、以下のような設定をしてください。<br>
-                            ・練習問題「単語＋文」：このモードではJLPT問題文で扱っている語彙を最初に入力し、そのあと例文を入力します。これにより、語彙と例文のスキーマを形成します。<br>
-                            ・ふりがな「なし」：このモードでは、漢字の読みを覚えることができます。<br>
+                            ・モード「単語くりかえし」：このモードではJLPT問題文で扱っている語彙を最初に入力し、そのあと例文を入力します。これにより、語彙と例文のスキーマを形成します。<br>
+                            ・ふりがな「なし」：このモードでは、漢字の読み方の練習ができます。<br>
                             5.練習後の結果をQRコードで発行してメール送信できます。講師のアドレスに送信してもらうことで、結果の収集を簡単にできます。<br>
                             <!-- 4.1～3の情報を組み込んだurlを発行できます。<br> -->
                             推奨環境　ディスプレイサイズ　1920*1080 以上<br>
@@ -75,7 +75,7 @@
                     </div>
                 </div>
                 <div class="collapse" id="configTab">
-                    <div class="card card-body my-1">
+                    <div class="card card-body border-3 my-1">
                         <form onchange="getFormValue()" id="formconfig">
                             <div class="row mb-2">
                                 <label class="col-1 col-form-label">練習時間</label>
@@ -145,48 +145,17 @@
                                 <div class="col-2 mt-2">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="practicelevel" id="pls1" value="s1">
-                                        <label for="pls1" class="text-black-50">むずかしい文(N1)</label>
+                                        <label for="pls1" >むずかしい(N1)</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="practicelevel" id="pls2" value="s2">
-                                        <label for="pls2" >ふつう文(N2)</label>
+                                        <label for="pls2" >ふつう(N2)</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="practicelevel" id="pls3" value="s3">
-                                        <label for="pls3" class="text-black-50">かんたん文(N3)</label>
+                                        <label for="pls3" >かんたん(N3)</label>
                                     </div>
                                 </div>
-
-                                <div class="col-2 mt-2">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicelevel" id="plb1" value="b1">
-                                        <label for="plb1" class="text-black-50">むずかしい単語＋文(N1)</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicelevel" id="plb2" value="b2" >
-                                        <label for="plb2" >ふつう単語＋文(N2)</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicelevel" id="plb3" value="b3" disabled>
-                                        <label for="plb3" class="text-black-50">かんたん単語＋文(N3)</label>
-                                    </div>
-                                </div>
-
-                                <div class="col-2 mt-2">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicelevel" id="plw6" value="w6">
-                                        <label for="plw1" class="text-black-50">むずかしい単語(N1)</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicelevel" id="plw7" value="w7" disabled>
-                                        <label for="plw2" class="text-black-50">ふつう単語(N2)</label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicelevel" id="plw8" value="w8" disabled>
-                                        <label for="plw3" class="text-black-50">かんたん単語(N3)</label>
-                                    </div>
-                                </div>
-
                                 <div class="col-2 mt-2">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="practicelevel" id="plc4" value="c4">
@@ -196,22 +165,43 @@
                                         <input class="form-check-input" type="radio" name="practicelevel" id="plc5" value="c5">
                                         <label for="plc5">ひらがな２</label>
                                     </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="plc6" value="c6">
+                                        <label for="plc6">アルファベット</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-2">
+                                <label class="col-1 col-form-label">モード</label>
+                                <div class="col mt-2">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="practicemode" id="pm0"
+                                            value="pm0"><label for="pm0">ふつう</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="practicemode" id="pm1"
+                                            value="pm1"><label for="pm1">単語くりかえし</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="practicemode" id="pm2"
+                                            value="pm2" disabled><label for="pm2" class="text-black-50">単語きりだし</label>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row mb-2">
                                 <label class="col-1 col-form-label">ふりがな</label>
                                 <div class="col mt-2">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="displayruby" id="dr2"
-                                            value="2"><label for="dr2">すべて</label>
+                                        <input class="form-check-input" type="radio" name="displayruby" id="dr0"
+                                            value="dr0"><label for="dr0">すべて</label>
                                     </div>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="displayruby" id="dr1"
-                                            value="1"><label for="dr1">漢字だけ</label>
+                                            value="dr1"><label for="dr1">漢字だけ</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="displayruby" id="dr0"
-                                            value="0"><label for="dr0">なし</label>
+                                        <input class="form-check-input" type="radio" name="displayruby" id="dr2"
+                                            value="dr2"><label for="dr2">なし</label>
                                     </div>
                                 </div>
                             </div>
@@ -219,12 +209,12 @@
                                 <label class="col-1 col-form-label">順番</label>
                                 <div class="col mt-2">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="userandom" id="ur0"
-                                            value="off"><label for="ur0">ふつう</label>
+                                        <input class="form-check-input" type="radio" name="order" id="od0"
+                                            value="od0"><label for="od0">ふつう</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="userandom" id="ur1"
-                                            value="on"><label for="ur1">ランダム</label>
+                                        <input class="form-check-input" type="radio" name="order" id="od1"
+                                            value="od1"><label for="od1">ランダム</label>
                                     </div>
                                 </div>
                             </div>
@@ -244,10 +234,10 @@
                                 <label class="col-1 col-form-label">QRコード</label>
                                 <div class="col mt-2">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="displayqr" id="dq1" value="on"><label for="dq1">表示あり</label>
+                                        <input class="form-check-input" type="radio" name="displayqr" id="dq1" value="on"><label for="dq1">あり</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="displayqr" id="dq0" value="off"><label for="dq0">表示なし</label>
+                                        <input class="form-check-input" type="radio" name="displayqr" id="dq0" value="off"><label for="dq0">なし</label>
                                     </div>
                                 </div>
                             </div>
@@ -256,7 +246,7 @@
                     </div>
                 </div>
                 <div class="collapse" id="qrTab">
-                    <div class="card card-body my-1 align-items-center">
+                    <div class="card card-body border-3 my-1 align-items-center">
                         <div id="qrimage"></div>
                         <div class="my-1">
                             名前/番号
@@ -284,10 +274,11 @@
             </div>
 
             <div class="row">
-                <span id="statusremain" class="h3 col ms-1 bgblue rounded text-center">練習時間：05:00</span>
-                <span id="statuslevel" class="h3 col ms-1 bgblue rounded text-center">レベル：単語＋文(N2)</span>
-                <span id="statusruby" class="h3 col ms-1 bgblue rounded text-center">ふりがな：漢字だけ</span>
-                <span id="statususerandom" class="h3 col ms-1 bgblue rounded text-center">順番：漢字だけ</span>
+                <span id="statusremain" class="h3 col ms-1 bgblue rounded text-center">練習時間<br>05:00</span>
+                <span id="statuslevel" class="h3 col ms-1 bgblue rounded text-center">レベル<br>むずかしい(N1)</span>
+                <span id="statusmode" class="h3 col ms-1 bgblue rounded text-center">モード<br>単語くりかえし</span>
+                <span id="statusruby" class="h3 col ms-1 bgblue rounded text-center">ふりがな<br>漢字だけ</span>
+                <span id="statusorder" class="h3 col ms-1 bgblue rounded text-center">順番<br>漢字だけ</span>
             </div>
 
             <div class="row">
@@ -315,7 +306,7 @@
                 </div>
 
                 <div id="animationtable"
-                    class="mb-2 border rounded d-flex bgyellow table-responsive"
+                    class="mb-2 border border-3 rounded d-flex bgyellow"
                     style="height: 200px;">
                     <!-- <div id="animationtable"
                     class="mb-2 border rounded d-flex align-items-center justify-content-center bgyellow table-responsive"
@@ -352,7 +343,7 @@
 
             <div class="row">
                 <!-- <h3 class="bgblue rounded">入力した文字</h3> -->
-                <div id="answertext" class="mb-2 bg-white border rounded justify-content-center" style="height: 200px;">
+                <div id="answertext" class="mb-2 bg-white border border-3 rounded justify-content-center" style="height: 200px;">
                 </div>
             </div>
         </main>

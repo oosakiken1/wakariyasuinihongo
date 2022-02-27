@@ -24,7 +24,8 @@ img {
 }
 
 .bgyellow{
-    background-color: #F7DE80;
+    /* background-color: #F7DE80; */
+    background-color: white;
     color : rgba(0,0,0,.7);
 }
 
@@ -56,6 +57,7 @@ h3 {
     /* font-family: monospace;   */
     font-size: 200%;
     transition: background-color 0.2s; 
+    overflow-x: hidden;
 }
 
 #questiontext {
@@ -108,7 +110,7 @@ span.red{
 #animationtable {
     /* font-family: monospace;   */
     transition: background-color 0.2s;
-    transition: scrollLeft 0.2s;
+    overflow-x: hidden;
 }
 
 .message {
@@ -154,7 +156,8 @@ td, th {
 }
 
 #animationtable .white{
-    color : #F7DE80;
+    /* color : #F7DE80; */
+    color : white;
         /* opacity:1; */
 }
 
