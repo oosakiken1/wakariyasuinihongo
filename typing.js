@@ -216,6 +216,9 @@ function setNextMondaiText() {
     tableAnime.innerHTML = getAnimationTable(mondaiText);
     DIV_ANIMATIONTABLE.appendChild(tableAnime);
 
+    $("#animationtable").stop(); 
+    $("#animationtable").scrollLeft(0); 
+
     displayAll();
 }
 
@@ -235,16 +238,18 @@ function getCorrectText(inputText) {
     return outputText;
 }
 
-function displayAll() {
-    // information.characterCount = lastScore + hiraganaText.length;
-
+function displayInfomation() {
     STATUS_TIME.innerText = `経過時間： ${information.displayTime}`;
     STATUS_COUNT.innerText = `問題数：${information.sentencesCount}`;
     STATUS_SCORE.innerText = `文字数：${information.characterCount}`;
     STATUS_MISS.innerText = `ミス回数：${information.unCorrectCount}`;
     STATUS_RATE.innerText = `正答率：${information.correctRate}%`;
+}
 
-    // DIV_QUESTIONTEXT.innerHTML = getDispayText(mondaiText, hiraganaText.length)
+
+function displayAll() {
+    displayInfomation();
+    
     DIV_ANSWERTEXT.innerHTML = '<div>' + romajiText + missText + '|<br>' + hiraganaText + untransferText + missText + '|</div>';
 
     for (let i = 0; i < correctText.length; i++) {
@@ -257,7 +262,7 @@ function displayAll() {
         }
     }
     scrollAnimationTable();
-    scrollTexts();
+    // scrollTexts();
 }
 
 let oldscrollLeft;
@@ -265,7 +270,7 @@ let oldscrollLeft;
 function scrollAnimationTable() {
     const sw = DIV_ANIMATIONTABLE.scrollWidth;
     const cw = DIV_ANIMATIONTABLE.clientWidth;
-    let scrollLeft = (sw - cw) * (hiraganaText.length - 5) / (correctText.length - 15)
+    let scrollLeft = (sw - cw) * (hiraganaText.length - (DIV_ANIMATIONTABLE.clientWidth/(DIV_ANIMATIONTABLE.scrollWidth/correctText.length))*.3) / (correctText.length - (DIV_ANIMATIONTABLE.clientWidth/(DIV_ANIMATIONTABLE.scrollWidth/correctText.length)*.7))
 
     if (oldscrollLeft === scrollLeft) {
         return
@@ -276,11 +281,7 @@ function scrollAnimationTable() {
     // $("#animationtable").scrollLeft(rate); 
 
     $("#animationtable").stop(); 
-    if (scrollLeft === 0) {
-        $("#animationtable").animate({  scrollLeft: scrollLeft },10,'linear'); 
-    } else {
-        $("#animationtable").animate({  scrollLeft: scrollLeft },2000,'easeOutCubic'); 
-    }
+    $("#animationtable").animate({  scrollLeft: scrollLeft },3000,'easeOutCubic'); 
 
 }
 
@@ -304,11 +305,12 @@ function scrollDiv(divName) {
     let scrollLeft = (sw - cw) * (hiraganaText.length - 5) / (correctText.length - 15)
 
     div.stop(); 
-    if (scrollLeft === 0) {
-        div.animate({  scrollLeft: scrollLeft },10,'linear'); 
-    } else {
-        div.animate({  scrollLeft: scrollLeft },2000,'easeOutCubic'); 
-    }
+    // if (scrollLeft === 0) {
+    //     div.animate({  scrollLeft: scrollLeft },10,'linear'); 
+    // } else {
+        div.animate({  scrollLeft: scrollLeft },2000,'swing'); 
+        // div.animate({  scrollLeft: scrollLeft },2000,'easeOutCubic'); 
+    // }
 }
 
 
@@ -574,7 +576,7 @@ BTN_START.onclick = function () {
                 }
 
                 setNextMondaiText();
-                intervalID = window.setInterval(intervalEvent, 50);
+                intervalID = window.setInterval(intervalEvent, 100);
             
             }, 1000)
 
@@ -592,7 +594,7 @@ function intervalEvent() {
     information.durationTime = Math.floor((nowTime.getTime() - startTime) / 1000);
     information.displayTime = `${(Math.floor(information.durationTime / 60)).toString().padStart(2,'0')}:${(information.durationTime % 60).toString().padStart(2,'0')}`;
 
-    displayAll();
+    displayInfomation();
 
     if (config.time[0] ==='M' && nowTime >= endTime) {
         displayReult();
@@ -758,7 +760,7 @@ function keydown_event(e) {
 
     lastUnCorrectflag = unCorrectflag;
 
-    // dispAll();
+    displayAll();
 
     return false;
 }

@@ -114,7 +114,7 @@ span.red{
 }
 
 .message {
-    font-size: 300%;
+    font-size: 2.5em;
 }
 
 table {
@@ -131,14 +131,14 @@ td, th {
 }
 
 #animationtable th{
-    font-size: 200%;
+    font-size: 2.5em;
     text-align:center;
     letter-spacing:0.0em;
 }
 
 
 #animationtable td{
-    font-size: 250%;
+    font-size: 3em;
     text-align:center;
 }
 
