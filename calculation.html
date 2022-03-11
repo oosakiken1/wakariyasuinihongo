@@ -21,15 +21,15 @@
     <meta property="og:url" content="https://oosakiken1.github.io/wakariyasuinihongo/calculation.html" />
     <meta property="og:image" content="https://oosakiken1.github.io/wakariyasuinihongo/image/calculation_sn.png" />
     <meta property="og:site_name" content=“多くの人にわかりやすい日本語” />
-    <meta property="og:description" content="日本人と外国人の双方にとってわかりにくいと思われる文を可視化するツール。入力されたテキストの構成要素から、わかりにくい文を文単位でハイライト表示します。" />
+    <meta property="og:description" content="文章内のわかりにくい文を可視化するライティング支援ツール。「多くの人にわかりやすい」という観点から文ごとのわかりにくさを推定し、わかりにくい文をハイライト表示します。" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="style.css">
 
     <title>わかりにくさ計算機（簡易版）</title>
-    <meta name="description" content="日本人と外国人の双方にとってわかりにくいと思われる文を可視化するツール。入力されたテキストの構成要素から、わかりにくい文を文単位でハイライト表示します。" />
-    <meta name="keywords" content="無料,わかりやすい,わかりにくい,日本語,やさしい日本語,多文化共生,専門文書,仕様書" />
+    <meta name="description" content="文章内のわかりにくい文を可視化するライティング支援ツール。「多くの人にわかりやすい」という観点から文ごとのわかりにくさを推定し、わかりにくい文をハイライト表示します。" />
+    <meta name="keywords" content="無料,わかりやすい,わかりにくい,日本語,やさしい日本語,多文化共生,専門文書,システム仕様書,ライティング,作文,自律学習" />
 
 </head>
 
@@ -46,22 +46,27 @@
                 </div>
                 <div class="my-1">
                     <button type="button" class="btn border btn-secondary" data-bs-toggle="collapse"
-                        data-bs-target="#howto">ツールの使い方を見る</button>
+                        data-bs-target="#howto">ツールの使い方 How To</button>
                     <button id="sample" type="button" class="btn btn-secondary">サンプル文章を判定する</button>
                 </div>
 
                 <div class="collapse" id="howto">
                     <div class="card card-body my-1">
-                        <div id="howtotext">1.このツールは、文章内のわかりにくい文を可視化するツールです。<br>
-                            2.判定したい文章を入力して「計算する」ボタンをクリックすると、わかりにくい文を赤色で表示します。<br>
-                            3.「サンプル文章を判定する」ボタンで、サンプル文章を判定することができます。<br>
-                            4.初期値では、30%以上の人がわかりにくいと思うと予測した文の色を変えます。<br>
-                            5.「30%未満も表示」をチェックすると、わかりにくいと思う人が30%未満の文も色を変えます。<br>
-                            6.「詳細表示」をチェックすると、(①-②-③=④)の形式で、わかりにくさの計算に利用した①一文の文字数②6文字以上連続する漢字の頻度③10文字以上連続するカタカナの頻度と、④わかりにくいと思う人の割合％を追加で表示します。<br>
-                            7.「ピリオドを文末扱い」をチェックすると、全角ピリオドを文末として扱います。初期値は、改行コードと句点を文末として扱います。<br>
+                        <div id="howtotext">このツールは、文章内のわかりにくい文を可視化するライティング支援ツールです。<br>
+                            文章を書いている著者本人が、書いている文章の「わかりにくい」部分を見つけることは意外と難しいものです。<br>
+                            このツールでは、「多くの人にわかりやすい」という観点から文ごとのわかりにくさ（※）を推定し、わかりにくいと思われる文をハイライト表示してくれます。<br><br>
+                            <!-- 【使い方】<br> -->
+                            1.判定したい文章を入力して「計算する」ボタンをクリックすると、わかりにくい文を赤色で表示します。わかりにくい文をほど鮮明な色となります。<br>
+                            2.「判定基準」は、わかりにくいと思う割合の基準を指定します。初期値では、30%以上としています。<br>
+                            3.「詳細表示」をチェックすると、(①-②-③=④)の形式で、わかりにくさの計算に利用した①一文の文字数②6文字以上連続する漢字の頻度③10文字以上連続するカタカナの頻度と、④わかりにくいと思う人の割合％を追加で表示します。<br>
+                            4.「全角ピリオドを文末扱い」をチェックすると、ピリオドを文末として扱います。初期値は、改行コードと句点（マル）を文末として扱います。<br>
+                            5.「サマリー表示」をチェックすると、参考値として文章全体の文数(n)及び、わかりにくさ係数の平均(M)、標準偏差(SD)を表示します。<br>
+                            6.括弧内の句点はエスケープ処理（読点への置き換え）をします。ただし、括弧の入れ子には対応していません。「エスケープ前の確認」をチェックすると、エスケープの前にメッセージを表示します。<br>
+                            7.「サンプル文章を判定する」ボタンで、サンプル文章を判定できます。<br>
                             <hr>
-                            ※このツールで計算するわかりにくさ係数は、外国人と日本人を調査対象とした「システム仕様書の中の日本語のわかりにくさに関する調査」（大崎，2021a）に最適化したものです。<br>
-                            ※このツールの理論背景については、わかりにくさ係数の簡易な手法による推定（大崎，2021b）をご参照ください。<br>
+                            ※このツールで推定する「わかりにくさ係数」は、その文をわかりにくいと思う読み手の割合です。<br>
+                            　この係数は、外国人と日本人を調査対象とした「システム仕様書の中の日本語のわかりにくさに関する調査」（大崎，2021a）に最適化したものです。<br>
+                            　このツールの理論背景については、わかりにくさ係数の簡易な手法による推定（大崎，2021b）をご参照ください。<br>
                             <br>
                             大崎（2021a）「わかりやすい日本語に関する定量分析」李在鎬編『データ科学×日本語教育』第13章、ひつじ書房、246-267<br>
                             大崎（2021b）「専門文書内のわかりにくい文の推定―多文化共生社会に向けたライティング支援のための考察―」『計量国語学会第六十五回大会予稿集』1-6
@@ -75,20 +80,36 @@
         <main>
             <div class="row">
                 <h3 class="bgblue rounded">判定したい文章</h3>
-                <textarea id="text" class="form-control" rows="12" placeholder="テキストを入力してください"
+                <textarea id="text" class="form-control" rows="10" placeholder="判定したいテキストを入力してください"
                     style="width:100%;"></textarea>
                 <div class="my-1">
-                    <label>
+                    判定基準
+                    <select id="limit">
+                        <option value="40">40%</option>
+                        <option value="30" selected>30%</option>
+                        <option value="25">25%</option>
+                        <option value="20">20%</option>
+                        <option value="0">すべて</option>
+                    </select>
+                    <!-- <label>
                         <input type="checkbox" value="" id="limit">
-                        30%未満も表示
-                    </label>
+                        25%未満も表示
+                    </label> -->
                     <label>
                         <input type="checkbox" value="" id="detail">
                         詳細表示
                     </label>
                     <label>
-                        <input type="checkbox" value="" id="period">
-                        ピリオドを文末扱い
+                        <input type="checkbox" value="" id="useperiod">
+                        全角ピリオドを文末扱い
+                    </label>
+                    <label>
+                        <input type="checkbox" value="" id="dispsummary">
+                        サマリー表示
+                    </label>
+                    <label>
+                        <input type="checkbox" value="" id="confirmescape">
+                        エスケープの確認
                     </label>
                     <button id="execute" type="button" class="btn btn-primary">計算する</button>
                     <button id="clear" type="button" class="btn btn-warning">クリア</button>
@@ -96,6 +117,9 @@
             </div>
             <div class="row">
                 <h3 class="bgblue rounded">判定結果</h3>
+                <h3 id="summary" class="bggreen rounded d-none">
+                    <p></p>
+                </h3>
                 <div id="result" class="border rounded bg-white">
                     <p></p>
                 </div>
@@ -105,7 +129,7 @@
         <footer>
             <hr>
             <div class="row">
-                <p>本ツールは研究・教育のための利用に限定します。本ツールを利用した論文・記事・発表をされる場合、本ツールを利用した旨を明記ください。商用でのご利用はご遠慮ください。
+                <p>本ツールは研究・教育・学習のための利用に限定します。本ツールを利用した論文・記事・発表をされる場合、本ツールを利用した旨を明記ください。商用でのご利用はご遠慮ください。
                 </p>
                 <p>Copyright 2021 Kenichi Oosaki.</p>
             </div>
