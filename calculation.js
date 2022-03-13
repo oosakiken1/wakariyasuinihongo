@@ -24,47 +24,18 @@ BTN_EXEC.onclick = function () {
         CHK_PERIOD.checked = true;
     }
 
-    // const parenthesesPeriod = text.match(/([(（「][^()（）「」]*。[^()（）「」]*[)）」]|[(（「][^()（）「」]*。|。[^()（）「」]*[)）」])/g);
-
-    let parenthesesReg = null;
-    if (CHK_PERIOD.checked) {
-        parenthesesReg = /[(（「『【][^()（）「」『』【】]*[。．][^()（）「」『』【】]*[)）」』】]/g;
-    } else {
-        parenthesesReg = /[(（「『【][^()（）「」『』【】]*。[^()（）「」『』【】]*[)）」』】]/g;
-    }
-
-    const matches = [];
-    // const parenthesesPeriods = text.matchAll(parenthesesReg);
-    for (let match of text.matchAll(parenthesesReg)) {
-        matches.push([match[0],match.index]);
-    }
- 
-    if (matches.length !== 0) {
-        if(!CHK_ESCAPE.checked || confirm(`括弧内の句点が ${matches.length} 箇所あります。この句点をエスケープしてよいですか？\n${matches}`)) {
-            for (let [match,index] of matches) {
-                if (CHK_PERIOD.checked) {
-                    match = match.replaceAll(/[。．]/g,'、');
-                } else {
-                    match = match.replaceAll(/[。]/g,'、');
-                }
-                text = text.substring(0,index) + match + text.substring(index + match.length);
-            }
-        }
-    }
-
     const lines = text.split('\n');
     const results = [];
 
     for (const line of lines) {
-        let sentenceReg = null;
-        if (CHK_PERIOD.checked) {
-            sentenceReg = /[^。．]*[。．]*/g;
-        } else {
-            sentenceReg = /[^。]*。*/g;
+        let sentencesOrg = getSentences(line);
+        let sentences = getSentencesWithParentheses(line);
+
+        if (sentencesOrg.length !== sentences.length) {
+            if (CHK_ESCAPE.checked && !confirm(`括弧内の句点をエスケープしてよいですか？\n${line} `)) {
+                sentences = sentencesOrg;
+            }
         }
-
-        const sentences = line.match(sentenceReg);
-
         for (const sentence of sentences) {
             if (sentence === '') { continue }
             const sentenceLength = sentence.length;
@@ -92,9 +63,9 @@ BTN_EXEC.onclick = function () {
     DIV_RESULT.innerHTML = resultText;
 
     if (CHK_SUMMARY.checked) {
-        DIV_SUMMARY.classList.remove("d-none");    
+        DIV_SUMMARY.classList.remove("d-none");
     } else {
-        DIV_SUMMARY.classList.add("d-none");    
+        DIV_SUMMARY.classList.add("d-none");
     }
 
     const [mean, sd] = calcMeanSd(results);
@@ -149,8 +120,45 @@ function calcMeanSd(data) {
     return [mean, sd];
 }
 
-function floor3 (num) {
-    return Math.floor(num *1000)/1000;
+function floor3(num) {
+    return Math.floor(num * 1000) / 1000;
+}
+
+
+function test_checkParentheses() {
+    return getSentencesWithParentheses('１）あいう。２）a『１）「a。」ｂ．』a．ああ。（いい。）');
+}
+
+
+
+function getSentences(text) {
+    let sentenceReg;
+    if (CHK_PERIOD.checked) {
+        sentenceReg = /[^。．]*[。．]*/g;
+    } else {
+        sentenceReg = /[^。]*。*/g;
+    }
+    const sentences = text.match(sentenceReg);
+    return sentences;
+}
+
+function getSentencesWithParentheses(text) {
+    parenthesesReg = /([\(（][^\(\)（）「『【]*[\)）]|「[^\(\)（「」『【]*」|『[^\(\)（「『』【]*』|【[^\(（「『【】]*】)/;
+    const match = text.match(parenthesesReg);
+
+    if (match) {
+        let texts = getSentencesWithParentheses(text.replace(parenthesesReg, "#".repeat(match[0].length)));
+        let index = 0;
+        texts.forEach((str, i) => {
+            if (index <= match.index && match.index < index + str.length) {
+                texts[i] = str.substring(0, match.index - index) + match[0] + str.substring(match.index - index + match[0].length);
+            }
+            index += str.length;
+        })
+        return texts;
+    }
+
+    return getSentences(text);
 }
 
 /**
@@ -160,9 +168,9 @@ function floor3 (num) {
  */
 var escapeHTML = function (str) {
     return str
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(/"/g, '&quot;')
-            .replace(/'/g, '&#39;');
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
 };
