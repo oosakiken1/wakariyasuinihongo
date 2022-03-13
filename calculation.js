@@ -98,7 +98,7 @@ BTN_EXEC.onclick = function () {
     }
 
     const [mean, sd] = calcMeanSd(results);
-    DIV_SUMMARY.innerHTML = `わかりにくさ係数(n=${results.length}, M=${floor3(mean)}, SD=${floor3(sd)})`;
+    DIV_SUMMARY.innerHTML = `わかりにくさ係数(<i>n</i> = ${results.length}, <i>M</i> = ${mean.toFixed(3)}, <i>SD</i> = ${sd.toFixed(3)})`;
 };
 
 function countKana10(str) {
