@@ -14,6 +14,10 @@ img {
 
 }
 
+.justfy {
+    text-align: justify;
+}
+
 .bgblue{
     background-color: #8484CF;
     color : rgba(255,255,255,.8);
