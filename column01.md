@@ -28,9 +28,8 @@
 <br>
 <br>
 
-### 日本語文章難易度判定システム　jReadability（李，2016）
-
-[https://jreadability.net/](https://jreadability.net/)
+### 日本語リーダビリティ測定（佐藤，2011）
+[http://readability.nagaokaut.ac.jp/readability](http://readability.nagaokaut.ac.jp/readability)
 
 「日本書き言葉均衡コーパス（[https://ccd.ninjal.ac.jp/bccwj/](https://ccd.ninjal.ac.jp/bccwj/)）」（以下，BCCWJ）の文字bigramモデルをもちいて、テキストの難易度を推定するツール。<br>
 このツールでは，教科書コーパスを用いた13段階の難易度と，BCCWJを用いた9段階の難易度の2つを測定することができる。<br>
@@ -39,8 +38,8 @@
 <br>
 <br>
 
-### 日本語リーダビリティ測定（佐藤，2011）
-[http://readability.nagaokaut.ac.jp/readability](http://readability.nagaokaut.ac.jp/readability)
+### 日本語文章難易度判定システム　jReadability（李，2016）
+[https://jreadability.net/](https://jreadability.net/)
 
 日本語教育の読解クラスを支援する目的で文章の難易度を判定するツール。<br>
 このツールでは、日本語教育の教科書とBCCWJに対して付与した6段階のレベルから、入力されたテキストのレベルを判定することができる。<br>
