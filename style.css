@@ -165,6 +165,12 @@ td, th {
         /* opacity:1; */
 }
 
+#animationtable .space{
+    /* color : #F7DE80; */
+    /* color : white; */
+         opacity:0; 
+}
+
 #animationtable .red {
     color: #F78B9E;
     transform: scale(1);

@@ -16,7 +16,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="B-grpIRlQPDVhsa-uzQTrLOoswSs9juvRvEZLXVCcxo" />
 
-    <meta property="og:title" content="多くの人に使いやすいローマ字タイピング" />
+    <meta property="og:title" content="ローマ字タイピング" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="https://oosakiken1.github.io/wakariyasuinihongo/typing.html" />
     <meta property="og:image" content="https://oosakiken1.github.io/wakariyasuinihongo/image/typing_sn.png" />
@@ -45,7 +45,7 @@
     <div class="container">
         <header>
             <div class="row">
-                <h1 class="text-secondary">多くの人に使いやすいローマ字タイピング 0.0.4(仮公開版)
+                <h1 class="text-secondary">ローマ字タイピング 0.0.5(仮公開版)
                     <span class="h6 rounded bg-secondary text-white mx-1 px-1">The romaji typing for all people</span>
                 </h1>
 
@@ -65,18 +65,19 @@
                     <div class="card card-body border-3 my-1">
                         <div id="howtotext">このツールは、ローマ字タイピングの練習アプリです。<br>
                             多くの人に使いやすくなるよう、大きな文字で見やすい作りになっています。<br>
-                            また、例文のレベルは日本語能力試験（JLPT）に対応しており、留学生などの日本語学習者にもおすすめです。<br>
-                            タイピングの結果をメール送付するQRコードが発行できますので、教室活動にも活用できます。<br><br>
+                            また、例文のレベルは日本語能力試験（JLPT）に対応しており、留学生などの日本語学習者にもおすすめです。<br><br>
+                            <!-- タイピングの結果をメール送付するQRコードが発行できますので、教室活動にも活用できます。<br><br> -->
                             ＜詳細＞<br>
                             このツールは、ひらがな→ローマ字変換が苦手な方に、ひらがな→ローマ字の変換を練習してもらうことを主目的としています。<br>
                             そのため、ローマ字のアルファベットやキーボードの表示などはありません。<br>
                             1.練習時間は、文字数、問題数、入力時間から選ぶことができます。<br>
-                            2.レベルは、むずかしい（N1）、ふつう（N2）、かんたん（N3）、ひらがな、アルファベットから選ぶことができます。<br>
-                            3.ふりがなは、なし、漢字のみ、すべてを選ぶことができます。<br>
+                            2.レベルは、むずかしい（N1）、ふつう（N2）、かんたん（N3）、やさしい（N4）、ひらがな、アルファベットから選べます。<br>
+                            3.ふりがなは、なし、漢字のみ、すべてから選べます。<br>
                             4.JLPTとタイピングのハイブリッド学習をする場合、以下のような設定をしてください。<br>
                             ・モード「単語くりかえし」：このモードではJLPT問題文で扱っている語彙を最初に入力し、そのあと例文を入力します。これにより、語彙と例文のスキーマを形成します。<br>
                             ・ふりがな「なし」：このモードでは、漢字の読み方の練習ができます。<br>
-                            5.練習後の結果をQRコードで発行してメール送信できます。講師のアドレスに送信してもらうことで、結果の収集を簡単にできます。<br>
+                            5.設定した内容を初期値とするURLが表示されます。こちらのURLを配布すると、設定の内容を簡単に共有できます。<br>
+                            <!-- 6.練習後の結果をQRコードで発行してメール送信できます。講師のアドレスに送信してもらうことで、結果の収集を簡単にできます。<br> -->
                             <!-- 4.1～3の情報を組み込んだurlを発行できます。<br> -->
                             推奨環境　ディスプレイサイズ　1920*1080 以上<br>
                         </div>
@@ -149,7 +150,7 @@
                                 </div>
                             </div>
                             <div class="row mb-2">
-                                <label class="col-1 col-form-label">レベル</label>
+                                <label class="col-1 col-form-label">例文レベル</label>
                                 <div class="col-2 mt-2">
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="practicelevel" id="pls1" value="s1">
@@ -163,19 +164,23 @@
                                         <input class="form-check-input" type="radio" name="practicelevel" id="pls3" value="s3">
                                         <label for="pls3" >かんたん(N3)</label>
                                     </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="pls4" value="s4">
+                                        <label for="pls4" >やさしい(N4)</label>
+                                    </div>
                                 </div>
                                 <div class="col-2 mt-2">
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="practicelevel" id="plc4" value="c4">
-                                        <label for="plc4">ひらがな１</label>
-                                    </div>
-                                    <div class="form-check">
                                         <input class="form-check-input" type="radio" name="practicelevel" id="plc5" value="c5">
-                                        <label for="plc5">ひらがな２</label>
+                                        <label for="plc5">ひらがな１</label>
                                     </div>
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="practicelevel" id="plc6" value="c6">
-                                        <label for="plc6">アルファベット</label>
+                                        <label for="plc6">ひらがな２</label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="practicelevel" id="plc7" value="c7">
+                                        <label for="plc7">アルファベット</label>
                                     </div>
                                 </div>
                             </div>
@@ -247,6 +252,13 @@
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="radio" name="displayqr" id="dq0" value="off"><label for="dq0">なし</label>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <label class="col-1 col-form-label">URL</label>
+                                <div class="col mt-2">
+                                    <input id="url" type="text" size="150" value="http://www" onfocus="this.select();" readonly>
                                 </div>
                             </div>
                         </form>

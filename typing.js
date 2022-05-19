@@ -7,6 +7,7 @@ const FORM_CONFIG = document.getElementById("formconfig");
 
 const INPUT_ID = document.getElementById("studentid");
 const INPUT_EMAIL = document.getElementById("email");
+const INPUT_URL = document.getElementById("url");
 
 const AUDIO_TYPE = document.getElementById("audiotype");
 const AUDIO_MISS = document.getElementById("audiomiss");
@@ -29,6 +30,20 @@ const BTN_CLEAR = document.getElementById("btnclear");
 const BTN_PASS = document.getElementById("btnpass");
 
 const config = {
+    time:'M5',
+    level:'s2',
+    mode:'pm0',
+    ruby:'dr1',
+    order: 'od1',
+    playAudio: 'off',
+    displayQR: 'off',
+ 
+    email:'',
+    studentId: ''
+}
+
+
+const initConfig = {
     time:'M5',
     level:'s2',
     mode:'pm0',
@@ -79,12 +94,21 @@ document.addEventListener('keyup', keyup_event);
 cleanMondaiTexts();
 let mode = 'title'; // title →　typing → result
 modeTitle();
+setConfig(getUrlQueries());
 setFormValue();
 getFormValue();
 
 // let displayText = '<ruby><rb>練習</rb><rt>れんしゅう</rt><rt>ばかりしていると</rt><rb>疲</rb><rt>つか</rt><rt>れます。</rt></ruby>';
 // let kanjiText = '練習ばかりしていると疲れます。'
 // let correctText = 'れんしゅうばかりしているとつかれます。'
+
+function setConfig(params) {
+    for(key of Object.keys(config)) {
+        if (key in params === true) {
+            config[key] = params[key];            
+        }        
+    }
+}
 
 function getFormValue() {
     config.time = FORM_CONFIG.elements['practicetime'].value;
@@ -102,6 +126,20 @@ function getFormValue() {
     $('#statusorder').html(`順番<br>${configTexts.order[config.order]}`);
 
     playAudio(AUDIO_TYPE);
+
+    let urlText = location.href.replace(/\?.*$/,"");
+    let firstparam = true;
+    for(key of Object.keys(config)) {
+        if (config[key] !== initConfig[key]) {
+            if (firstparam) {
+                urlText += "?" + key + '=' + config[key];
+                firstparam = false;
+            } else {
+                urlText += '&' + key + '=' + config[key];
+            }
+       }
+    }
+    INPUT_URL.value = urlText;
 }
 
 function setFormValue() {
@@ -224,7 +262,7 @@ function setNextMondaiText() {
 
 function getCorrectText(inputText) {
     let outputText = '';
-    let nonKanjiTexts = inputText.match(/[^\u3005\u3007\u4E00-\u9FFF（）]+/g);
+    let nonKanjiTexts = inputText.match(/[^\u3005\u3007\u4E00-\u9FFF（）　]+/g);
 
     for (let str of nonKanjiTexts) {
         str = str.replace(/[\u30a1-\u30f6]/g, function (match) {
@@ -441,9 +479,14 @@ function getAnimationTable(inputText) {
             if (str.search(/[（）]/) === -1) {
                 // 漢字テキストに追加
                 for (let char of str) {
-                    kjIndex++;
-                    let delay = Math.floor(Math.random() * 4);
-                    kjText += `<td><span id="k${kjIndex}" class="fs${delay}">${char}</span>`;
+
+                    if (char !== '　') {
+                        kjIndex++;
+                        let delay = Math.floor(Math.random() * 4);
+                        kjText += `<td><span id="k${kjIndex}" class="fs${delay}">${char}</span></td>`;
+                    } else {
+                        kjText += `<td><span class="space">_</span></td>`;
+                    }
                 }
                 //　カタカナをひらがなに変換
                 str = str.replace(/[\u30a1-\u30f6]/g, function (match) {
@@ -453,12 +496,16 @@ function getAnimationTable(inputText) {
 
                 //ふりがなテキストに追加
                 for (let char of str) {
-                    if (config.ruby === 'dr0') {  // ふりがなすべての時は、見える
-                        rbText += `<th><span id="r${rbIndex}">${char}</span></th>`;
-                    } else {                    // ふりがなすべて以外は、見えない
-                        rbText += `<th><span id="r${rbIndex}" class="white">${char}</span></th>`;
+                    if (char !== '　') {
+                        if (config.ruby === 'dr0') {  // ふりがなすべての時は、見える
+                            rbText += `<th><span id="r${rbIndex}">${char}</span></th>`;
+                        } else {                    // ふりがなすべて以外は、見えない
+                            rbText += `<th><span id="r${rbIndex}" class="white">${char}</span></th>`;
+                        }
+                        rbIndex++;
+                    } else {
+                        rbText += `<th><span></span></th>`;
                     }
-                    rbIndex++;
                 }
             //ふりがなブロックの場合
             } else {
@@ -472,7 +519,7 @@ function getAnimationTable(inputText) {
                 });
 
                 //ふりがなテキストに追加
-                rbText += '<th class = "narrow">'
+                rbText += '<th class="narrow">'
                 for (let char of str) {
                     if (config.ruby !== 'dr2') {  // ふりがななし以外は、見える
                         rbText += `<span id="r${rbIndex}">${char}</span>`;
@@ -871,3 +918,23 @@ function getExpectedRomaji(str) {
 }
 
 // んっしょ nssho
+
+function getUrlQueries() {
+    var queryStr = window.location.search.slice(1);  // 文頭?を除外
+        queries = {};
+  
+    // クエリがない場合は空のオブジェクトを返す
+    if (!queryStr) {
+      return queries;
+    }
+  
+    // クエリ文字列を & で分割して処理
+    queryStr.split('&').forEach(function(queryStr) {
+      // = で分割してkey,valueをオブジェクトに格納
+      var queryArr = queryStr.split('=');
+      queries[queryArr[0]] = queryArr[1];
+    });
+  
+    return queries;
+  }
+  
