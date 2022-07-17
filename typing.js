@@ -1,6 +1,4 @@
 const DIV_ANSWERTEXT = document.getElementById("answertext");
-const DIV_QUESTIONTEXT = document.getElementById("questiontext");
-const DIV_ANIMATIONTEXT = document.getElementById("animationtext");
 const DIV_ANIMATIONTABLE = document.getElementById("animationtable");
 
 const FORM_CONFIG = document.getElementById("formconfig");
@@ -30,13 +28,13 @@ const BTN_CLEAR = document.getElementById("btnclear");
 const BTN_PASS = document.getElementById("btnpass");
 
 const config = {
-    time:'M5',
+    time:'m5',
     level:'s2',
-    mode:'pm0',
-    ruby:'dr1',
-    order: 'od1',
-    playAudio: 'off',
-    displayQR: 'off',
+    mode:'m0',
+    ruby:'r1',
+    order: 'o1',
+    audio: 'off',
+    qr: 'off',
  
     email:'',
     studentId: ''
@@ -44,13 +42,13 @@ const config = {
 
 
 const initConfig = {
-    time:'M5',
+    time:'m5',
     level:'s2',
-    mode:'pm0',
-    ruby:'dr1',
-    order: 'od1',
-    playAudio: 'off',
-    displayQR: 'off',
+    mode:'m0',
+    ruby:'r1',
+    order: 'o1',
+    audio: 'off',
+    qr: 'off',
  
     email:'',
     studentId: ''
@@ -69,12 +67,13 @@ let romajiText = '';
 let hiraganaText = '';
 let untransferText = '';
 let missText = '';
+let fullTypeText = '';
 
 let mondaiText = '';
 let correctText = '';
 let order = [];
 
-let level = 0;
+let level = '';
 
 let lastScore = 0;
 
@@ -116,8 +115,8 @@ function getFormValue() {
     config.mode = FORM_CONFIG.elements['practicemode'].value;
     config.ruby = FORM_CONFIG.elements['displayruby'].value;
     config.order = FORM_CONFIG.elements['order'].value;
-    config.playAudio = FORM_CONFIG.elements['playaudio'].value;
-    config.displayQR = FORM_CONFIG.elements['displayqr'].value;
+    config.audio = FORM_CONFIG.elements['playaudio'].value;
+    config.qr = FORM_CONFIG.elements['displayqr'].value;
 
     $('#statusremain').html(`練習時間<br>${configTexts.time[config.time]}`);
     $('#statuslevel').html(`レベル<br>${configTexts.level[config.level]}`);
@@ -148,12 +147,12 @@ function setFormValue() {
     FORM_CONFIG.elements['practicemode'].value = config.mode;
     FORM_CONFIG.elements['displayruby'].value = config.ruby;
     FORM_CONFIG.elements['order'].value = config.order;
-    FORM_CONFIG.elements['playaudio'].value = config.playAudio;
-    FORM_CONFIG.elements['displayqr'].value = config.displayQR;
+    FORM_CONFIG.elements['playaudio'].value = config.audio;
+    FORM_CONFIG.elements['displayqr'].value = config.qr;
 }
 
 function playAudio(audio) {
-    if (config.playAudio === 'on') {
+    if (config.audio === 'on') {
         audio.currentTime = 0;
         audio.volume = 0.1;
         audio.play();
@@ -199,7 +198,7 @@ function makeOrder(){
     for (let i=0; i < mondaiTexts[level].length; i++) {
         order.push(i);
     }
-    if (config.order === 'od1' && config.level[1] !=='6' ) {   
+    if (config.order === 'o1' && config.level[0] !=='a' ) {   
         for (let i=0; i < order.length; i++) {
             const j = Math.floor(order.length * Math.random());
             [order[i], order[j]] = [order[j], order[i]];
@@ -216,12 +215,12 @@ function setNextMondaiText() {
 
         text = mondaiTexts[level][order[information.sentencesCount % order.length]];
 
-        if (config.level[0] === 'c') {
+        if (config.level[0] !== 's') {
             mondaiText = text;
         } else if (config.level[0] === 's') {
-            if (config.mode === 'pm0') {    // ふつう
+            if (config.mode === 'm0') {    // ふつう
                 mondaiText = text.split('/')[1]||text;
-            } else if (config.mode === 'pm1') { // 単語くりかえし
+            } else if (config.mode === 'm1') { // 単語くりかえし
                 mondaiText = text.replace('/','。');
             } else {
                 mondaiText = text.split('/')[0];
@@ -236,14 +235,7 @@ function setNextMondaiText() {
     missText = '';
     hiraganaText = '';
     untransferText = '';
-
-    // while (DIV_ANIMATIONTEXT.firstChild) {
-    //     DIV_ANIMATIONTEXT.removeChild(DIV_ANIMATIONTEXT.firstChild);
-    // }
-
-    // const divAnime = document.createElement("div");
-    // divAnime.innerHTML = `<div class="animate four" id="animate">${getAnimationText(mondaiText)}</div>`;
-    // DIV_ANIMATIONTEXT.appendChild(divAnime);
+    fullTypeText = '';
 
     while (DIV_ANIMATIONTABLE.firstChild) {
         DIV_ANIMATIONTABLE.removeChild(DIV_ANIMATIONTABLE.firstChild);
@@ -288,9 +280,10 @@ function displayInfomation() {
 function displayAll() {
     displayInfomation();
     
-    DIV_ANSWERTEXT.innerHTML = '<div>' + romajiText + missText + '|<br>' + hiraganaText + untransferText + missText + '|</div>';
+    DIV_ANSWERTEXT.innerHTML = `<div>${romajiText}${missText}|<br>${hiraganaText}${untransferText}${missText}|</div>`;
+    // DIV_ANSWERTEXT.innerHTML = `<div>${romajiText}${missText}|<br>${hiraganaText}${untransferText}${missText}|<br>${fullTypeText}</div>`;
 
-    for (let i = 0; i < correctText.length; i++) {
+    for (let i = 0; i < correctText.length; i++) {     
         const span = document.getElementById('r' + i);
         if (i < hiraganaText.length) {
             span.classList.add('red');
@@ -308,7 +301,9 @@ let oldscrollLeft;
 function scrollAnimationTable() {
     const sw = DIV_ANIMATIONTABLE.scrollWidth;
     const cw = DIV_ANIMATIONTABLE.clientWidth;
-    let scrollLeft = (sw - cw) * (hiraganaText.length - (DIV_ANIMATIONTABLE.clientWidth/(DIV_ANIMATIONTABLE.scrollWidth/correctText.length))*.3) / (correctText.length - (DIV_ANIMATIONTABLE.clientWidth/(DIV_ANIMATIONTABLE.scrollWidth/correctText.length)*.7))
+    // let scrollLeft = (sw - cw) * (hiraganaText.length - (DIV_ANIMATIONTABLE.clientWidth/(DIV_ANIMATIONTABLE.scrollWidth/correctText.length))*.2) / (correctText.length - (DIV_ANIMATIONTABLE.clientWidth/(DIV_ANIMATIONTABLE.scrollWidth/correctText.length)*.5))
+
+    let scrollLeft = (sw - cw) * (hiraganaText.length - (cw/(sw/correctText.length))*.1) / (correctText.length - (cw/(sw/correctText.length)*.7))
 
     if (oldscrollLeft === scrollLeft) {
         return
@@ -319,7 +314,7 @@ function scrollAnimationTable() {
     // $("#animationtable").scrollLeft(rate); 
 
     $("#animationtable").stop(); 
-    $("#animationtable").animate({  scrollLeft: scrollLeft },3000,'easeOutCubic'); 
+    $("#animationtable").animate({  scrollLeft: scrollLeft },5000,'easeOutCubic'); 
 
 }
 
@@ -386,68 +381,13 @@ function getDispayText(inputText, spanIndex) {
                 if (nonKnajiIndex < spanIndex) {
                     outputText += `<span class="red">${char}</span>`;
                 } else {
-                    if (config.ruby === 'dr1') {
+                    if (config.ruby === 'r1') {
                         outputText += char;
                     } else {
                         outputText += `<span class="white">${char}</span>`;
                     }
                 }
                 nonKnajiIndex++;
-            }
-            outputText += '</rt>';
-        }
-    }
-    return `<ruby>${outputText}</ruby>`;
-}
-
-function getAnimationText(inputText) {
-    let outputText = '';
-    let kanjiIndex = 0;
-    let rubyIndex = 0;
-    let tempTexts = inputText.match(/(（[^\u3005\u3007\u4E00-\u9FFF]+）|[^\u3005\u3007\u4E00-\u9FFF（）]+|[\u3005\u3007\u4E00-\u9FFF]+)/g);
-    // let tempTexts = inputText.match(/([^\u3005\u3007\u4E00-\u9FFF（）]+|[\u3005\u3007\u4E00-\u9FFF（）]+)/g);
-
-    for (let str of tempTexts) {
-        if (str.length === 0) continue;
-
-        if (str.search(/[\u3005\u3007\u4E00-\u9FFF]/) === 0) {
-            for (let char of str) {
-                outputText += `<span id="k${kanjiIndex}" class="fs">${char}</span>`;
-                kanjiIndex++;
-            }
-        } else {
-            let rubyFlag = false;
-
-            if (str.search(/[（）]/) === -1) {
-                for (let char of str) {
-                    outputText += `<span id="k${kanjiIndex}" class="fs">${char}</span>`;
-                    kanjiIndex++;
-                }
-                if (config.ruby === '2') {
-                    rubyFlag = true;
-                }
-            } else {
-                if (config.ruby !== '0') {
-                    rubyFlag = true;
-                }
-            }
-            // （）を削除
-            str = str.replace(/[（）]/g, '');
-
-            //　カタカナをひらがなに変換
-            str = str.replace(/[\u30a1-\u30f6]/g, function (match) {
-                var chr = match.charCodeAt(0) - 0x60;
-                return String.fromCharCode(chr);
-            });
-
-            outputText += '<rt>';
-            for (let char of str) {
-                if (rubyFlag) {
-                    outputText += `<span id="r${rubyIndex}">${char}</span>`;
-                } else {
-                    outputText += `<span id="r${rubyIndex}" class="white">${char}</span>`;
-                }
-                rubyIndex++;
             }
             outputText += '</rt>';
         }
@@ -497,7 +437,7 @@ function getAnimationTable(inputText) {
                 //ふりがなテキストに追加
                 for (let char of str) {
                     if (char !== '　') {
-                        if (config.ruby === 'dr0') {  // ふりがなすべての時は、見える
+                        if (config.ruby === 'r0') {  // ふりがなすべての時は、見える
                             rbText += `<th><span id="r${rbIndex}">${char}</span></th>`;
                         } else {                    // ふりがなすべて以外は、見えない
                             rbText += `<th><span id="r${rbIndex}" class="white">${char}</span></th>`;
@@ -521,7 +461,7 @@ function getAnimationTable(inputText) {
                 //ふりがなテキストに追加
                 rbText += '<th class="narrow">'
                 for (let char of str) {
-                    if (config.ruby !== 'dr2') {  // ふりがななし以外は、見える
+                    if (config.ruby !== 'r2') {  // ふりがななし以外は、見える
                         rbText += `<span id="r${rbIndex}">${char}</span>`;
                     } else {                    // ふりがななしの時は、見えない
                         rbText += `<span id="r${rbIndex}" class="white">${char}</span>`;
@@ -582,7 +522,7 @@ BTN_START.onclick = function () {
     lastScore = 0;
     lastUnCorrectflag = false;
 
-    level = parseInt(config.level[1]);
+    level = config.level;
 
     DIV_ANIMATIONTABLE.innerHTML = '<table><tr><td><div class="message"><span class="res">3</span><div></td></tr></table>';
     playAudio(AUDIO_COUNT);
@@ -605,15 +545,15 @@ BTN_START.onclick = function () {
                 makeOrder();
 
                 startTime = new Date().getTime();
-                if (config.time[0] === 'S') {
-                    if (config.time[1] === 'A') {
+                if (config.time[0] === 's') {
+                    if (config.time[1] === 'a') {
                         endCount = order.length;
                         endTime = 0;
                     } else {
                         endCount = parseInt(config.time[1]) * 10;
                         endTime = 0;
                     }
-                } else if (config.time[0] === 'C') {
+                } else if (config.time[0] === 'c') {
                     endCount = parseInt(config.time[1]) * 100;
                     endTime = 0;
             } else {
@@ -643,7 +583,7 @@ function intervalEvent() {
 
     displayInfomation();
 
-    if (config.time[0] ==='M' && nowTime >= endTime) {
+    if (config.time[0] ==='m' && nowTime >= endTime) {
         displayReult();
         modeResult();
     }
@@ -677,7 +617,7 @@ function displayReult() {
 
     createQRcode() ;
 
-    if (config.displayQR === 'on'){
+    if (config.qr === 'on'){
         $('#qrTab').collapse('show');
     }
     // $("#qrimage").addClass('res');
@@ -720,9 +660,7 @@ function keyup_event(e) {
     DIV_ANSWERTEXT.innerHTML = romajiText + missText + '<br>' + hiraganaText + untransferText + missText;
     DIV_ANIMATIONTABLE.classList.remove('highlight');
 
-    // DIV_QUESTIONTEXT.classList.add('bg-white');
-
-    if (config.time[0] === 'C' && information.characterCount >= endCount) {
+    if (config.time[0] === 'c' && information.characterCount >= endCount) {
         displayReult();
         return;
     }
@@ -730,11 +668,11 @@ function keyup_event(e) {
     if (correctText === hiraganaText) {
         lastScore += hiraganaText.length;
 
-        if (config.time[0] === 'S' && information.sentencesCount >= endCount) {
+        if (config.time[0] === 's' && information.sentencesCount >= endCount) {
             displayReult();
             return;
         } else {
-            if (config.level[0] !== 'c') {
+            if (config.level[0] === 's') {
                 playAudio(AUDIO_NEW_TEXT);
             }
             setNextMondaiText();
@@ -762,6 +700,7 @@ function keydown_event(e) {
         }
     } else {
         nextRomajiText = romajiText + e.key.toLowerCase();
+        fullTypeText += e.key.toLowerCase();
     }
 
     [nextHiriganaText, nextUntransferText] = getHiraganaTextUseCorrectText(nextRomajiText);

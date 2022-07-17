@@ -64,16 +64,6 @@ h3 {
     overflow-x: hidden;
 }
 
-#questiontext {
-    /* font-family: monospace;   */
-    font-size: 250%;
-    transition: background-color 0.2s;
-}
-
-#questiontext rt{
-    font-size: 75%;
-}
-
 #animationtable span {
     display: inline-block;
 }
@@ -89,26 +79,6 @@ span.red{
 
     /* text-decoration:underline; 
     text-decoration-color:#FF0000; */
-}
-
-
-#animationtext {
-    /* font-family: monospace;   */
-    font-size: 250%;
-    letter-spacing:0.1em;
-        /* background-color: #F7DE80; */
-    /* transition: background-color 0.2s;  1秒かけて背景色を元に戻す */
-}
-
-#animationtext rt{
-    font-size: 80%;
-    letter-spacing:0.0em;
-}
-
-#animationtext .red {
-    color: #F78B9E;
-    transform: scale(1);
-    animation: animation2 .2s forwards;
 }
 
 #animationtable {
@@ -142,7 +112,7 @@ td, th {
 
 
 #animationtable td{
-    font-size: 3em;
+    font-size: 3.0em;
     text-align:center;
 }
 
