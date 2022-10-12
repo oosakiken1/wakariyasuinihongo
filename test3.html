@@ -3,7 +3,18 @@
 
 <head>
 <meta charset="UTF-8">
-<title>mebee テスト</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-6XZQGTDR6Z"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'G-6XZQGTDR6Z');
+    </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<title>タイトル</title>
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <link rel="stylesheet" href="style.css"> -->
@@ -13,7 +24,19 @@
 <div class="container markdown-body">
 
 <div id="content"></div>
+</div>
+
+</body>
+</html>
+
+<script>
+(window.onload = function() {
+    document.getElementById('content').innerHTML = marked.parse(document.getElementById("md").innerHTML);
+})();
+</script>
+
 <div id="md" style="display:none;">
+<!-- ここからmdコンテンツ -->
 
 <h1 class="text-secondary"> 日本語文章を自動評価するWebツール一覧</h1>
 
@@ -45,9 +68,8 @@
 <br>
 <br>
 
-### 日本語文章難易度判定システム　jReadability（李，2016）
-
-[https://jreadability.net/](https://jreadability.net/)
+### 日本語リーダビリティ測定（佐藤，2011）
+[http://readability.nagaokaut.ac.jp/readability](http://readability.nagaokaut.ac.jp/readability)
 
 「日本書き言葉均衡コーパス（[https://ccd.ninjal.ac.jp/bccwj/](https://ccd.ninjal.ac.jp/bccwj/)）」（以下，BCCWJ）の文字bigramモデルをもちいて、テキストの難易度を推定するツール。<br>
 このツールでは，教科書コーパスを用いた13段階の難易度と，BCCWJを用いた9段階の難易度の2つを測定することができる。<br>
@@ -56,8 +78,8 @@
 <br>
 <br>
 
-### 日本語リーダビリティ測定ツール（佐藤，2011）
-[http://readability.nagaokaut.ac.jp/readability](http://readability.nagaokaut.ac.jp/readability)
+### 日本語文章難易度判定システム　jReadability（李，2016）
+[https://jreadability.net/](https://jreadability.net/)
 
 日本語教育の読解クラスを支援する目的で文章の難易度を判定するツール。<br>
 このツールでは、日本語教育の教科書とBCCWJに対して付与した6段階のレベルから、入力されたテキストのレベルを判定することができる。<br>
@@ -149,11 +171,5 @@
 李在鎬・長谷部陽一郎・迫田久美子（2017）「人工知能の仕組みを利用した学習者作文評価システム『jWriter』―I-JAS を利用した試み」『2017 年度日本語教育学会秋季大会予稿集』，289-291.<br>
 
 
+<!-- ここまでがmdコンテンツ -->
 </div>
-</div>
-
-<script>
-document.getElementById('content').innerHTML = marked.parse(document.getElementById("md").innerHTML);
-</script>
-</body>
-</html>

@@ -1,5 +1,5 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="ja">
 
 <head>
     <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -8,27 +8,166 @@
         window.dataLayer = window.dataLayer || [];
         function gtag() { dataLayer.push(arguments); }
         gtag('js', new Date());
-
         gtag('config', 'G-6XZQGTDR6Z');
     </script>
-    
-    <meta charset="utf-8" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    <meta charset="UTF-8">
     <title>日本語文章を自動評価するWebツール一覧</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css"> 
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@3.0.1/github-markdown.min.css"> -->
+    <script>
+        (window.onload = function() {
+            document.getElementById('content').innerHTML = marked.parse(document.getElementById("md").innerHTML);
+        })();
+    </script>
 </head>
 
 <body>
-    <div class="container">
+    <div class="container markdown-body">
         <div id="content"></div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script>
-        axios.get('./column01.md')
-            .then(response => document.querySelector('#content').innerHTML = marked.parse(response.data));
-    </script>
 </body>
-
 </html>
+
+
+<div id="md" style="display:none;">
+<!-- ここからmdコンテンツ -->
+
+<h1 class="text-secondary"> 日本語文章を自動評価するWebツール一覧</h1>
+
+<div class="my-1">
+<a href="./index.html" class="badge btn-secondary">Home</a>
+</div>
+
+このページでは、日本語文章を自動評価するWebツールを紹介しています。 
+
+## 目次
+
+1. [文章難易度の自動評価ツール](#難易度の自動評価ツール)
+2. [作文の自動評価ツール](#作文の自動評価ツール)
+3. [文章のわかりやすさを自動評価するツール](#文章のわかりやすさを自動評価するツール)
+4. [文章のリライト支援ツール](#文章のリライト支援ツール)
+
+<br>
+
+## 1. 難易度の自動評価ツール<a id="難易度の自動評価ツール"></a>
+<br>
+
+### 帯3	日本語テキストの難易度を測る（柴崎・玉岡，2010）
+
+[http://kotoba.nuee.nagoya-u.ac.jp/sc/obi3/](http://kotoba.nuee.nagoya-u.ac.jp/sc/obi3/)
+
+文章の難易度を、学校教育の学年という形で判定するツール。<br>
+学年ごとの国語の教科書に収められたテキストの構成要素から、入力された文章の難易度を判定することができる。<br>
+難易度を測る独立変数はテキスト全体の平仮名，1文の平均述語数の2つとして、学年の判定をおこなっている。
+<br>
+<br>
+
+### 日本語リーダビリティ測定（佐藤，2011）
+[http://readability.nagaokaut.ac.jp/readability](http://readability.nagaokaut.ac.jp/readability)
+
+「日本書き言葉均衡コーパス（[https://ccd.ninjal.ac.jp/bccwj/](https://ccd.ninjal.ac.jp/bccwj/)）」（以下，BCCWJ）の文字bigramモデルをもちいて、テキストの難易度を推定するツール。<br>
+このツールでは，教科書コーパスを用いた13段階の難易度と，BCCWJを用いた9段階の難易度の2つを測定することができる。<br>
+難易度の推定には、文字bigramモデルを用いている。<br>
+
+<br>
+<br>
+
+### 日本語文章難易度判定システム　jReadability（李，2016）
+[https://jreadability.net/](https://jreadability.net/)
+
+日本語教育の読解クラスを支援する目的で文章の難易度を判定するツール。<br>
+このツールでは、日本語教育の教科書とBCCWJに対して付与した6段階のレベルから、入力されたテキストのレベルを判定することができる。<br>
+判定に利用する独立変数は平均文長，漢語率，和語率，動詞率，助詞率の5つとし、公式の妥当性については外部基準である日本語能力試験の読解テキストを用いて確認できたとしている。<br>
+<br>
+<br>
+
+### やさにちチェッカー（中島・岩田，2019）
+[http://www4414uj.sakura.ne.jp/Yasanichi1/nsindan/](http://www4414uj.sakura.ne.jp/Yasanichi1/nsindan/)
+
+やさしい日本語かどうかを判定するツール。<br>
+語彙、漢字、硬さ、長さ、文法という５つの指標から、総合判定を評価することができる。<br>
+5つ指標及び総合判定は有識者が作成した判定基準を用いて、点数を評価する。<br>
+<br>
+<br>
+<br>
+
+
+## 2. 作文の自動評価ツール<a id="作文の自動評価ツール"></a>
+<br>
+
+### GoodWriting Rater（田中ら，2018）
+[https://goodwriting.jp/wp/](https://goodwriting.jp/wp/)
+
+日本語ランティングの評価を支援ツール。<br>
+アカデミックライティングの「比較と意見（論証）」のフローチャート評価値を機械学習した結果から、テキストの構成要素から推定する。<br>
+結果として、ホリスティック評価・マルチプルレイト評価の結果と確信度を提示する。<br>
+<br>
+<br>
+
+### 日本語学習者作文評価システム jWriter（李・長谷部・迫田，2017）
+
+[https://jreadability.net/jwriter/](https://jreadability.net/jwriter/)
+
+日本語学習者の作文から熟達度を自動評価するツール。<br>
+日本語学習者コーパス「I-JAS（[https://ninjal-sakoda.sakura.ne.jp/lsaj/](https://ninjal-sakoda.sakura.ne.jp/lsaj/)）」につけた日本語の熟達度（初級、中級、上級）をもとに、作文の熟達度を自動評価する。<br>
+判定には、平均語数、中級後半語、タイプ・トークン比、動詞、中級前半後、総文字数、和語を利用している。
+<br>
+<br>
+<br>
+
+## 3. 文章のわかりやすさを自動評価するツール<a id="文章のわかりやすさを自動評価するツール"></a>
+<br>
+
+### わかりにくさ計算機（簡易版）（大崎，2021）
+[https://oosakiken1.github.io/wakariyasuinihongo/calculation.html](https://oosakiken1.github.io/wakariyasuinihongo/calculation.html)
+
+専門文書内にある、日本人と外国人の双方にとってわかりにくいと思われる文を可視化するツール。<br>
+入力されたテキストの構成要素から、わかりにくい文を文単位でハイライト表示することができる。<br>
+評価値の分析に用いた専門文書はシステム仕様書で、一文ごとにわかりにくいと評価した人の割合の独自調査の結果から、該当の文がどの程度の人がわかりにくいかを推定している。<br>
+判定には、一文の長さ、連続するカタカナの文字数、連続する漢字の文字数を利用する。
+
+<br>
+<br>
+<br>
+
+## 4. 文章のリライト支援ツール<a id="文章のリライト支援ツール"></a>
+<br>
+
+### 公文書作成支援システム（中島・岩田，2019）
+[http://www4414uj.sakura.ne.jp/Yasanichi1/sakusei/](http://www4414uj.sakura.ne.jp/Yasanichi1/sakusei/)
+
+公文書をやさしい日本語に書き換える目的で作成されたライティング支援ツール。<br>
+あらかじめ準備した難語、易語の書き換え辞書を用いて、入力された文章から書き換えたやさしい日本語の候補を表示することができる。
+<br>
+<br>
+
+### チュウ太のやさしくなーれ（川村，2015）
+[http://yasashii.overworks.jp/](http://yasashii.overworks.jp/)
+
+日本語教育能力検定試験（以下、JLPT）の旧出題基準をもとに、やさしい日本語に書き換えるライティング支援ツール。<br>
+難易度の高い語彙と、対応するやさしい語彙を併記した書き換えリストから、入力された文章をやさしい文章に自動で書き換える。<br>
+このツールでは、JLPTの旧2級以上の語彙を難易度の高い語彙としている。
+
+<br>
+<br>
+
+---
+
+### 参考文献
+
+大崎健一（2021）「専門文書内のわかりにくい文の推定―多文化共生社会に向けたライティング支援のための考察―」『計量国語学会第六十五回大会予稿集』1-6.<br>
+川村よし子（2015）「日本語教師の集合知を活用したやさしい日本語書き換えシステムの構築」『ヨーロッパ日本語教育』18，131-136.<br>
+佐藤理史（2011）「均衡コーパスを規範とするテキスト難易度測定」『情報処理学会論文誌』52(4),1777-1789.<br>
+柴崎秀子・玉岡賀津雄（2010）「国語科教科書を基にした小・中学校の文章難易学年判定式の構築」『日本教育工学会論文誌』33(4)，449-458．<br>
+田中真理ら（2018）「日本語ライティング評価の支援ツールGoodWiring Raterの活用の可能性―「人間」と「機械」による評価の統合的活用―」『〈"GoodWriting Rater" 完成公開セミナー〉』発表資料<br>
+中島明則・岩田一成（2019）「書き換え支援システム　公用文をやさしい日本語に」庵功雄ほか編『〈やさしい日本語〉と多文化共生』ココ出版，161-172.<br>
+李在鎬（2016）「日本語教育のための文章難易度に関する研究」『早稲田日本語教育学』21，1-16．<br>
+李在鎬・長谷部陽一郎・迫田久美子（2017）「人工知能の仕組みを利用した学習者作文評価システム『jWriter』―I-JAS を利用した試み」『2017 年度日本語教育学会秋季大会予稿集』，289-291.<br>
+
+
+<!-- ここまでがmdコンテンツ -->
+</div>
