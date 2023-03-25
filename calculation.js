@@ -19,6 +19,8 @@ BTN_EXEC.onclick = function () {
     let text = DIV_TEXT.value.replace(/\r\n|\r/g, '\n');
     let resultText = '';
 
+    if (!text) return;
+
     const eosPeriod = text.match(/．\n/g);
     if (!CHK_PERIOD.checked && eosPeriod !== null && confirm(`ピリオド直後の改行が ${eosPeriod.length} 箇所あります。ピリオドを文末として扱いますか？`)) {
         CHK_PERIOD.checked = true;
@@ -69,7 +71,7 @@ BTN_EXEC.onclick = function () {
     }
 
     const [mean, sd] = calcMeanSd(results);
-    DIV_SUMMARY.innerHTML = `わかりにくさ係数(<i>n</i> = ${results.length}, <i>M</i> = ${mean.toFixed(3)}, <i>SD</i> = ${sd.toFixed(3)})`;
+    DIV_SUMMARY.innerHTML = `わかりやすさ評価  ${(100-mean*100).toFixed(1)}±${(sd*100).toFixed(1)}点<span class="h6">（わかりにくさ係数 <i>n</i> = ${results.length}, <i>M</i> = ${mean.toFixed(3)}, <i>SD</i> = ${sd.toFixed(3)}）</span>`;
 };
 
 function countKana10(str) {
