@@ -520,19 +520,26 @@ h2:[
 a1:[
     // 'A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z',',','.',';','/',
 
-    'F','R','V','FRFVF','FRFRFVFVF',
-    'J','U','M','JUJMJ','JUJUJMJMJ',
-    'G','T','B','FGFTFBF','FGFGFTFTFBFBF',
-    'H','Y','N','JHJYJNJ','JHJHJYJYJNJNJ',
-    'D','E','C','DEDCD','DEDEDCDCD',
-    'K','I','，','KIK，K','KIKIK，K，K',
-    'S','W','X','SWSXS','SWSWSXSXS',
-    'L','O','．','LOL．L','LOLOL．L．L',
-    'A','Q','Z','AQAZA','AQAQAZAZA',
-    '；','P','／','；P；／；','；P；P；／；／；',
+    'F','J','FFFF','JJJJ','FJFJFJFJ','JFJFJFJF',
+    'G','H','GFGFGFGF','HJHJHJHJ','GFHJGFHJ','HJGFHJGF',
+    'D','K','DFDFDFDF','KJKJKJKJ','DFKJDFKJ','KJDFKJDF',
+    'S','L','SFSFSFSF','LJLJLJLJ','SFLJSFLJ','LJSFLJSF',
+    'A','；','AFAFAFAF','；J；J；J；J','AF；JAF；J','；JAF；JAF',
+    'F','R','V','RFRFRFRF','VFVFVFVF','RFVFRFVF','VFRFVFRF',
+    'J','U','M','UJUJUJUJ','MJMJMJMJ','UJMJUJMJ','MJUJMJUJ',
+    'G','T','B','GFGFGFGF','TFTFTFTF','BFBFBFBF','GFTFBFGFTFBF','GFBFTFGFBFTF',
+    'H','Y','N','HJHJHJHJ','YJYJYJYJ','NJNJNJNJ','HJYJNJHJYJNJ','HJNJYJHJNJYJ',
+    'D','E','C','EDEDEDEDF','CDCDCDCDF','EDCDEDCDF','CDEDCDEDF',
+    'K','I','，','IKIKIKIKJ','，K，K，K，KJ','IK，KIK，KJ','，KIK，kIKJ',
+    'S','W','X','WSWSWSWSF','XSXSXSXSF','WSXSWSXSF','XSWSXSWSF',
+    'L','O','．','OLOLOLOLJ','．L．L．L．LJ','OL．LOL．LJ','．LOL．LOLJ',
+    'A','Q','Z','QAQAQAQAF','ZAZAZAZAF','QAZAQAZAF','ZAQAZAQAF',
+    '；','P','／','P；P；P；P；','／；／；／；／；','P；／；P；／；J','／；P；／；P；J',
 
-    'ABCDEFG','HIJKLMNOP','QRST','UVWXYZ',
-
+    'ABCDEFG','HIJKLMNOP','QRST','U','VWX','Y','Z',
+    'ABCDEFG','HIJKLMNOP','QRST','U','VWX','Y','Z',
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 
 ]
 }
