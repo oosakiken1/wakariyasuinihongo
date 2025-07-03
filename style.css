@@ -3,6 +3,11 @@ body {
     background-color: aliceblue;
 }
 
+.body2 {
+    background-color: #FFE6E1;
+}
+
+
 img {
     height: 250px;
     object-fit: cover; 
