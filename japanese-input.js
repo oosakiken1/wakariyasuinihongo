@@ -663,6 +663,8 @@ function keyup_event(e) {
 
     if (e.isComposing) return;
 
+    DIV_ANSWERTEXT.value = DIV_ANSWERTEXT.value.trim();
+
     // missText = '';
     // DIV_ANSWERTEXT.innerHTML = romajiText + missText + '<br>' + hiraganaText + untransferText + missText;
     DIV_ANIMATIONTABLE.classList.remove('highlight');
