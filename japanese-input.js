@@ -507,7 +507,7 @@ BTN_PASS.onclick = function () {
 
 BTN_START.onclick = function () {
     if (mode !== 'title') return;
-    // gtag('event', 'start-japanese-input', {'event_category': 'execute'});
+    gtag('event', 'start-japanese-input', {'event_category': 'execute'});
 
     closeAllTab();
 
