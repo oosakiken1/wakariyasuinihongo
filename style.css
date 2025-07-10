@@ -263,3 +263,40 @@ span.res {
 
     }
 }
+
+.twrap {
+  position: relative;
+}
+.twrap textarea {
+  font-family:'Courier New', Courier, monospace;
+  -webkit-appearance: none;
+  border: 1px solid #aaa;
+  border-radius: 0;
+  box-sizing: border-box;
+  font-size: 2rem;
+  margin: 0;
+  padding: 0 .5rem;
+  overflow: hidden;
+  resize: none;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.twrap pre {
+  left: 0;
+  margin: 0;
+  padding: 0 .5rem;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+}
+.twrap pre code {
+  font-family:'Courier New', Courier, monospace;
+  border: 1px solid transparent;
+  border-radius: 0;
+  box-sizing: border-box;
+  font-size: 2rem;
+  margin: 0;
+  padding: 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}

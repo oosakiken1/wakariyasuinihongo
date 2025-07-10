@@ -1,4 +1,4 @@
-const DIV_ANSWERTEXT = document.getElementById("answertext");
+const DIV_ANSWERTEXT = document.getElementById("answertext2");
 const DIV_ANIMATIONTABLE = document.getElementById("animationtable");
 
 const FORM_CONFIG = document.getElementById("formconfig");
@@ -240,6 +240,7 @@ function setNextMondaiText() {
 
     DIV_ANSWERTEXT.value = '';
     DIV_ANSWERTEXT.focus();
+    dummy.innerText = '';
 
     while (DIV_ANIMATIONTABLE.firstChild) {
         DIV_ANIMATIONTABLE.removeChild(DIV_ANIMATIONTABLE.firstChild);
@@ -658,38 +659,20 @@ function createQRcode() {
 
 }
 
+var textarea = document.querySelector(".twrap textarea");
+var dummy = document.querySelector(".twrap pre code");
+
+textarea.oninput = function(e) {
+    checkText(e);
+}
+
 function keyup_event(e) {
-    if (mode !== 'typing') return;
 
     if (e.isComposing) return;
 
-    DIV_ANSWERTEXT.value = DIV_ANSWERTEXT.value.trim();
-
-    // missText = '';
-    // DIV_ANSWERTEXT.innerHTML = romajiText + missText + '<br>' + hiraganaText + untransferText + missText;
-    DIV_ANIMATIONTABLE.classList.remove('highlight');
-
-    if (config.time[0] === 'c' && information.characterCount >= endCount) {
-        displayReult();
-        return;
-    }
+    checkText(e);
 
     let inputText = replaceHalfToFull(DIV_ANSWERTEXT.value);
-
-    confirmedText = '';
-
-    for (let i = 0 ; i < inputText.length ; i++) {
-        if (correctText[i] === inputText[i]) {
-            confirmedText += correctText[i];
-        } else {
-        DIV_ANIMATIONTABLE.classList.add('highlight');
-            break;
-        }
-    }
-
-    information.characterCount = lastScore + confirmedText.length;
-
-    displayAll();
 
     if (correctText === inputText) {
         lastScore += correctText.length;
@@ -708,9 +691,46 @@ function keyup_event(e) {
     }
 }
 
-function keydown_event(e) {
+function checkText(e) {
     if (mode !== 'typing') return;
 
+    // if (e.isComposing) return;
+
+    DIV_ANSWERTEXT.value = DIV_ANSWERTEXT.value.trim();
+
+    missText = '';
+
+    // DIV_ANIMATIONTABLE.classList.remove('highlight');
+
+    if (config.time[0] === 'c' && information.characterCount >= endCount) {
+        displayReult();
+        return;
+    }
+
+    let inputText = replaceHalfToFull(DIV_ANSWERTEXT.value);
+
+    confirmedText = '';
+
+    for (let i = 0 ; i < inputText.length ; i++) {
+        if (correctText[i] === inputText[i]) {
+            confirmedText += DIV_ANSWERTEXT.value[i];
+        } else {
+        // DIV_ANIMATIONTABLE.classList.add('highlight');
+            missText = DIV_ANSWERTEXT.value.substring(i);
+            break;
+        }
+    }
+
+    dummy.innerHTML = confirmedText + '<span class="red">' +  missText + '</span>';
+
+    information.characterCount = lastScore + confirmedText.length;
+
+    displayAll();
+
+}
+
+function keydown_event(e) {
+    if (mode !== 'typing') return;
 
     return false;
 }
