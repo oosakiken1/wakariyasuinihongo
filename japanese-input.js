@@ -66,7 +66,7 @@ const information = {
 let romajiText = '';
 let confirmedText = '';
 // let untransferText = '';
-// let missText = '';
+let missText = '';
 // let fullTypeText = '';
 
 let mondaiText = '';
@@ -671,6 +671,12 @@ function keyup_event(e) {
     if (e.isComposing) return;
 
     checkText(e);
+
+    if (missText) {
+        body2.classList.add('highlight');
+    } else {
+        body2.classList.remove('highlight');
+    }
 
     let inputText = replaceHalfToFull(DIV_ANSWERTEXT.value);
 
