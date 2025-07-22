@@ -493,6 +493,7 @@ BTN_CLEAR.onclick = function () {
     }
     if (mode === 'typing') {
         DIV_ANIMATIONTABLE.innerHTML = '<table><tr><td><div class="message"><span class="fs">中</span><span class="fs">断</span></div></td></tr></table>';
+        body2.classList.remove('highlight');
         window.clearInterval(intervalID);
         mode = 'result';
         modeResult();
@@ -618,6 +619,7 @@ function displayReult() {
     DIV_ANIMATIONTABLE.innerHTML = '<table><tr><td><div class="message"><span class="res">お</span><span class="res">し</span><span class="res">ま</span><span class="res">い</span></div></td></tr></table>';
     DIV_ANSWERTEXT.value = '';
 
+    body2.classList.remove('highlight');
     window.clearInterval(intervalID);
     mode = 'result';
 
@@ -664,6 +666,11 @@ var dummy = document.querySelector(".twrap pre code");
 
 textarea.oninput = function(e) {
     checkText(e);
+
+    if (!missText) {
+        body2.classList.remove('highlight');
+    }
+
 }
 
 function keyup_event(e) {
