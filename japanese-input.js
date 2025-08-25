@@ -34,6 +34,7 @@ const config = {
     ruby:'r1',
     order: 'o1',
     audio: 'off',
+    pass: 'on',
     qr: 'off',
  
     email:'',
@@ -48,6 +49,7 @@ const initConfig = {
     ruby:'r1',
     order: 'o1',
     audio: 'off',
+    pass: 'on',
     qr: 'off',
  
     email:'',
@@ -118,6 +120,7 @@ function getFormValue() {
     config.ruby = FORM_CONFIG.elements['displayruby'].value;
     config.order = FORM_CONFIG.elements['order'].value;
     config.audio = FORM_CONFIG.elements['playaudio'].value;
+    config.pass = FORM_CONFIG.elements['pass'].value;
     config.qr = FORM_CONFIG.elements['displayqr'].value;
 
     $('#statusremain').html(`練習時間<br>${configTexts.time[config.time]}`);
@@ -150,6 +153,7 @@ function setFormValue() {
     FORM_CONFIG.elements['displayruby'].value = config.ruby;
     FORM_CONFIG.elements['order'].value = config.order;
     FORM_CONFIG.elements['playaudio'].value = config.audio;
+    FORM_CONFIG.elements['pass'].value = config.pass;
     FORM_CONFIG.elements['displayqr'].value = config.qr;
 }
 
@@ -603,15 +607,15 @@ function modeTitle() {
 
 function modeTyping() {
     BTN_START.style.display = 'none';
-    BTN_PASS.style.display = 'inline'
+    if (config.pass === "on") { BTN_PASS.style.display = 'inline'; }
     BTN_CLEAR.style.display = 'inline'
 
 };
 
 function modeResult() {
     BTN_START.style.display = 'none';
-    BTN_PASS.style.display = 'inline'
-    BTN_PASS.style.display = 'none';
+    BTN_PASS.style.display = 'none'
+    BTN_CLEAR.style.display = 'inline'
 }
 
 function displayReult() {
