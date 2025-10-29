@@ -596,26 +596,30 @@ function intervalEvent() {
 }
 
 function modeTitle() {
-    // BTN_START.disabled = false;
-    // BTN_CLEAR.disabled = true;
+    BTN_START.disabled = false;
+    BTN_CLEAR.disabled = true;
     // BTN_PASS.disabled = true;
-    BTN_START.style.display = 'inline'
-    BTN_CLEAR.style.display = 'none';
+    // BTN_START.style.display = 'inline'
+    // BTN_CLEAR.style.display = 'none';
     BTN_PASS.style.display = 'none';
 
 };
 
 function modeTyping() {
-    BTN_START.style.display = 'none';
+    BTN_START.disabled = true;
+    BTN_CLEAR.disabled = false;
+    // BTN_START.style.display = 'none';
+    // BTN_CLEAR.style.display = 'inline'
     if (config.pass === "on") { BTN_PASS.style.display = 'inline'; }
-    BTN_CLEAR.style.display = 'inline'
 
 };
 
 function modeResult() {
-    BTN_START.style.display = 'none';
+    BTN_START.disabled = true;
+    BTN_CLEAR.disabled = false;
+    // BTN_START.style.display = 'none';
+    // BTN_CLEAR.style.display = 'inline'
     BTN_PASS.style.display = 'none'
-    BTN_CLEAR.style.display = 'inline'
 }
 
 function displayReult() {
