@@ -30,7 +30,7 @@ const BTN_PASS = document.getElementById("btnpass");
 const config = {
     time:'m5',
     level:'s2',
-    mode:'m0',
+    // mode:'m0',
     ruby:'r1',
     order: 'o1',
     audio: 'off',
@@ -45,7 +45,7 @@ const config = {
 const initConfig = {
     time:'m5',
     level:'s2',
-    mode:'m0',
+    // mode:'m0',
     ruby:'r1',
     order: 'o1',
     audio: 'off',
@@ -116,7 +116,7 @@ function setConfig(params) {
 function getFormValue() {
     config.time = FORM_CONFIG.elements['practicetime'].value;
     config.level = FORM_CONFIG.elements['practicelevel'].value;
-    config.mode = FORM_CONFIG.elements['practicemode'].value;
+    // config.mode = FORM_CONFIG.elements['practicemode'].value;
     config.ruby = FORM_CONFIG.elements['displayruby'].value;
     config.order = FORM_CONFIG.elements['order'].value;
     config.audio = FORM_CONFIG.elements['playaudio'].value;
@@ -125,7 +125,7 @@ function getFormValue() {
 
     $('#statusremain').html(`練習時間<br>${configTexts.time[config.time]}`);
     $('#statuslevel').html(`レベル<br>${configTexts.level[config.level]}`);
-    $('#statusmode').html(`モード<br>${configTexts.mode[config.mode]}`);
+    // $('#statusmode').html(`モード<br>${configTexts.mode[config.mode]}`);
     $('#statusruby').html(`ふりがな<br>${configTexts.ruby[config.ruby]}`);
     $('#statusorder').html(`順番<br>${configTexts.order[config.order]}`);
 
@@ -149,7 +149,7 @@ function getFormValue() {
 function setFormValue() {
     FORM_CONFIG.elements['practicetime'].value = config.time;
     FORM_CONFIG.elements['practicelevel'].value = config.level;
-    FORM_CONFIG.elements['practicemode'].value = config.mode;
+    // FORM_CONFIG.elements['practicemode'].value = config.mode;
     FORM_CONFIG.elements['displayruby'].value = config.ruby;
     FORM_CONFIG.elements['order'].value = config.order;
     FORM_CONFIG.elements['playaudio'].value = config.audio;
@@ -166,27 +166,27 @@ function playAudio(audio) {
 }
 
 BTN_QR.onclick = function (e) {
-    $('#howtoTab').collapse('hide');
-    $('#configTab').collapse('hide');
+    // $('#howtoTab').collapse('hide');
+    // $('#configTab').collapse('hide');
     // $('#qrTab').collapse('show');
 }
 
 BTN_CONFIG.onclick = function (e) {
-    $('#howtoTab').collapse('hide');
+    // $('#howtoTab').collapse('hide');
     // $('#configTab').collapse('show');
-    $('#qrTab').collapse('hide');
+    // $('#qrTab').collapse('hide');
 }
 
 BTN_HOWTO.onclick = function (e) {
     // $('#howtoTab').collapse('show');
-    $('#configTab').collapse('hide');
-    $('#qrTab').collapse('hide');
+    // $('#configTab').collapse('hide');
+    // $('#qrTab').collapse('hide');
 }
 
 function closeAllTab() {
-    $('#howtoTab').collapse('hide');
-    $('#configTab').collapse('hide');
-    $('#qrTab').collapse('hide');
+    // $('#howtoTab').collapse('hide');
+    // $('#configTab').collapse('hide');
+    // $('#qrTab').collapse('hide');
 }
 
 function cleanMondaiTexts(){
@@ -224,13 +224,13 @@ function setNextMondaiText() {
         if (config.level[0] !== 's') {
             mondaiText = text;
         } else if (config.level[0] === 's') {
-            if (config.mode === 'm0') {    // ふつう
+            // if (config.mode === 'm0') {    // ふつう
                 mondaiText = text.split('/')[1]||text;
-            } else if (config.mode === 'm1') { // 単語くりかえし
-                mondaiText = text.replace('/','。');
-            } else {
-                mondaiText = text.split('/')[0];
-            }
+            // } else if (config.mode === 'm1') { // 単語くりかえし
+            //     mondaiText = text.replace('/','。');
+            // } else {
+            //     mondaiText = text.split('/')[0];
+            // }
         }
     }
 
@@ -603,29 +603,27 @@ function intervalEvent() {
 
 function modeTitle() {
     BTN_START.disabled = false;
+    BTN_START.style.opacity = 1.0;
     BTN_CLEAR.disabled = true;
-    // BTN_PASS.disabled = true;
-    // BTN_START.style.display = 'inline'
-    // BTN_CLEAR.style.display = 'none';
-    BTN_PASS.style.display = 'none';
-
+    BTN_CLEAR.style.opacity = 0.2;
+    BTN_PASS.style.visibility = 'hidden';
 };
 
 function modeTyping() {
     BTN_START.disabled = true;
+    BTN_START.style.opacity = 0.2;
     BTN_CLEAR.disabled = false;
-    // BTN_START.style.display = 'none';
-    // BTN_CLEAR.style.display = 'inline'
-    if (config.pass === "on") { BTN_PASS.style.display = 'inline'; }
+    BTN_CLEAR.style.opacity = 1.0;
+     if (config.pass === "on") { BTN_PASS.style.visibility = 'visible'; }
 
 };
 
 function modeResult() {
     BTN_START.disabled = true;
+    BTN_START.style.opacity = 0.2;
     BTN_CLEAR.disabled = false;
-    // BTN_START.style.display = 'none';
-    // BTN_CLEAR.style.display = 'inline'
-    BTN_PASS.style.display = 'none'
+    BTN_CLEAR.style.opacity = 1.0;
+    BTN_PASS.style.visibility = 'hidden';
 }
 
 function displayReult() {
@@ -658,7 +656,7 @@ function createQRcode() {
         id: INPUT_ID.value,
         tim: config.time,
         lvl: config.level,
-        mod: config.mode,
+        // mod: config.mode,
         rub: config.ruby,
         dur: information.displayTime,
         txt: information.sentencesCount,
@@ -700,7 +698,7 @@ function keyup_event(e) {
         body2.classList.remove('highlight');
     }
 
-    let inputText = replaceHalfToFull(DIV_ANSWERTEXT.value);
+    let inputText = replaceHalfToFull(DIV_ANSWERTEXT.value.trim());
 
     if (correctText === inputText) {
         lastScore += correctText.length;
@@ -724,7 +722,7 @@ function checkText(e) {
 
     // if (e.isComposing) return;
 
-    DIV_ANSWERTEXT.value = DIV_ANSWERTEXT.value.trim();
+    // DIV_ANSWERTEXT.value = DIV_ANSWERTEXT.value.trim();
 
     missText = '';
 
@@ -735,7 +733,7 @@ function checkText(e) {
         return;
     }
 
-    let inputText = replaceHalfToFull(DIV_ANSWERTEXT.value);
+    let inputText = replaceHalfToFull(DIV_ANSWERTEXT.value.trim());
 
     confirmedText = '';
 
