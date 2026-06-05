@@ -93,11 +93,11 @@ document.addEventListener('keydown', keydown_event);
 document.addEventListener('keyup', keyup_event);
 
 cleanMondaiTexts();
-let mode = 'title'; // title →　typing → result
-modeTitle();
 setConfig(getUrlQueries());
 setFormValue();
 getFormValue();
+let mode = 'title'; // title →　typing → result
+modeTitle();
 
 // let displayText = '<ruby><rb>練習</rb><rt>れんしゅう</rt><rt>ばかりしていると</rt><rb>疲</rb><rt>つか</rt><rt>れます。</rt></ruby>';
 // let kanjiText = '練習ばかりしていると疲れます。'
@@ -142,6 +142,7 @@ function getFormValue() {
        }
     }
     INPUT_URL.value = urlText;
+    document.getElementById("notice").innerHTML = `このページは削除予定です。新しい <a href="${INPUT_URL.value.replace("typing","romaji-typing")}" class="red">URL</a> をご利用ください。`;
 }
 
 function setFormValue() {
