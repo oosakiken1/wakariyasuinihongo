@@ -29,7 +29,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="romaji-style.css">
 
     <audio id="audionewtext" src="sound4.mp3" type="audio/mp3" preload="auto"></audio>
     <audio id="audiotype" src="sound38.mp3" type="audio/mp3" preload="auto"></audio>
@@ -45,15 +45,12 @@
     <div class="container">
         <header>
             <div class="row">
-                <h1 class="text-secondary">ローマ字タイピング 1.0.0
+                <h1 class="text-secondary">ローマ字タイピング 2.0.0
                     <span class="h6 rounded bg-secondary text-white mx-1 px-1">The romaji typing for all people</span>
                 </h1>
         
                 <div class="my-1">
                     <a href="./index.html" class="badge btn-secondary">Home</a>
-                    <span style="font-size:16pt;">このページは削除予定です。新しい <a href="./romaji-typing.html" class="red">URL</a> をご利用ください。</span>
-                </div>
-                <div class="my-1">
                     <button id="btnhowto" type="button" class="btn border btn-secondary" data-bs-toggle="modal"
                         data-bs-target="#howtoModal">使い方 HOW TO</button>
                     <button id="btnconfig" type="button" class="btn border btn-secondary" data-bs-toggle="modal"
@@ -358,14 +355,22 @@
                 <div id="animationtable"
                     class="mb-2 border border-3 rounded d-flex bgyellow"
                     style="height: 200px;">
-                    <span style="font-size:16pt;">このページは削除予定です。新しい <a href="./romaji-typing.html" class="red">URL</a> をご利用ください。</span>
                </div>
+
             </div>
 
             <div class="row">
-                <div id="answertext" class="mb-2 bg-white border border-3 rounded justify-content-center" style="height: 200px;">
+                <div id="answertext" class="mb-2 bg-white border border-3 rounded justify-content-center" style="height: 200px;display: none;">
                 </div>
             </div>
+
+            <div class="row">
+                <!-- サーバ起動しないとキー押下表示はできない -->
+                <div class="keyboard-wrapper">
+                    <object id="keyboard" data="japanese-keyboard.svg" type="image/svg+xml"></object>
+                </div>
+            </div>
+
         </main>
 
 
@@ -384,7 +389,7 @@
     <script src="romaji.json.js"></script>
     <script src="mondai.json.js"></script>
     <script src="typing.json.js"></script>
-    <script src="typing.js"></script>
+    <script src="romaji-typing.js"></script>
 </body>
 
 </html>

@@ -1,0 +1,289 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1270" height="430" viewBox="0 0 1270 430" preserveAspectRatio="xMidYMid meet">
+  <style>
+    .key { fill:#fafafa; stroke:#999; stroke-width:1; transition: all 0.1s ease;}
+    .home { stroke:#444; stroke-width:3; }
+    .blank { fill:#888;}
+    .cc  { font-family:"Segoe UI"; font-size:28px; text-anchor:middle; dominant-baseline:middle; }
+    .ct  { font-family:"Segoe UI"; font-size:28px; text-anchor:middle; dominant-baseline:hanging; }
+    .cb  { font-family:"Segoe UI"; font-size:28px; text-anchor:middle; dominant-baseline:ideographic; }
+    .gray {fill:#888;}
+    .red {fill:#F78B9E;}
+    .small {font-size:20px;}
+  </style>
+
+  <!-- 行の基準位置 -->
+  <!-- y=40（数字列） / y=130（QWERTY） / y=220（ASDF） / y=310（ZXCV） / y=400（スペース行） -->
+
+  <!-- 1段目：日本語106キーの数字列（ハングルなし） -->
+  <g id="row1">
+    <!-- 半角/全角 -->
+    <rect id="xBackquote" class="key" x="40" y="20" width="70" height="70" rx="6"/>
+    <text class="cc small" x="75" y="55">全/半</text>
+
+    <!-- 数字キー -->
+    <rect id="Digit1" class="key" x="120" y="20" width="70" height="70" rx="6"/>
+    <text class="ct"  x="140" y="25">!</text>
+    <text class="cb"  x="170" y="85">1</text>
+
+    <rect id="Digit2" class="key" x="200" y="20" width="70" height="70" rx="6"/>
+    <text class="ct"  x="220" y="25">"</text>
+    <text class="cb"  x="250" y="85">2</text>
+
+    <rect id="Digit3" class="key" x="280" y="20" width="70" height="70" rx="6"/>
+    <text class="ct"  x="300" y="25">#</text>
+    <text class="cb"  x="330" y="85">3</text>
+
+    <rect id="Digit4" class="key" x="360" y="20" width="70" height="70" rx="6"/>
+    <text class="ct"  x="380" y="25">$</text>
+    <text class="cb"  x="410" y="85">4</text>
+
+    <rect id="Digit5" class="key" x="440" y="20" width="70" height="70" rx="6"/>
+    <text class="ct"  x="460" y="25">%</text>
+    <text class="cb"  x="490" y="85">5</text>
+    <rect id="Digit6" class="key" x="520" y="20" width="70" height="70" rx="6"/>
+    <text class="ct"  x="540" y="25">&amp;</text>
+    <text class="cb"  x="570" y="85">6</text>
+    <rect id="Digit7" class="key" x="600" y="20" width="70" height="70" rx="6"/>
+    <text class="ct"  x="620" y="25">'</text>
+    <text class="cb"  x="650" y="85">7</text>
+    <rect id="Digit8" class="key" x="680" y="20" width="70" height="70" rx="6"/>
+    <text class="ct"  x="700" y="25">(</text>
+    <text class="cb"  x="730" y="85">8</text>
+    <rect id="Digit9" class="key" x="760" y="20" width="70" height="70" rx="6"/>
+    <text class="ct"  x="780" y="25">)</text>
+    <text class="cb"  x="810" y="85">9</text>
+    <rect id="Digit0" class="key" x="840" y="20" width="70" height="70" rx="6"/>
+    <text class="ct"  x="860" y="25"></text>
+    <text class="cb"  x="890" y="85">0</text>
+
+    <!-- - = -->
+    <rect id="Minus" class="key" x="920" y="20" width="70" height="70" rx="6"/>
+    <text class="ct"  x="940" y="25">=</text>
+    <text class="cb"  x="970" y="85">-</text>
+
+    <rect id="Equal" class="key" x="1000" y="20" width="70" height="70" rx="6"/>
+    <text class="ct"  x="1020" y="25">~</text>
+    <text class="cb"  x="1050" y="85">^</text>
+
+    <rect id="IntlYen" class="key" x="1080" y="20" width="70" height="70" rx="6"/>
+    <text class="ct"   x="1100" y="25">|</text>
+    <text class="cb"   x="1130" y="85">￥</text>
+
+    <!-- Backspace -->
+    <rect id="Backspace" class="key" x="1160" y="20" width="70" height="70" rx="6"/>
+    <text class="cc small" x="1195" y="45">Back</text>
+    <text class="cc small" x="1195" y="65">Space</text>
+  </g>
+
+  <!-- 2段目：QWERTY（濃音右上・英字左上・通常ハングル右下） -->
+  <g id="row2">
+    <!-- Tab -->
+    <rect id="xTab" class="key" x="40" y="100" width="110" height="70" rx="6"/>
+    <text class="cc" x="95" y="135">Tab</text>
+
+    <!-- Q -->
+    <rect id="KeyQ" class="key" x="160" y="100" width="70" height="70" rx="6"/>
+    <text class="ct"  x="180" y="105">Q</text>
+
+    <!-- W -->
+    <rect id="KeyW" class="key" x="240" y="100" width="70" height="70" rx="6"/>
+    <text class="ct"  x="260" y="105">W</text>
+
+    <!-- E -->
+    <rect id="KeyE" class="key" x="320" y="100" width="70" height="70" rx="6"/>
+    <text class="ct"  x="340" y="105">E</text>
+
+    <!-- R -->
+    <rect id="KeyR" class="key" x="400" y="100" width="70" height="70" rx="6"/>
+    <text class="ct"  x="420" y="105">R</text>
+
+    <!-- T -->
+    <rect id="KeyT" class="key" x="480" y="100" width="70" height="70" rx="6"/>
+    <text class="ct"  x="500" y="105">T</text>
+
+    <!-- Y -->
+    <rect id="KeyY" class="key" x="560" y="100" width="70" height="70" rx="6"/>
+    <text class="ct"  x="580" y="105">Y</text>
+
+    <!-- U -->
+    <rect id="KeyU" class="key" x="640" y="100" width="70" height="70" rx="6"/>
+    <text class="ct"  x="660" y="105">U</text>
+
+    <!-- I -->
+    <rect id="KeyI" class="key" x="720" y="100" width="70" height="70" rx="6"/>
+    <text class="ct"  x="740" y="105">I</text>
+
+    <!-- O -->
+    <rect id="KeyO" class="key" x="800" y="100" width="70" height="70" rx="6"/>
+    <text class="ct"  x="820" y="105">O</text>
+
+    <!-- P -->
+    <rect id="KeyP" class="key" x="880" y="100" width="70" height="70" rx="6"/>
+    <text class="ct"  x="900" y="105">P</text>
+
+    <!-- @ -->
+    <rect id="BracketLeft" class="key" x="960" y="100" width="70" height="70" rx="6"/>
+    <text class="ct"  x="980" y="105">`</text>
+    <text class="cb"  x="1010" y="165">@</text>
+
+    <!-- [ -->
+    <rect id="BracketRight" class="key" x="1040" y="100" width="70" height="70" rx="6"/>
+    <text class="ct"  x="1060" y="105">{</text>
+    <text class="cb"  x="1090" y="165">[</text>
+
+  </g>
+
+  <!-- 3段目：ASDF -->
+  <g id="row3">
+    <!-- Caps -->
+    <rect id="xCapsLock" class="key" x="40" y="180" width="130" height="70" rx="6"/>
+    <text class="cc" x="105" y="215">Caps</text>
+
+    <!-- A -->
+    <rect id="KeyA" class="key home" x="180" y="180" width="70" height="70" rx="6"/>
+    <text class="ct"   x="200" y="185">A</text>
+
+    <!-- S -->
+    <rect id="KeyS" class="key home" x="260" y="180" width="70" height="70" rx="6"/>
+    <text class="ct"   x="280" y="185">S</text>
+
+    <!-- D -->
+    <rect id="KeyD" class="key home" x="340" y="180" width="70" height="70" rx="6"/>
+    <text class="ct"   x="360" y="185">D</text>
+
+    <!-- F -->
+    <rect id="KeyF" class="key home" x="420" y="180" width="70" height="70" rx="6"/>
+    <text class="ct"   x="440" y="185">F</text>
+
+    <!-- G -->
+    <rect id="KeyG" class="key" x="500" y="180" width="70" height="70" rx="6"/>
+    <text class="ct"  x="520" y="185">G</text>
+
+    <!-- H -->
+    <rect id="KeyH" class="key" x="580" y="180" width="70" height="70" rx="6"/>
+    <text class="ct"  x="600" y="185">H</text>
+
+    <!-- J -->
+    <rect id="KeyJ" class="key home" x="660" y="180" width="70" height="70" rx="6"/>
+    <text class="ct"  x="680" y="185">J</text>
+
+    <!-- K -->
+    <rect id="KeyK" class="key home" x="740" y="180" width="70" height="70" rx="6"/>
+    <text class="ct"   x="760" y="185">K</text>
+
+    <!-- L -->
+    <rect id="KeyL" class="key home" x="820" y="180" width="70" height="70" rx="6"/>
+    <text class="ct"   x="840" y="185">L</text>
+
+    <!-- : -->
+    <rect id="Semicolon" class="key home" x="900" y="180" width="70" height="70" rx="6"/>
+    <text class="ct"   x="920" y="185">+</text>
+    <text class="cb"   x="950" y="245">;</text>
+
+    <!-- ] -->
+    <rect id="Quote" class="key" x="980" y="180" width="70" height="70" rx="6"/>
+    <text class="ct"  x="1000" y="185">*</text>
+    <text class="cb"  x="1030" y="245">:</text>
+
+    <!-- ] -->
+    <rect id="Backslash" class="key" x="1060" y="180" width="70" height="70" rx="6"/>
+    <text class="ct"  x="1080" y="185">}</text>
+    <text class="cb"  x="1110" y="245">]</text>
+
+    <!-- Enter（縦長） -->
+    <rect id="Enter" class="key" x="1140" y="100" width="90" height="150" rx="6"/>
+    <text class="cc"  x="1185" y="175">Enter</text>
+  </g>
+
+  <!-- 4段目：ZXCV -->
+  <g id="row4">
+    <!-- Shift -->
+    <rect id="shiftLeft" class="key" x="40" y="260" width="150" height="70" rx="6"/>
+    <text class="cc" x="115" y="295">Shift</text>
+
+    <!-- Z -->
+    <rect id="KeyZ" class="key" x="200" y="260" width="70" height="70" rx="6"/>
+    <text class="ct"  x="220" y="265">Z</text>
+
+    <!-- X -->
+    <rect id="KeyX" class="key" x="280" y="260" width="70" height="70" rx="6"/>
+    <text class="ct"  x="300" y="265">X</text>
+
+    <!-- C -->
+    <rect id="KeyC" class="key" x="360" y="260" width="70" height="70" rx="6"/>
+    <text class="ct"  x="380" y="265">C</text>
+
+    <!-- V -->
+    <rect id="KeyV" class="key" x="440" y="260" width="70" height="70" rx="6"/>
+    <text class="ct"  x="460" y="265">V</text>
+
+    <!-- B -->
+    <rect id="KeyB" class="key" x="520" y="260" width="70" height="70" rx="6"/>
+    <text class="ct"  x="540" y="265">B</text>
+
+    <!-- N -->
+    <rect id="KeyN" class="key" x="600" y="260" width="70" height="70" rx="6"/>
+    <text class="ct"  x="620" y="265">N</text>
+
+    <!-- M -->
+    <rect id="KeyM" class="key" x="680" y="260" width="70" height="70" rx="6"/>
+    <text class="ct"  x="700" y="265">M</text>
+
+    <!-- ,< -->
+    <rect id="Comma" class="key" x="760" y="260" width="70" height="70" rx="6"/>
+    <text class="ct"  x="780" y="265">&lt;</text>
+    <text class="cb"  x="810" y="325">,</text>
+
+    <!-- .> -->
+    <rect id="Period" class="key" x="840" y="260" width="70" height="70" rx="6"/>
+    <text class="ct"  x="860" y="265">&gt;</text>
+    <text class="cb"  x="890" y="325">.</text>
+
+    <!-- / -->
+    <rect id="Slash" class="key" x="920" y="260" width="70" height="70" rx="6"/>
+    <text class="ct"  x="940" y="265">?</text>
+    <text class="cb"  x="970" y="325">/</text>
+
+    <!-- ろ -->
+    <rect id="IntlRo" class="key" x="1000" y="260" width="70" height="70" rx="6"/>
+    <text class="ct"   x="1020" y="265">_</text>
+    <text class="cb"   x="1050" y="325">\</text>
+
+    <!-- Shift -->
+    <rect id="shiftRight" class="key" x="1080" y="260" width="150" height="70" rx="6"/>
+    <text class="cc" x="1155" y="295">Shift</text>
+  </g>
+
+  <!-- 5段目：スペース行 -->
+  <g id="row5">
+    <rect id="WakeUp" class="key" x="40" y="340" width="70" height="70" rx="6"/>
+    <text class="cc" x="75" y="375">Fn</text>
+
+    <rect id="ControlLeft" class="key" x="120" y="340" width="90" height="70" rx="6"/>
+    <text class="cc" x="165" y="375">Ctrl</text>
+
+    <rect id="xMetaLeft" class="key" x="220" y="340" width="70" height="70" rx="6"/>
+    <text class="cc" x="255" y="375">Win</text>
+
+    <rect id="AltLeft" class="key" x="300" y="340" width="70" height="70" rx="6"/>
+    <text class="cc" x="335" y="375">Alt</text>
+
+    <rect id="NonConvert" class="key" x="380" y="340" width="70" height="70" rx="6"/>
+    <text class="cc small" x="415" y="375">無変換</text>
+
+    <rect id="Space" class="key" x="460" y="340" width="290" height="70" rx="6"/>
+    <text class="cc" x="605" y="375">Space</text>
+
+    <rect id="Convert" class="key" x="760" y="340" width="70" height="70" rx="6"/>
+    <text class="cc small" x="795" y="375">変換</text>
+
+    <rect id="KanaMode" class="key" x="840" y="340" width="70" height="70" rx="6"/>
+    <text class="cc small" x="875" y="375">かな</text>
+
+    <rect id="AltRight" class="key" x="920" y="340" width="70" height="70" rx="6"/>
+    <text class="cc" x="955" y="375">Alt</text>
+
+    <rect id="ControlRight" class="key" x="1000" y="340" width="70" height="70" rx="6"/>
+    <text class="cc" x="1035" y="375">Ctrl</text>
+  </g>
+</svg>
