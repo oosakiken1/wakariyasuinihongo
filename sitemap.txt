@@ -2,6 +2,6 @@ https://oosakiken1.github.io/wakariyasuinihongo/
 https://oosakiken1.github.io/wakariyasuinihongo/calculation.html
 https://oosakiken1.github.io/wakariyasuinihongo/column01.html
 https://oosakiken1.github.io/wakariyasuinihongo/typing.html
-https://oosakiken1.github.io/wakariyasuinihongo/japanese-typing.html
+https://oosakiken1.github.io/wakariyasuinihongo/romaji-typing.html
 https://oosakiken1.github.io/wakariyasuinihongo/japanese-input.html
 https://oosakiken1.github.io/wakariyasuinihongo/hangul-typing.html
