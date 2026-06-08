@@ -578,7 +578,9 @@ function keyup_event(e) {
 
     missText = '';
 
-    hangulText = convertKeyToHanguls(romajiText);
+    let confirmText, displayText;
+    [confirmText, displayText] = getConfirmText(romajiText);
+    hangulText = displayText;
 
     DIV_ANSWERTEXT.innerHTML = romajiText + missText + '<br>' + hangulText;
     DIV_ANIMATIONTABLE.classList.remove('highlight');
@@ -653,7 +655,9 @@ function keydown_event(e) {
         fullTypeText += addKey;
     }
 
-    hangulText = convertKeyToHanguls(nextRomajiText);
+    let confirmText, displayText;
+    [confirmText, displayText] = getConfirmText(nextRomajiText);
+    hangulText = displayText;
 
     if (correctRomajiText.indexOf(nextRomajiText) === 0) {
         unCorrectflag = false;
@@ -679,7 +683,7 @@ function keydown_event(e) {
         playAudio(AUDIO_TYPE);
     }
 
-    information.characterCount = lastScore + hangulText.length;
+    information.characterCount = lastScore + confirmText.length;
     information.correctRate = (information.characterCount === 0 ? 100 : (100 - information.unCorrectCount / information.characterCount * 100)).toFixed(1);                
 
     lastUnCorrectflag = unCorrectflag;
@@ -690,6 +694,36 @@ function keydown_event(e) {
 }
 
 
+function getConfirmText(testRomajiText) {
+    let confirmText ='';
+    let approveText = '';
+    let convertRomajiText ='';
+    let convertText = '';
+    let displayText = '';
+
+    for (let i = 0; i < testRomajiText.length; i++) {
+        // ハングル変換前に一致する場合はそこまでの文字を確定する
+        if (correctText.indexOf(displayText + testRomajiText[i]) === 0) {
+            displayText += testRomajiText[i];
+            confirmText = displayText;
+            convertRomajiText = '';
+            approveText = '';
+            continue;
+        } else {
+            // ハングル変換して一致した場合は、承認済みにためておく
+            convertRomajiText += testRomajiText[i];
+            convertText = convertKeyToHanguls(convertRomajiText)
+            displayText = confirmText + convertText;
+            if (correctText.indexOf(displayText) === 0) {
+                approveText = convertText;
+                continue;
+            }
+        }
+    }
+    // console.log(confirmText + approveText + '-' + displayText)
+
+    return [confirmText + approveText, displayText] ;
+}
 
 function getUrlQueries() {
     var queryStr = window.location.search.slice(1);  // 文頭?を除外
@@ -986,9 +1020,6 @@ function convertKeyToHanguls(input) {
 }
 
 console.log(convertKeyToHanguls("gkrtod"));      // 出力: 학생 (正しく連音化・結合される)
-console.log(convertKeyToHanguls("gksrnrdj"));    // 한국어
-console.log(convertKeyToHanguls("rks"));         // 간
-console.log(convertKeyToHanguls("rkt"));         // 갓
 console.log(convertKeyToHanguls("gksrmf"));      // 한글
 
 // ------------------------------
