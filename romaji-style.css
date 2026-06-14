@@ -87,6 +87,7 @@ span.red{
     transition: background-color 0.2s;
     overflow-x: hidden;
     overflow-y: hidden;
+    line-height: 1.2;
 }
 
 .message {
@@ -112,7 +113,6 @@ td, th {
     font-size: 40px;
     text-align:center;
     height: 1.0em;
-    font-size: 40px;
     letter-spacing:0.0em;
     position: relative;
 }
@@ -124,7 +124,7 @@ td, th {
 
 #animationtable .ruby td .ans{
     position: absolute;
-    top:-48px;
+    top:-44px;
     opacity: 1;
 }
 
@@ -292,7 +292,7 @@ span.res {
 .keyboard-wrapper {
     margin:auto;
     width: 100%;
-    max-width: 900px;
+    max-width: 800px;
 }
 
 #keyboard {
