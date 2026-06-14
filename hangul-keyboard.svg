@@ -60,12 +60,12 @@
 
     <!-- - = -->
     <rect id="Minus" class="key" x="920" y="20" width="70" height="70" rx="6"/>
-    <text class="ct"  x="940" y="25">-</text>
-    <text class="cb"  x="970" y="85">_</text>
+    <text class="ct"  x="940" y="25">_</text>
+    <text class="cb"  x="970" y="85">-</text>
 
     <rect id="Equal" class="key" x="1000" y="20" width="70" height="70" rx="6"/>
-    <text class="ct"  x="1020" y="25">=</text>
-    <text class="cb"  x="1050" y="85">+</text>
+    <text class="ct"  x="1020" y="25">+</text>
+    <text class="cb"  x="1050" y="85">=</text>
 
     <rect id="IntlYen" class="key blank" x="1080" y="20" width="70" height="70" rx="6"/>
     <text class="ct"   x="1100" y="25"></text>
@@ -210,7 +210,7 @@
 
     <!-- ] -->
     <rect id="Quote" class="key" x="980" y="180" width="70" height="70" rx="6"/>
-    <text class="ct"  x="1000" y="185">:</text>
+    <text class="ct"  x="1000" y="185">"</text>
     <text class="cb"  x="1030" y="245">'</text>
 
     <!-- ] -->

@@ -112,7 +112,7 @@ td, th {
 
 #animationtable th{
     height: 1.0em;
-    font-size: 3.0em;
+    font-size: 48px;
     text-align:left;
     letter-spacing:0.0em;
     position: relative;
@@ -125,7 +125,7 @@ td, th {
 }
 
 #animationtable td{
-    font-size: 3.0em;
+    font-size: 48px;
     text-align:left;
 }
 
@@ -290,7 +290,7 @@ span.res {
 .keyboard-wrapper {
     margin:auto;
     width: 100%;
-    max-width: 850px;
+    max-width: 800px;
 }
 
 #keyboard {
