@@ -61,8 +61,6 @@ const information = {
     displayTime:'',
     sentencesCount:0,
     characterCount:0,
-    // unCorrectCount:0,
-    // correctRate:''
 }
 
 let romajiText = '';
@@ -89,8 +87,7 @@ let remainTime = ''; // 秒
 let lastUnCorrectflag = false;
 let intervalID = null;
 
-// document.addEventListener('keydown', keydown_event);
-
+document.addEventListener('keydown', keydown_event);
 document.addEventListener('keyup', keyup_event);
 document.addEventListener('compositionend', keyup_event);
 
@@ -123,11 +120,11 @@ function getFormValue() {
     config.pass = FORM_CONFIG.elements['pass'].value;
     config.qr = FORM_CONFIG.elements['displayqr'].value;
 
-    $('#statusremain').html(`練習時間<br>${configTexts.time[config.time]}`);
-    $('#statuslevel').html(`レベル<br>${configTexts.level[config.level]}`);
+    $('#statusremain').html(`練習時間 : ${configTexts.time[config.time]}`);
+    $('#statuslevel').html(`レベル : ${configTexts.level[config.level]}`);
     // $('#statusmode').html(`モード<br>${configTexts.mode[config.mode]}`);
-    $('#statusruby').html(`ふりがな<br>${configTexts.ruby[config.ruby]}`);
-    $('#statusorder').html(`順番<br>${configTexts.order[config.order]}`);
+    $('#statusruby').html(`ふりがな : ${configTexts.ruby[config.ruby]}`);
+    $('#statusorder').html(`順番 : ${configTexts.order[config.order]}`);
 
     playAudio(AUDIO_TYPE);
 
@@ -221,16 +218,10 @@ function setNextMondaiText() {
 
         text = mondaiTexts[level][order[information.sentencesCount % order.length]];
 
-        if (config.level[0] !== 's') {
+        if (!text.includes('/')) {
             mondaiText = text;
-        } else if (config.level[0] === 's') {
-            // if (config.mode === 'm0') {    // ふつう
-                mondaiText = text.split('/')[1]||text;
-            // } else if (config.mode === 'm1') { // 単語くりかえし
-            //     mondaiText = text.replace('/','。');
-            // } else {
-            //     mondaiText = text.split('/')[0];
-            // }
+        } else {
+            mondaiText = text.split('/')[1]||text;
         }
     }
 
@@ -263,7 +254,6 @@ function setNextMondaiText() {
 
 function getCorrectText(inputText) {
     let outputText = '';
-    // let nonKanjiTexts = inputText.match(/[^\u3005\u3007\u4E00-\u9FFF（）　]+/g);
 
     let kanjiText = inputText.replaceAll(/(（.*?）|　)/g,"");
     kanjiText = replaceHalfToFull(kanjiText);
@@ -276,8 +266,6 @@ function displayInfomation() {
     STATUS_TIME.innerText = `経過時間： ${information.displayTime}`;
     STATUS_COUNT.innerText = `問題数：${information.sentencesCount}`;
     STATUS_SCORE.innerText = `文字数：${information.characterCount}`;
-    // STATUS_MISS.innerText = `ミス回数：${information.unCorrectCount}`;
-    // STATUS_RATE.innerText = `正答率：${information.correctRate}%`;
 }
 
 
@@ -343,62 +331,10 @@ function scrollDiv(divName) {
     let scrollLeft = (sw - cw) * (confirmedText.length - 5) / (correctText.length - 15)
 
     div.stop(); 
-    // if (scrollLeft === 0) {
-    //     div.animate({  scrollLeft: scrollLeft },10,'linear'); 
-    // } else {
-        div.animate({  scrollLeft: scrollLeft },2000,'swing'); 
-        // div.animate({  scrollLeft: scrollLeft },2000,'easeOutCubic'); 
-    // }
+    div.animate({  scrollLeft: scrollLeft },2000,'swing'); 
 }
 
 
-// 問題文から、漢字と漢字以外の連続をとる。（）は区切り文字。
-// 漢字の場合、書き出し。
-// 漢字以外の場合、
-//   文字数を数えて、 カーソル位置を含む場合、spanをぶち込む
-//   rtで囲む。
-
-// function getDispayText(inputText, spanIndex) {
-//     let outputText = '';
-//     let nonKnajiIndex = 0;
-//     let tempTexts = inputText.match(/(（[^\u3005\u3007\u4E00-\u9FFF]+）|[^\u3005\u3007\u4E00-\u9FFF（）]+|[\u3005\u3007\u4E00-\u9FFF]+)/g);
-//     // let tempTexts = inputText.match(/([^\u3005\u3007\u4E00-\u9FFF（）]+|[\u3005\u3007\u4E00-\u9FFF（）]+)/g);
-
-//     for (let str of tempTexts) {
-//         if (str.length === 0) continue;
-//         if (str.search(/[\u3005\u3007\u4E00-\u9FFF]/) === 0) {
-//             outputText += str;
-//         } else {
-//             if (str.search(/[（）]/) != -1) {
-//                 str = str.replace(/[（）]/g, '');
-//             } else {
-//                 outputText += str;
-//             }
-
-//             str = str.replace(/[\u30a1-\u30f6]/g, function (match) {
-//                 var chr = match.charCodeAt(0) - 0x60;
-//                 return String.fromCharCode(chr); zu
-//             });
-
-//             outputText += '<rt>';
-//             for (let char of str) {
-
-//                 if (nonKnajiIndex < spanIndex) {
-//                     outputText += `<span class="red">${char}</span>`;
-//                 } else {
-//                     if (config.ruby === 'r1') {
-//                         outputText += char;
-//                     } else {
-//                         outputText += `<span class="white">${char}</span>`;
-//                     }
-//                 }
-//                 nonKnajiIndex++;
-//             }
-//             outputText += '</rt>';
-//         }
-//     }
-//     return `<ruby>${outputText}</ruby>`;
-// }
 
 function getAnimationTable(inputText) {
     let kjText = '';
@@ -477,7 +413,7 @@ function getAnimationTable(inputText) {
             }
         }
     }
-    return `<tr>${rbText}</tr><tr>${kjText}</tr>`;
+    return `<tr class="ruby">${rbText}</tr><tr class="kanji">${kjText}</tr>`;
 }
 
 
@@ -528,8 +464,6 @@ BTN_START.onclick = function () {
     information.durationTime = 0;
     information.displayTime = '00:00';
     information.sentencesCount = 0;
-    // information.unCorrectCount = 0;
-    // information.correctRate = '100.0'
 
     lastScore = 0;
     lastUnCorrectflag = false;
@@ -628,11 +562,12 @@ function modeResult() {
 
 function displayReult() {
 
+    body2.classList.remove('highlight');
+
     DIV_ANIMATIONTABLE.innerHTML = '<table><tr><td><div class="message"><span class="res">お</span><span class="res">し</span><span class="res">ま</span><span class="res">い</span></div></td></tr></table>';
     DIV_ANSWERTEXT.value = '';
     dummy.innerText = '';
 
-    body2.classList.remove('highlight');
     window.clearInterval(intervalID);
     mode = 'result';
 
@@ -661,8 +596,6 @@ function createQRcode() {
         dur: information.displayTime,
         txt: information.sentencesCount,
         chr: information.characterCount,
-        // mis: information.unCorrectCount,
-        // rat: information.correctRate
     }
 
     var qrtext = `mailto:${INPUT_EMAIL.value}?subject=RT-RESULT&body=${JSON.stringify(body)}`;
@@ -689,6 +622,8 @@ textarea.oninput = function(e) {
 function keyup_event(e) {
 
     if (e.isComposing) return;
+
+    if (mode !== 'typing') return;
 
     checkText(e);
 
@@ -747,7 +682,7 @@ function checkText(e) {
         }
     }
 
-    dummy.innerHTML = confirmedText + '<span class="red">' +  missText + '</span>';
+    dummy.innerHTML = '<span class="hidden">' + confirmedText + '</span><span class="red">' +  missText + '</span>';
 
     information.characterCount = lastScore + confirmedText.length;
 
@@ -757,7 +692,8 @@ function checkText(e) {
 
 function keydown_event(e) {
     if (mode !== 'typing') return;
-
+    //キーを押したら自動でフォーカスを戻す
+    DIV_ANSWERTEXT.focus();
     return false;
 }
 

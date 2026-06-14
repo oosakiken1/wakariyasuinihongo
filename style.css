@@ -64,9 +64,10 @@ h3 {
 
 #answertext {
     /* font-family: monospace;   */
-    font-size: 200%;
+    font-size: 40px;
     transition: background-color 0.2s; 
     overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 #animationtable span {
@@ -86,14 +87,20 @@ span.red{
     text-decoration-color:#FF0000; */
 }
 
+span.hidden{
+    visibility:hidden;
+}
+
 #animationtable {
     /* font-family: monospace;   */
     transition: background-color 0.2s;
     overflow-x: hidden;
+    overflow-y: hidden;
+    line-height: 1.2;
 }
 
 .message {
-    font-size: 2.5em;
+    font-size: 120px;
 }
 
 table {
@@ -106,18 +113,20 @@ td, th {
 
 #animationtable table{
     margin: auto;
+    /* margin-bottom: 12px; */
     white-space: nowrap;
 }
 
 #animationtable th{
-    font-size: 2.5em;
+    font-size: 40px;
     text-align:center;
     letter-spacing:0.0em;
+    font-weight: 400;
 }
 
 
 #animationtable td{
-    font-size: 3.0em;
+    font-size: 48px;
     text-align:center;
 }
 
@@ -273,7 +282,7 @@ span.res {
   border: 1px solid #aaa;
   border-radius: 0;
   box-sizing: border-box;
-  font-size: 2rem;
+  font-size: 32px;
   margin: 0;
   padding: 0 .5rem;
   overflow: hidden;
@@ -294,7 +303,7 @@ span.res {
   border: 1px solid transparent;
   border-radius: 0;
   box-sizing: border-box;
-  font-size: 2rem;
+  font-size: 32px;
   margin: 0;
   padding: 0;
   white-space: pre-wrap;
