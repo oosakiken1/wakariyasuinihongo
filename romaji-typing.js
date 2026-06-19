@@ -473,7 +473,7 @@ BTN_PASS.onclick = function () {
 BTN_START.onclick = function () {
     if (mode !== 'title') return;
     let tmpConfig = `rt-t:${config.time}-l:${config.level}-o:${config.order}-a:${config.audio}-p:${config.pass}`
-    gtag('event', 'start-japanese-input', {'event_category': 'execute', 'config': tmpConfig});
+    gtag('event', 'start-romaji-typing', {'event_category': 'execute', 'config': tmpConfig});
 
     // gtag('event', 'start-romaji-typing', {'event_category': 'execute', 'config': JSON.stringify(config)});
 

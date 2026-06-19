@@ -415,7 +415,7 @@ BTN_PASS.onclick = function () {
 BTN_START.onclick = function () {
     if (mode !== 'title') return;
     let tmpConfig = `ht-t:${config.time}-l:${config.level}-o:${config.order}-a:${config.audio}-p:${config.pass}`
-    gtag('event', 'start-japanese-input', {'event_category': 'execute', 'config': tmpConfig});
+    gtag('event', 'start-hangul-input', {'event_category': 'execute', 'config': tmpConfig});
     // gtag('event', 'start-hangul-typing', {'event_category': 'execute', 'config': JSON.stringify(config)});
 
     closeAllTab();
